@@ -11,7 +11,7 @@
             padding: 0;
             height: 100%;
             overflow: hidden;
-            background-color: transparent !important;
+            background-color: white !important;
         }
 
         .bg-container {
@@ -24,7 +24,7 @@
             background-size: contain;
             animation: zoomEffect 20s infinite alternate; /* 20초 동안 천천히 확대/축소 */
             z-index: -1;
-            background-color: transparent;
+            background-color: white;
         }
 
         @keyframes zoomEffect {
@@ -39,7 +39,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: rgba(0, 0, 0, 0.2); /* 이미지 위에 살짝 어두운 막을 씌워 글자를 선명하게 함 */
+            background: rgba(255, 255, 255, 0.1); /* 이미지 위에 살짝 어두운 막을 씌워 글자를 선명하게 함 */
         }
 
         /* 3. 흐르는 자막 (Marquee) 효과 */
@@ -83,6 +83,7 @@
 </body>
 
 </html>
+
 
 
 
