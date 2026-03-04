@@ -13,6 +13,7 @@
             background-color: white;
         }
 
+        /* GIF 배경 */
         .bg-container {
             position: fixed;
             top: 0;
@@ -30,6 +31,7 @@
             to { transform: scale(1.1); }
         }
 
+        /* 중앙 내용 (배경 어둡게) */
         .content {
             position: relative;
             z-index: 1;
@@ -41,10 +43,14 @@
             background: rgba(0, 0, 0, 0.25);
         }
 
-        .marquee-container {
-            width: 100%;
+        /* 자막을 유튜브 바로 위에 고정 */
+        .marquee-fixed {
+            position: fixed;
+            left: 20px;
+            bottom: 270px; /* 유튜브 높이 240px + 여백 30px */
+            width: 420px;  /* 유튜브와 동일한 폭 */
             overflow: hidden;
-            margin-bottom: 5px;
+            z-index: 3;
         }
 
         .marquee-text {
@@ -60,11 +66,34 @@
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
+
+        /* 왼쪽 아래 고정된 유튜브 영상 */
+        .youtube-box {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            width: 420px;
+            height: 240px;
+            border-radius: 13px;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .youtube-box iframe {
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 
-    <body>
+<body>
+
     <div class="bg-container"></div>
+
+    <!-- 유튜브 영상 바로 위에서 흐르는 자막 -->
+    <div class="marquee-fixed">
+        <div class="marquee-text">♬ AI vs 가수 --- 요즘 조금 한가해서 여러가지 테스트 하는 재미가 쏠쏠합니다.^^ 행복한 하루 되세요! ♬</div>
+    </div>
 
     <!-- 왼쪽 아래 고정된 유튜브 영상 -->
     <div class="youtube-box">
@@ -76,13 +105,8 @@
         </iframe>
     </div>
 
-    <div class="content">
-        <div class="marquee-container">
-            <div class="marquee-text">♬ 당신도 울고 있네요 --- 요즘 조금 한가해서 여러가지 테스트 하는 재미가 쏠쏠합니다.^^ 행복한 하루 되세요! ♬</div>
-        </div>
-    </div>
+    <div class="content"></div>
+
 </body>
-
-
 </html>
 
