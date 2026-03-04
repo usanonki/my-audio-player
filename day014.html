@@ -31,24 +31,12 @@
             to { transform: scale(1.1); }
         }
 
-        /* 중앙 내용 (배경 어둡게) */
-        .content {
-            position: relative;
-            z-index: 1;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.25);
-        }
-
         /* 자막을 유튜브 바로 위에 고정 */
         .marquee-fixed {
             position: fixed;
             left: 20px;
-            bottom: 270px; /* 유튜브 높이 240px + 여백 30px */
-            width: 420px;  /* 유튜브와 동일한 폭 */
+            bottom: 270px; /* 유튜브 높이 240 + 여백 30 */
+            width: 420px;
             overflow: hidden;
             z-index: 3;
         }
@@ -83,6 +71,13 @@
             width: 100%;
             height: 100%;
         }
+
+        /* 중앙 내용은 더 이상 화면 전체를 덮지 않음 */
+        .content {
+            position: relative;
+            z-index: 1;
+            padding-top: 50px;
+        }
     </style>
 </head>
 
@@ -109,4 +104,3 @@
 
 </body>
 </html>
-
