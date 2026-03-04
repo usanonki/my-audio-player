@@ -57,20 +57,29 @@
         }
 
         /* 왼쪽 아래 고정된 유튜브 영상 */
-        .youtube-box {
-            position: fixed;
-            left: 10px;
-            bottom: 10px;
-            width: 420px;
-            height: 240px;
-            border-radius: 13px;
-            overflow: hidden;
-            z-index: 2;
-        }
+    .youtube-box {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    width: 420px;
+    height: 240px;
+    border-radius: 13px;
+    overflow: hidden;
+    z-index: 2;
 
-        .youtube-box iframe {
-            width: 100%;
-            height: 100%;
+    transition: transform 0.3s ease; /* 부드러운 확대 */
+    transform-origin: left bottom;   /* 왼쪽 아래 기준으로 확대 */
+}
+
+.youtube-box:hover {
+    transform: scale(1.15); /* 마우스 오버 시 15% 확대 */
+}
+
+.youtube-box iframe {
+    width: 100%;
+    height: 100%;
+}
+
         }
 
         /* 중앙 내용은 더 이상 화면 전체를 덮지 않음 */
@@ -105,5 +114,6 @@
 
 </body>
 </html>
+
 
 
