@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>재생중: YouAreCryingToo.mp3</title>
+
     <style>
-        /* 1. 배경 애니메이션 설정 */
-        body, html {
+        /* 전체 화면 기본 설정 */
+        html, body {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden;
-            background-color: white;/* 회색 대신 흰색으로 강제 설정 */
+            background-color: white;
         }
 
+        /* GIF 배경 */
         .bg-container {
             position: fixed;
             top: 0;
@@ -21,10 +22,9 @@
             width: 100%;
             height: 100%;
             background: url('004.gif') no-repeat center center;
-            background-size: 1000px auto; 
-            animation: zoomEffect 20s infinite alternate; /* 20초 동안 천천히 확대/축소 */
-            z-index: -1;
-            background-color: white;
+            background-size: cover; /* 화면에 꽉 차게 */
+            animation: zoomEffect 20s infinite alternate;
+            z-index: 0; /* -1 → 0 으로 수정 */
         }
 
         @keyframes zoomEffect {
@@ -32,30 +32,32 @@
             to { transform: scale(1.1); }
         }
 
-        /* 2. 레이아웃 설정 */
+        /* 내용 영역 */
         .content {
+            position: relative;
+            z-index: 1;
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: flex-end;
-            background: rgba(0, 0, 0, 0.2); /* 이미지 위에 살짝 어두운 막을 씌워 글자를 선명하게 함 */
+            align-items: center;
+            background: rgba(0, 0, 0, 0.25);
         }
 
-        /* 3. 흐르는 자막 (Marquee) 효과 */
+        /* 자막 영역 */
         .marquee-container {
             width: 100%;
             overflow: hidden;
-            margin-bottom: 30px;
+            margin-bottom: 5px; /* 플레이어와 더 가까이 */
         }
 
         .marquee-text {
             white-space: nowrap;
-            font-size: 20px;
+            font-size: 22px;
             color: white;
             font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: scrollText 15s linear infinite;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            animation: scrollText 25s linear infinite; /* 속도 느리게 */
         }
 
         @keyframes scrollText {
@@ -63,24 +65,29 @@
             100% { transform: translateX(-100%); }
         }
 
+        /* 오디오 플레이어 */
         audio {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             border-radius: 30px;
+            padding: 5px;
         }
     </style>
 </head>
+
 <body>
-    <div class="bg-container"></div> <!-- 움직이는 배경 -->
-    
+    <div class="bg-container"></div>
+
     <div class="content">
         <div class="marquee-container">
-            <!-- 아래 문구를 원하는 가사나 메시지로 수정해 보세요 -->
-            <div class="marquee-text">♬  흐르는 곡;당신도 울고 있네요,         		     요즘 여러가지 테스트 중 입니다~~~. ♬</div>
+            <div class="marquee-text">♬ 당신도 울고 있네요. - 요즘 한가해서 여러가지 테스트 중 이예요^^! ♬</div>
         </div>
-        
-        <audio controls src="YouAreCryingToo.mp3"></audio>
+
+            <audio id="player" controls src="YouAreCryingToo.mp3"></audio> 
+        <script>
+            const audio = document.getElementById("player");
+            audio.volume = 0.2; // 0.0 ~ 1.0 사이 값 </script>
     </div>
 </body>
-
 </html>
+
 
