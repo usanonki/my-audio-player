@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>재생중: YouTube 영상</title>
@@ -13,6 +12,7 @@
             padding: 0;
             height: 100%;
             background-color: white;
+            overflow: hidden; /* 스크롤 방지 */
         }
 
         /* GIF 배경 */
@@ -33,22 +33,22 @@
             to { transform: scale(1.1); }
         }
 
-        /* 자막을 유튜브 바로 위에 고정 */
+        /* 자막 레이어 */
         .marquee-fixed {
             position: fixed;
             left: 0;
             bottom: 0;
             width: 100%;
             overflow: hidden;
-            z-index: 3;
+            z-index: 1; /* 영상보다 아래로 배치하여 버튼 조작 방해 금지 */
+            pointer-events: none; /* 자막이 클릭을 방해하지 않도록 설정 */
         }
 
-        
         .marquee-text {
             white-space: nowrap;
             font-size: 32px;
-            color: #00e5ff; /* 네온 블루 */
-            font-weight: regular;
+            color: #00e5ff;
+            font-weight: normal;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
             animation: scrollText 25s linear infinite;
             font-family: 'Gamja Flower', cursive;
@@ -59,36 +59,34 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* 왼쪽 아래 고정된 유튜브 영상 */
- .youtube-box {
-    position: fixed;
-    left: 10px;
-    bottom: 10px;
-    width: 420px;
-    height: 240px;
-    border-radius: 5px;
-    overflow: hidden;
-    z-index: 2;
-    transition: transform 0.3s ease;
-    transform-origin: left bottom;
-    
-    /* 추가: 마우스 감지 범위를 사방으로 30px 넓힘 */
-    padding: 30px; 
-    margin: -30px;
-}
-.youtube-box:hover {
-    transform: scale(1.15); /* 마우스 오버 시 15% 확대 */
-}
-
-
-.youtube-box iframe {
-    width: 100%;
-    height: 100%;
-}
-
+        /* 유튜브 박스 기본 설정 */
+        .youtube-box {
+            position: fixed;
+            left: 10px;
+            bottom: 10px;
+            width: 420px;
+            height: 240px;
+            border-radius: 10px;
+            overflow: hidden;
+            z-index: 5; /* 조작을 위해 가장 위로 */
+            transition: all 0.4s ease-in-out;
+            transform-origin: left bottom;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            cursor: pointer; /* 클릭 가능하다는 표시 */
         }
 
-        /* 중앙 내용은 더 이상 화면 전체를 덮지 않음 */
+        /* [핵심] 클릭 시 추가될 클래스 */
+        .youtube-box.expanded {
+            transform: scale(1.5); /* 1.5배 확대 (조절 가능) */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+        }
+
+        .youtube-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         .content {
             position: relative;
             z-index: 1;
@@ -101,25 +99,38 @@
 
     <div class="bg-container"></div>
 
-    <!-- 유튜브 영상 바로 위에서 흐르는 자막 -->
+    <!-- 흐르는 자막 -->
     <div class="marquee-fixed">
-        <div class="marquee-text">♬ 당신도 울고 있네요-Cover ---  여러가지 테스트 하는 중입니다.^^ 행복한 하루 되세요! ♬</div>
+        <div class="marquee-text">♬ 당신도 울고 있네요-Cover --- 여러가지 테스트 하는 중입니다.^^ 행복한 하루 되세요! ♬</div>
     </div>
 
     <!-- 왼쪽 아래 고정된 유튜브 영상 -->
-    <div class="youtube-box">
+    <div id="videoPlayer" class="youtube-box">
         <iframe 
-            src="https://www.youtube.com/embed/0vsCi7oU5OQ?autoplay=1&loop=1&playlist=UBf9IXz7iZ4,YtBTHww3Q_s"
-            frameborder="0"
-            allow="autoplay"
+            src="https://www.youtube.com"
+            allow="autoplay; encrypted-media"
             allowfullscreen>
         </iframe>
     </div>
 
     <div class="content"></div>
 
+    <!-- 자바스크립트 추가 -->
+    <script>
+        const player = document.getElementById('videoPlayer');
+
+        // 박스를 클릭하면 expanded 클래스를 넣었다 뺐다(toggle) 합니다.
+        player.addEventListener('click', function() {
+            this.classList.toggle('expanded');
+        });
+
+        // 팁: iframe 내부 클릭 시 이벤트 전파가 안 될 수 있으므로 
+        // 테두리나 박스 근처를 클릭하면 크기가 바뀝니다.
+    </script>
+
 </body>
 </html>
+
 
 
 
