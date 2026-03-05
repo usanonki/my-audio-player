@@ -34,10 +34,8 @@
             object-fit: cover;
             opacity: 0;
             transition: opacity 3s ease-in-out;
-
-             border-radius: 20px;
-            -webkit-mask-image: radial-gradient(circle, black 85%, transparent 100%);
-            mask-image: radial-gradient(circle, black 85%, transparent 100%);
+border-radius: 20px; /* ← 모서리 둥글게 */
+             
         }
         .slide.active { opacity: 1; }
 
@@ -148,5 +146,6 @@
 
 </body>
 </html>
+
 
 
