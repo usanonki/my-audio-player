@@ -60,7 +60,7 @@
         }
 
         /* 왼쪽 아래 고정된 유튜브 영상 */
-    .youtube-box {
+ .youtube-box {
     position: fixed;
     left: 10px;
     bottom: 10px;
@@ -69,9 +69,12 @@
     border-radius: 5px;
     overflow: hidden;
     z-index: 2;
-
-    transition: transform 0.3s ease; /* 부드러운 확대 */
-    transform-origin: left bottom;   /* 왼쪽 아래 기준으로 확대 */
+    transition: transform 0.3s ease;
+    transform-origin: left bottom;
+    
+    /* 추가: 마우스 감지 범위를 사방으로 30px 넓힘 */
+    padding: 30px; 
+    margin: -30px;
 }
 .youtube-box:hover {
     transform: scale(1.15); /* 마우스 오버 시 15% 확대 */
@@ -117,6 +120,7 @@
 
 </body>
 </html>
+
 
 
 
