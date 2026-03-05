@@ -37,6 +37,17 @@
         }
         .slide.active { opacity: 1; }
 
+        /* 비누방울 GIF 오버레이 */
+        .bubble-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            z-index: 12; /* 사진 위, 자막 아래 */
+            opacity: 0.8; /* 필요하면 조절 가능 */
+        }
+
         /* 자막 */
         .caption-container {
             position: absolute;
@@ -85,6 +96,9 @@
 
 <div class="container">
 
+    <!-- 비누방울 GIF 오버레이 -->
+    <img src="waterspot.gif" class="bubble-overlay">
+
     <!-- 자막 -->
     <div class="caption-container">
         <div class="scrolling-text">
@@ -119,7 +133,7 @@
     }
 
     // 20초마다 사진 변경
-    setInterval(nextSlide, 20000);
+    setInterval(nextSlide,20000);
 
     // 클릭 시 음악 재생 보장
     window.addEventListener('click', function() {
