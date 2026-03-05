@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>경칩 인사말 갤러리</title>
+
+    <!-- 구글 폰트 감자꽃 -->
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        /* 사진 페이드 효과 */
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+	    
+	    border-radius: 20px;
+            -webkit-mask-image: radial-gradient(circle, black 85%,    transparent 100%);
+            mask-image: radial-gradient(circle, black 85%, transparent 100%);
+        }
+        .slide.active { opacity: 1; }
+
+        /* 비누방울 GIF 오버레이 */
+        .bubble-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            z-index: 12; /* 사진 위, 자막 아래 */
+            opacity: 0.8; /* 필요하면 조절 가능 */
+        }
+.second-bubble {
+    animation-delay: 5s; /* 실행 간격 조정 */
+    opacity: 0.7;        /* 필요하면 조절 */
+}
+.bubble-overlay {
+    animation: fadeIn 2s ease forwards;
+}
+
+.second-bubble {
+    animation: fadeIn 2s ease forwards;
+    animation-delay: 6s; /* 6초 뒤에 등장 */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 0.8; }
+}
+
+        /* 자막 */
+        .caption-container {
+            position: absolute;
+            bottom: 45px;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 20;
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .scrolling-text {
+            display: inline-block;
+            font-family: 'Gamja Flower', cursive;
+            font-size: 28px;
+            color: #adff2f;
+            text-shadow: 2px 2px 2px #000, -1px -1px 0 #000, 1px -1px 0 #000,
+                         -1px 1px 0 #000, 1px 1px 0 #000;
+            padding-left: 100%;
+            animation: marquee 40s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* 오디오 플레이어 */
+        audio {
+    position: fixed;
+    bottom: 20px;
+    left: 3%;
+    width: 94%;
+    height: 14px;
+    opacity: 0.9;
+    z-index: 9999;
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 비누방울 GIF 오버레이 -->
+    <img src="waterspot.gif" class="bubble-overlay">
+<img src="bubble.gif" class="bubble-overlay second-bubble">
+    <!-- 자막 -->
+    <div class="caption-container">
+        <div class="scrolling-text">
+            🐸 겨울 잠을 자던 개구리가 깨어 나고 새싹이 돋아나는 경칩입니다. 🌸 
+            경칩이 지나면 봄은 한걸음 더 가까이 오겠죠? 🌼 
+            기온 차가 있는 환절기에 건강 조심 하시고 오늘 하루도 행복하게 보내시기 바랍니다. ✨
+        </div>
+    </div>
+
+    <!-- GitHub 이미지 001~008 -->
+    <img src="001.jpg" class="slide active">
+    <img src="002.jpg" class="slide">
+    <img src="003.jpg" class="slide">
+    <img src="004.jpg" class="slide">
+    <img src="005.jpg" class="slide">
+    <img src="006.jpg" class="slide">
+    <img src="007.jpg" class="slide">
+    <img src="008.jpg" class="slide">
+
+    <!-- 오디오 -->
+    <audio id="myAudio" src="spring.mp3" controls autoplay loop></audio>
+</div>
+
+<script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function nextSlide() {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+    }
+
+    // 20초마다 사진 변경
+    setInterval(nextSlide, 20000);
+
+    // 클릭 시 음악 재생 보장
+    window.addEventListener('click', function() {
+        var audio = document.getElementById('myAudio');
+        if (audio.paused) { audio.play(); }
+    }, { once: true });
+</script>
+
+</body>
+</html>
+
