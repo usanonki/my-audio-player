@@ -19,8 +19,11 @@
         /* 2. 플레이어 위치 제어 (왼쪽 55% 지점 배치) */
         .layout-wrapper {
             width: 100%;
-            padding-left: 55%; 
-            box-sizing: border-box;
+    /* 왼쪽 끝에서 약간의 여백(예: 5%)만 주고 배치합니다 */
+    padding-left: 5%; 
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
         }
 
         /* 3. 오디오 플레이어 본체 (배경: Happy.jpg) */
@@ -165,6 +168,7 @@ muteBtn.onclick = () => {
 
 </body>
 </html>
+
 
 
 
