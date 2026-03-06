@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>심플 뮤직 플레이어</title>
+    <style>
+        /* 1. 박스 디자인: 배경 사진 설정 */
+        .player-container { 
+            width: 350px;
+            padding:130px 25px;
+            border-radius: 20px;
+            font-family: 'Malgun Gothic', sans-serif;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            
+            /* 베이지 계열 배경 사진 설정 (원하는 파일명으로 바꾸세요) */
+            background-image: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), url('Happy.jpg');
+            background-color: #f5f5dc; /* 사진 없을 때 기본 베이지색 */
+            background-size: cover;
+            background-position: center;
+        }
+
+        #current-title { 
+            display: block; 
+            font-size: 1.3em; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            color: #3e2723; /* 진한 고동색으로 가독성 확보 */
+            text-align: center;
+        }
+        
+        audio { 
+    width: 100%; 
+    height: 30px; /* 기본(54px)보다 훨씬 얇게 조절 */
+    margin-bottom: 10px; 
+    opacity: 0.6; /* 전체적으로 투명하게 (0.0 ~ 1.0) */
+    filter: invert(10%) sepia(20%); /* 배경색에 맞춰 살짝 톤 조절 가능 */
+    transition: opacity 0.3s;
+}
+
+/* 마우스를 올렸을 때만 선명하게 보이게 설정 (선택 사항) */
+audio:hover {
+    opacity: 1;
+}
+
+        .volume-control { 
+            background: rgba(255,255,255,0.2); /* 반투명 흰색 배경 */
+            padding: 5 px 10px; 
+            border-radius: 10px; 
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* 2. 재생 목록 스타일: 가독성 높인 버전 */
+        .playlist { 
+            list-style: none; 
+            padding: 5px; 
+            margin: 0; 
+            max-height: 200px; 
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.3); /* 리스트 영역 살짝 밝게 */
+            border-radius: 10px;
+        }
+        .playlist li { 
+            padding: 12px; 
+            cursor: pointer; 
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            color: black; /* 진한 브라운 색상으로 가독성 Up #4a342e*/
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .playlist li:hover { background: rgba(255,255,255,0.4); }
+        
+        /* 재생 중인 곡 스타일 */
+        .playlist li.active { 
+            background: #ff4757; 
+            color: white; 
+            font-weight: bold; 
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="player-container">
+    <small style="color: #6d4c41; display:block; text-align:center;">Now Playing</small>
+    <span id="current-title">곡을 선택하세요</span>
+    
+    <audio id="myAudio" controls autoplay muted>
+        <source id="audioSource" src="" type="audio/mpeg">
+    </audio>
+
+    <div class="volume-control">
+        <button id="muteBtn" style="cursor:pointer;">Play</button>
+        <input type="range" id="volSlider" min="0" max="1" step="0.01" value="0.1">
+        <span id="volText" style="color: #3e2723;">10%</span>
+    </div>
+
+    <ul class="playlist" id="playlistDisplay"></ul>
+</div>
+
+<script>
+    const audio = document.getElementById('myAudio');
+    const source = document.getElementById('audioSource');
+    const titleDisplay = document.getElementById('current-title');
+    const playlistDisplay = document.getElementById('playlistDisplay');
+
+    // 곡 목록 데이터
+    const songs = ["Adagio Gary Moore.mp3", "Memory Remains.mp3", "You Are Crying Too.mp3"];
+    let currentIdx = 0;
+
+    // 리스트 출력 함수
+    function renderPlaylist() {
+    playlistDisplay.innerHTML = "";
+    songs.forEach((song, index) => {
+        const li = document.createElement('li');
+        
+        // 현재 재생 중인지 확인
+        const isActive = (index === currentIdx);
+        
+        // 모든 곡 앞에 아이콘(▶)을 넣되, 재생 중인 곡은 빨간색으로 강조
+        const iconColor = isActive ? "#ff4757" : "#8d6e63"; // 재생중:빨강, 대기중:흐린브라운
+        
+        li.innerHTML = `
+            <span style="color: ${iconColor}; margin-right: 10px; font-size: 0.8em;">▶</span>
+            <span style="flex: 1;">${song}</span>
+        `;
+        
+        if(isActive) li.className = "active";
+        
+        li.onclick = () => playSong(index);
+        playlistDisplay.appendChild(li);
+    });
+}
+
+
+    // 곡 재생 함수
+    function playSong(index) {
+        currentIdx = index;
+        source.src = songs[currentIdx];
+        titleDisplay.innerText = songs[currentIdx];
+        
+        audio.load();
+        audio.play();
+        renderPlaylist();
+    }
+
+    // 초기 설정
+    audio.volume = 0.1;
+    renderPlaylist();
+    playSong(0);
+
+    // 볼륨 컨트롤
+    document.getElementById('volSlider').oninput = (e) => {
+        audio.volume = e.target.value;
+        document.getElementById('volText').innerText = Math.round(e.target.value * 100) + "%";
+    };
+
+    // 음소거 버튼
+    const muteBtn = document.getElementById('muteBtn');
+    muteBtn.onclick = () => {
+        audio.muted = !audio.muted;
+        muteBtn.innerText = audio.muted ? "Play" : "Stop";
+    };
+
+    // 자동 다음 곡 재생
+    audio.onended = () => playSong((currentIdx + 1) % songs.length);
+
+</script>
+</body>
+</html>
