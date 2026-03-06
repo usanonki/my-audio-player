@@ -2,101 +2,90 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>심플 뮤직 플레이어</title>
+    <title>Premium Audio Player - usanonki</title>
     <style>
-        /* 1. 박스 디자인: 배경 사진 설정 */
+        /* 1. 전체 배경화면 설정 (Test.jpg) */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url('Test.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center; 
+            overflow: hidden;
+        }
+
+        /* 2. 플레이어 위치 제어 (왼쪽 55% 지점 배치) */
+        .layout-wrapper {
+            width: 100%;
+            padding-left: 55%; 
+            box-sizing: border-box;
+        }
+
+        /* 3. 오디오 플레이어 본체 (배경: Happy.jpg) */
         .player-container { 
             width: 350px;
-            padding:130px 25px;
-            border-radius: 20px;
+            padding: 130px 25px; 
+            border-radius: 25px;
             font-family: 'Malgun Gothic', sans-serif;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             
-            /* 베이지 계열 배경 사진 설정 (원하는 파일명으로 바꾸세요) */
-            background-image: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), url('Happy.jpg');
-            background-color: #f5f5dc; /* 사진 없을 때 기본 베이지색 */
+            /* 플레이어 배경에 Happy.jpg 설정 */
+            background: linear-gradient(rgba(245, 245, 220, 0.6), rgba(245, 245, 220, 0.6)), url('Happy.jpg');
             background-size: cover;
             background-position: center;
+            backdrop-filter: blur(5px);
+            position: relative;
         }
 
-        #current-title { 
-            display: block; 
-            font-size: 1.3em; 
-            font-weight: bold; 
-            margin-bottom: 15px; 
-            color: #3e2723; /* 진한 고동색으로 가독성 확보 */
-            text-align: center;
-        }
-        
-        audio { 
-    width: 100%; 
-    height: 30px; /* 기본(54px)보다 훨씬 얇게 조절 */
-    margin-bottom: 10px; 
-    opacity: 0.6; /* 전체적으로 투명하게 (0.0 ~ 1.0) */
-    filter: invert(10%) sepia(20%); /* 배경색에 맞춰 살짝 톤 조절 가능 */
-    transition: opacity 0.3s;
-}
-
-/* 마우스를 올렸을 때만 선명하게 보이게 설정 (선택 사항) */
-audio:hover {
-    opacity: 1;
-}
+        #current-title { display: block; font-size: 1.1em; font-weight: bold; margin-bottom: 20px; color: #3e2723; text-align: center; height: 1.2em; overflow: hidden; }
+        audio { width: 100%; height: 30px; opacity: 0.85; margin-bottom: 15px; }
 
         .volume-control { 
-            background: rgba(255,255,255,0.2); /* 반투명 흰색 배경 */
-            padding: 5 px 10px; 
-            border-radius: 10px; 
-            text-align: center;
-            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.5); 
+            padding: 8px 12px; 
+            border-radius: 12px; 
+            display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
         }
 
-        /* 2. 재생 목록 스타일: 가독성 높인 버전 */
+        /* 4. 재생 목록 스타일 */
         .playlist { 
-            list-style: none; 
-            padding: 5px; 
-            margin: 0; 
-            max-height: 200px; 
-            overflow-y: auto;
-            background: rgba(255, 255, 255, 0.3); /* 리스트 영역 살짝 밝게 */
-            border-radius: 10px;
+            list-style: none; padding: 0; margin: 0; 
+            max-height: 300px; overflow-y: auto;
+            background: rgba(255, 255, 255, 0.3); border-radius: 15px;
         }
         .playlist li { 
-            padding: 12px; 
-            cursor: pointer; 
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            color: black; /* 진한 브라운 색상으로 가독성 Up #4a342e*/
-            font-weight: 500;
-            transition: 0.2s;
+            padding: 15px; cursor: pointer; color: #4a342e; font-weight: 500; font-size: 0.9em;
+            display: flex; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.1);
         }
-        .playlist li:hover { background: rgba(255,255,255,0.4); }
+        .playlist li:hover { background: rgba(255, 255, 255, 0.4); }
+        .playlist li.active { background: #ff4757; color: white; border-radius: 10px; font-weight: bold; }
         
-        /* 재생 중인 곡 스타일 */
-        .playlist li.active { 
-            background: #ff4757; 
-            color: white; 
-            font-weight: bold; 
-            border-radius: 5px;
-        }
+        #volSlider { flex: 1; height: 4px; cursor: pointer; }
+        button { border: none; background: none; cursor: pointer; font-weight: bold; color: #3e2723; }
     </style>
 </head>
 <body>
 
-<div class="player-container">
-    <small style="color: #6d4c41; display:block; text-align:center;">Now Playing</small>
-    <span id="current-title">곡을 선택하세요</span>
-    
-    <audio id="myAudio" controls autoplay muted>
-        <source id="audioSource" src="" type="audio/mpeg">
-    </audio>
+    <div class="layout-wrapper">
+        <div class="player-container">
+            <small style="color: #6d4c41; display:block; text-align:center; margin-bottom:5px; font-weight: bold;">Music Library</small>
+            <span id="current-title">노래를 재생하세요</span>
+            
+            <audio id="myAudio" controls autoplay muted>
+                <source id="audioSource" src="" type="audio/mpeg">
+            </audio>
 
-    <div class="volume-control">
-        <button id="muteBtn" style="cursor:pointer;">Play</button>
-        <input type="range" id="volSlider" min="0" max="1" step="0.01" value="0.1">
-        <span id="volText" style="color: #3e2723;">10%</span>
+            <div class="volume-control">
+                <button id="muteBtn">소리 켜기</button>
+                <input type="range" id="volSlider" min="0" max="1" step="0.01" value="0.1">
+                <span id="volText" style="font-size:0.85em; color:#3e2723;">10%</span>
+            </div>
+
+            <ul class="playlist" id="playlistDisplay"></ul>
+        </div>
     </div>
-
-    <ul class="playlist" id="playlistDisplay"></ul>
-</div>
 
 <script>
     const audio = document.getElementById('myAudio');
@@ -104,52 +93,45 @@ audio:hover {
     const titleDisplay = document.getElementById('current-title');
     const playlistDisplay = document.getElementById('playlistDisplay');
 
-    // 곡 목록 데이터
-    const songs = ["Adagio Gary Moore.mp3", "Memory Remains.mp3", "You Are Crying Too.mp3"];
+    // 5. GitHub에 업로드된 정확한 곡명 리스트
+    const songs = [
+        "YouAreCryingToo.mp3", 
+        "Memory Remains.mp3", 
+        "spring.mp3", 
+        "그대는어디에.mp3"
+    ];
     let currentIdx = 0;
 
-    // 리스트 출력 함수
     function renderPlaylist() {
-    playlistDisplay.innerHTML = "";
-    songs.forEach((song, index) => {
-        const li = document.createElement('li');
-        
-        // 현재 재생 중인지 확인
-        const isActive = (index === currentIdx);
-        
-        // 모든 곡 앞에 아이콘(▶)을 넣되, 재생 중인 곡은 빨간색으로 강조
-        const iconColor = isActive ? "#ff4757" : "#8d6e63"; // 재생중:빨강, 대기중:흐린브라운
-        
-        li.innerHTML = `
-            <span style="color: ${iconColor}; margin-right: 10px; font-size: 0.8em;">▶</span>
-            <span style="flex: 1;">${song}</span>
-        `;
-        
-        if(isActive) li.className = "active";
-        
-        li.onclick = () => playSong(index);
-        playlistDisplay.appendChild(li);
-    });
-}
+        playlistDisplay.innerHTML = "";
+        songs.forEach((song, index) => {
+            const li = document.createElement('li');
+            const isActive = (index === currentIdx);
+            // 재생 중인 곡은 흰색 아이콘, 나머지는 빨간색 아이콘
+            const iconColor = isActive ? "white" : "#ff4757";
+            
+            li.innerHTML = `<span style="color: ${iconColor}; margin-right: 12px;">▶</span> ${song.replace('.mp3', '')}`;
+            if(isActive) li.className = "active";
+            li.onclick = () => playSong(index);
+            playlistDisplay.appendChild(li);
+        });
+    }
 
-
-    // 곡 재생 함수
     function playSong(index) {
         currentIdx = index;
-        source.src = songs[currentIdx];
-        titleDisplay.innerText = songs[currentIdx];
-        
+        source.src = encodeURIComponent(songs[currentIdx]); // 한글 파일명 등 특수문자 처리
+        titleDisplay.innerText = songs[currentIdx].replace('.mp3', '');
         audio.load();
-        audio.play();
+        audio.play().catch(e => console.log("자동 재생 정책으로 인해 클릭이 필요합니다."));
         renderPlaylist();
     }
 
     // 초기 설정
     audio.volume = 0.1;
     renderPlaylist();
-    playSong(0);
+    playSong(0); // 첫 곡 세팅
 
-    // 볼륨 컨트롤
+    // 볼륨 조절
     document.getElementById('volSlider').oninput = (e) => {
         audio.volume = e.target.value;
         document.getElementById('volText').innerText = Math.round(e.target.value * 100) + "%";
@@ -159,12 +141,15 @@ audio:hover {
     const muteBtn = document.getElementById('muteBtn');
     muteBtn.onclick = () => {
         audio.muted = !audio.muted;
-        muteBtn.innerText = audio.muted ? "Play" : "Stop";
+        muteBtn.innerText = audio.muted ? "소리 켜기" : "음소거";
     };
 
-    // 자동 다음 곡 재생
-    audio.onended = () => playSong((currentIdx + 1) % songs.length);
-
+    // 곡이 끝나면 자동으로 다음 곡 재생
+    audio.onended = () => {
+        let nextIdx = (currentIdx + 1) % songs.length;
+        playSong(nextIdx);
+    };
 </script>
+
 </body>
 </html>
