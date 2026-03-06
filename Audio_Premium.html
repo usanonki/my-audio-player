@@ -10,7 +10,8 @@
             padding: 0;
             height: 100vh;
             background: url('Test.jpg') no-repeat center center;
-            background-size: cover;
+            background-size: contain;
+            background-color: #f5f5dc;
             display: flex;
             align-items: center; 
             overflow: hidden;
@@ -21,9 +22,10 @@
             width: 100%;
     /* 왼쪽 끝에서 약간의 여백(예: 5%)만 주고 배치합니다 */
     padding-left: 5%; 
+            padding-top: 50px; /* 상단이 잘리는 만큼 이 숫자를 키워서 전체를 내리세요 */
     box-sizing: border-box;
     display: flex;
-    justify-content: flex-start; /* 왼쪽 정렬 */
+    
         }
 
         /* 3. 오디오 플레이어 본체 (배경: Happy.jpg) */
@@ -168,6 +170,7 @@ muteBtn.onclick = () => {
 
 </body>
 </html>
+
 
 
 
