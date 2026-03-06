@@ -1,1 +1,26 @@
-<!DOCTYPE html><html><head> <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet"> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>재생중: YouTube 영상</title> <style> html, body { margin: 0; padding: 0; height: 100%; background-color: white; } /* GIF 배경 */ .bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('107.png') no-repeat center center; background-size: cover; animation: zoomEffect 20s infinite alternate; z-index: 0; } @keyframes zoomEffect { from { transform: scale(1); } to { transform: scale(1.1); } } /* 자막을 유튜브 바로 위에 고정 */ .marquee-fixed { position: fixed; left: 0; bottom: 0; width: 100%; overflow: hidden; z-index: 3; } .marquee-text { white-space: nowrap; font-size: 32px; color: #00e5ff; /* 네온 블루 */ font-weight: regular; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); animation: scrollText 25s linear infinite; font-family: 'Gamja Flower', cursive; } @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } } /* 왼쪽 아래 고정된 유튜브 영상 */ .youtube-box { position: fixed; left: 10px; bottom: 10px; width: 420px; height: 240px; border-radius: 5px; overflow: hidden; z-index: 2; transition: transform 0.3s ease; /* 부드러운 확대 */ transform-origin: left bottom; /* 왼쪽 아래 기준으로 확대 */}.youtube-box:hover { transform: scale(1.15); /* 마우스 오버 시 15% 확대 */}.youtube-box iframe { width: 100%; height: 100%;} } /* 중앙 내용은 더 이상 화면 전체를 덮지 않음 */ .content { position: relative; z-index: 1; padding-top: 50px; } </style></head><body> <div class="bg-container"></div> <!-- 유튜브 영상 바로 위에서 흐르는 자막 --> <div class="marquee-fixed"> <div class="marquee-text">♬ 당신도 울고 있네요-Cover --- 여러가지 테스트 하는 중입니다.^^ 행복한 하루 되세요! ♬</div> </div> <!-- 왼쪽 아래 고정된 유튜브 영상 --> <div class="youtube-box"> <iframe src="https://www.youtube.com/embed/0vsCi7oU5OQ?autoplay=1&loop=1&playlist=UBf9IXz7iZ4,YtBTHww3Q_s" frameborder="0" allow="autoplay" allowfullscreen> </iframe> </div> <div class="content"></div></body></html>
+<!DOCTYPE html><html><head> <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet"> 
+  <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>재생중: YouTube 영상</title> <style> html, body { margin: 0; padding: 0; height: 100%; background-color: white; }
+    /* GIF 배경 */ .bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('107.png')
+      no-repeat center center; background-size: cover; animation: zoomEffect 20s infinite alternate; z-index: 0; }
+    @keyframes zoomEffect { from { transform: scale(1); } to { transform: scale(1.1); } } /* 자막을 유튜브 바로 위에 고정 */ 
+    .marquee-fixed { position: fixed; left: 0; bottom: 0; width: 100%; overflow: hidden; z-index: 3; }
+    .marquee-text { white-space: nowrap; font-size: 32px; color: #00e5ff; /* 네온 블루 */ font-weight: regular; 
+                   text-shadow: 2px 2px 4px rgba(0,0,0,0.6); animation: scrollText 25s linear infinite; 
+                   font-family: 'Gamja Flower', cursive; } 
+    @keyframes scrollText { 0% { transform: translateX(100%); } 100% 
+                           { transform: translateX(-100%); } } /* 왼쪽 아래 고정된 유튜브 영상 */
+    .youtube-box { position: fixed; left: 10px; bottom: 10px; width: 420px; height: 240px; 
+                  border-radius: 5px; overflow: hidden; z-index: 2; transition: transform 0.3s ease; /* 부드러운 확대 */ 
+                  transform-origin: left bottom; /* 왼쪽 아래 기준으로 확대 */}
+    .youtube-box:hover { transform: scale(1.15); /* 마우스 오버 시 15% 확대 */}.
+    youtube-box iframe { width: 100%; height: 100%;} } /* 중앙 내용은 더 이상 화면 전체를 덮지 않음 */ 
+    .content { position: relative; z-index: 1; padding-top: 50px; } 
+  </style></head><body> <div class="bg-container"></div> <!-- 유튜브 영상 바로 위에서 흐르는 자막 --> 
+    <div class="marquee-fixed"> <div class="marquee-text">♬ 당신도 울고 있네요-Cover --- 
+      여러가지 테스트 하는 중입니다.^^ 행복한 하루 되세요! ♬</div> </div> <!-- 왼쪽 아래 고정된 유튜브 영상 -->
+    <div class="youtube-box"> 
+      <iframe src="https://www.youtube.com/embed/0vsCi7oU5OQ?autoplay=1&loop=1&playlist=UBf9IXz7iZ4,YtBTHww3Q_s" frameborder="0" 
+        allow="autoplay" allowfullscreen> </iframe> 
+    </div> <div class="content"></div></body></html>
+
