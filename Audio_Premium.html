@@ -25,8 +25,8 @@
 
         /* 3. 오디오 플레이어 본체 (배경: Happy.jpg) */
         .player-container { 
-            width: 350px;
-            padding: 160px 25px; 
+            width: 400px;
+            padding: 180px 25px; 
             border-radius: 25px;
             font-family: 'Malgun Gothic', sans-serif;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
@@ -137,12 +137,24 @@
         document.getElementById('volText').innerText = Math.round(e.target.value * 100) + "%";
     };
 
-    // 음소거 버튼
-    const muteBtn = document.getElementById('muteBtn');
-    muteBtn.onclick = () => {
-        audio.muted = !audio.muted;
-        muteBtn.innerText = audio.muted ? "소리 켜기" : "음소거";
-    };
+  // 음소거 버튼 클릭 이벤트 부분
+const muteBtn = document.getElementById('muteBtn');
+muteBtn.onclick = () => {
+    // 1. 음소거 상태 토글
+    audio.muted = !audio.muted;
+    
+    if (!audio.muted) {
+        // 2. 음소거를 해제하는 순간, 강제로 재생 명령을 내림 (크롬 대응)
+        audio.play().then(() => {
+            muteBtn.innerText = "음소거";
+        }).catch(error => {
+            console.log("재생 실패:", error);
+        });
+    } else {
+        muteBtn.innerText = "소리 켜기";
+    }
+};
+
 
     // 곡이 끝나면 자동으로 다음 곡 재생
     audio.onended = () => {
@@ -153,5 +165,6 @@
 
 </body>
 </html>
+
 
 
