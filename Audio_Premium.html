@@ -10,8 +10,7 @@
             padding: 0;
             height: 100vh;
             background: url('Test.jpg') no-repeat center center;
-            background-size: contain;
-            background-color: white;
+            background-size: cover;
             display: flex;
             align-items: center; 
             overflow: hidden;
@@ -20,25 +19,17 @@
         /* 2. 플레이어 위치 제어 (왼쪽 55% 지점 배치) */
         .layout-wrapper {
             width: 100%;
-    /* 왼쪽 끝에서 약간의 여백(예: 5%)만 주고 배치합니다 */
-            padding-left: 8%; 
-            padding-top: 50px; /* 상단이 잘리는 만큼 이 숫자를 키워서 전체를 내리세요 */
+            padding-left: 55%; 
             box-sizing: border-box;
-            display: flex;
-    
         }
 
         /* 3. 오디오 플레이어 본체 (배경: Happy.jpg) */
         .player-container { 
-            width: 450px;
-            padding: 250px 25px 100px 25px; 
+            width: 350px;
+            padding: 130px 25px; 
             border-radius: 25px;
             font-family: 'Malgun Gothic', sans-serif;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-
-            /* --- 크기 조절 핵심 코드 --- */
-        transform: scale(0.4);      /* 0.8은 80% 크기로 줄인다는 뜻입니다 */
-        transform-origin: left top; /* 왼쪽 상단을 기준으로 줄여서 위치 이탈 방지 */
             
             /* 플레이어 배경에 Happy.jpg 설정 */
             background: linear-gradient(rgba(245, 245, 220, 0.6), rgba(245, 245, 220, 0.6)), url('Happy.jpg');
@@ -146,24 +137,12 @@
         document.getElementById('volText').innerText = Math.round(e.target.value * 100) + "%";
     };
 
-  // 음소거 버튼 클릭 이벤트 부분
-const muteBtn = document.getElementById('muteBtn');
-muteBtn.onclick = () => {
-    // 1. 음소거 상태 토글
-    audio.muted = !audio.muted;
-    
-    if (!audio.muted) {
-        // 2. 음소거를 해제하는 순간, 강제로 재생 명령을 내림 (크롬 대응)
-        audio.play().then(() => {
-            muteBtn.innerText = "음소거";
-        }).catch(error => {
-            console.log("재생 실패:", error);
-        });
-    } else {
-        muteBtn.innerText = "소리 켜기";
-    }
-};
-
+    // 음소거 버튼
+    const muteBtn = document.getElementById('muteBtn');
+    muteBtn.onclick = () => {
+        audio.muted = !audio.muted;
+        muteBtn.innerText = audio.muted ? "소리 켜기" : "음소거";
+    };
 
     // 곡이 끝나면 자동으로 다음 곡 재생
     audio.onended = () => {
@@ -174,29 +153,3 @@ muteBtn.onclick = () => {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
