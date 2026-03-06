@@ -61,25 +61,23 @@
 
         /* 유튜브 박스 기본 설정 */
         .youtube-box {
-            position: fixed;
-            left: 10px;
-            bottom: 10px;
-            width: 420px;
-            height: 240px;
-            border-radius: 10px;
-            overflow: hidden;
-            z-index: 5; /* 조작을 위해 가장 위로 */
-            transition: all 0.4s ease-in-out;
-            transform-origin: left bottom;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            cursor: pointer; /* 클릭 가능하다는 표시 */
-        }
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    width: 420px;
+    height: 240px;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 2;
+    transition: transform 0.3s ease;
+    transform-origin: left bottom;
+}
 
-        /* [핵심] 클릭 시 추가될 클래스 */
-        .youtube-box.expanded {
-            transform: scale(1.5); /* 1.5배 확대 (조절 가능) */
-            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
-        }
+/* 확대 기능 제거됨 */
+.youtube-box:hover {
+    /* transform: scale(1.15); */
+}
+
 
         .youtube-box iframe {
             width: 100%;
@@ -130,6 +128,7 @@
 
 </body>
 </html>
+
 
 
 
