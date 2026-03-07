@@ -28,26 +28,25 @@
         }
 
         /* 우측 50% 영역 */
-        .right-area {
-            width: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+      .right-area {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px; /* 여백 줄임 */
+}
 
-        /* 텍스트 박스 */
-        .text-box {
-            width: 80%;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.65);
-            border-radius: 20px;
-            font-size: 1.6em;
-            color: #333;
-            line-height: 1.6em;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-            text-align: center;
-            white-space: pre-line;
+.text-box {
+    width: 80%;
+    padding: 0;              /* 박스 내부 여백 제거 */
+    background: none;        /* 박스 배경 제거 */
+    box-shadow: none;        /* 그림자 제거 */
+    border-radius: 0;        /* 둥근 모서리 제거 */
+    font-size: 1.4em;        /* 글자 크기 약간 줄임 */
+    color: #ffffff;          /* 배경 위에서 잘 보이도록 흰색 */
+    line-height: 1.5em;
+    text-align: left;        /* 자연스럽게 왼쪽 정렬 */
+    white-space: pre-line;   /* 줄바꿈 유지 */
         }
 
         /* 플레이어 박스 */
@@ -272,4 +271,5 @@
 </script>
 
 </body>
+
 </html>
