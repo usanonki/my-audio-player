@@ -78,6 +78,31 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);position: fixed;
             
         }
+
+        .typewriter-line {
+            position: absolute;
+            top: 30px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Gamja Flower', cursive;
+            font-size: 28px;
+            color: #adff2f;
+            text-shadow: 2px 2px 2px #000;
+            opacity: 0;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        @keyframes typing {
+        from { width: 0; }
+        to { width: 100%; }
+        }
+
+        @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+        }
+
     </style>
 </head>
 <body>
@@ -85,23 +110,16 @@
 <div class="container">
 
     <!-- 자막 -->
-    <div class="caption-container">
-        <div class="scrolling-text">
-            차 한 잔이 그리운 날
-청복(淸福 )한 송이  
-차 한 잔이 그리운 날
-나를 유혹하는 차의 향긋함 속
-내 마음을 흔들어가는 이 시간
-차 한 잔을 함께 나눌 수 있는
-그대가 내 옆에 있어서 좋아요
+   <div class="caption-container">
+    <div class="typewriter-line" id="line1">차 한 잔이 그리운 날</div>
+    <div class="typewriter-line" id="line2">청복(淸福)한 송이</div>
+    <div class="typewriter-line" id="line3">나를 유혹하는 차의 향긋함 속</div>
+    <div class="typewriter-line" id="line4">내 마음을 흔들어가는 이 시간</div>
+    <div class="typewriter-line" id="line5">차 한 잔을 함께 나눌 수 있는 그대가 좋아요</div>
+    <div class="typewriter-line" id="line6">여유로움 속 이 시간</div>
+    <div class="typewriter-line" id="line7">꽃 같은 향기에 젖어보는 날입니다 🌸</div>
+</div>
 
-여유로움 속 이 시간
-주홍빛 물든 지난날 내 그리움
-작은 행복이라지만 내 마음속에
-간직했던 아름다운 시절이기에
-다시 한번 그 시간을 그려보면서
-꽃 같은 향기에 젖어보는 날입니다. 🐸 🌸 🌼 ✨
-        </div>
     </div>
 
     <!-- GitHub 이미지 슬라이드 -->
@@ -137,6 +155,7 @@
 
 </body>
 </html>
+
 
 
 
