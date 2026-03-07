@@ -21,29 +21,29 @@
    
 
        .layout-wrapper {
-    width: 100vw;           /* 화면 전체 너비 사용 */
-    height: 100vh;          /* 화면 전체 높이 사용 */
-    display: flex;
-    justify-content: center; /* 가로 중앙 */
-    align-items: center;     /* 세로 중앙 */
-    position: absolute;      /* 부모(iframe)의 위치에 구애받지 않음 */
-    top: 0;
+    position: fixed;         /* 브라우저 화면을 기준으로 고정 */
+    top: 50px;               /* 상단에서 50px 내려옴 (기존 padding 30px 고려) */
     left: 0;
+    width: 100vw;           /* 화면 전체 가로 너비 */
+    display: flex;
+    justify-content: center; /* 가로 정중앙 */
+    pointer-events: none;    /* 배경 클릭 방해 금지 */
+    z-index: 9999;           /* 다른 요소보다 위에 표시 */
 }
 
+.player-container {
+    pointer-events: auto;    /* 플레이어 조작은 가능하게 설정 */
+    width: 350px;
+    /* 기존 스타일 유지 */
+    padding: 50px 25px;
+    border-radius: 25px;
+    font-family: 'Malgun Gothic', sans-serif;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    background: linear-gradient(rgba(245, 245, 220, 0.2), rgba(245, 245, 220, 0.2)), url('Happy.jpg');
+    background-size: contain;
+    background-position: center;
+}
 
-        .player-container { 
-            width: 350px;
-            padding: 50px 25px;
-            border-radius: 25px;
-            font-family: 'Malgun Gothic', sans-serif;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            background: linear-gradient(rgba(245, 245, 220, 0.2), rgba(245, 245, 220, 0.2)), url('Happy.jpg');
-            background-size: contain;
-            background-position: center;
-            backdrop-filter: blur(0px); 
-            position: relative;
-        }
 
         #current-title { 
             display: block; 
@@ -244,6 +244,7 @@
 
 </body>
 </html>
+
 
 
 
