@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>봄마중 인사말 갤러리</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        /* 사진 페이드 효과 */
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+            border-radius: 10px;
+        }
+        .slide.active { opacity: 1; }
+
+        /* 자막 */
+        .caption-container {
+            position: absolute;
+            bottom: 45px;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 20;
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .scrolling-text {
+            display: inline-block;
+            font-family: 'Gamja Flower', cursive;
+            font-size: 28px;
+            color: #adff2f;
+            text-shadow: 2px 2px 2px #000, -1px -1px 0 #000, 1px -1px 0 #000,
+                         -1px 1px 0 #000, 1px 1px 0 #000;
+            padding-left: 100%;
+            animation: marquee 40s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* YouTube 얇은 플레이어 */
+        .youtube-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 3%;
+            width: 94%;
+            height: 28px; /* 얇게 만드는 핵심 */
+            z-index: 9999;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 자막 -->
+    <div class="caption-container">
+        <div class="scrolling-text">
+            봄마중 꽃마중 가는 불금♪♬✿˘◡˘✿✿⊱⊹~✿⊱⊹~✿⊱⊹~✿⊱⊹~
+            신나게 출~~~~발 합니다ε=ε= ᕕ( ᐛ )ᕗ
+            ㉵㉶!㉵㉶!㉵㉶!화이팅ᕙ(•̀‸•́‶)ᕗ
+            회원님네 가정에 항상 좋은 일만 가득하세요ㅡ☜ ((♡+:..:+"*☆♡)) ☞ㅡ 🐸 🌸 🌼 ✨
+        </div>
+    </div>
+
+    <!-- GitHub 이미지 슬라이드 -->
+    <img src="https://usanonki.github.io/photo/001.gif" class="slide active">
+    <img src="https://usanonki.github.io/photo/002.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/003.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/012.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/013.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/014.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/015.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/016.gif" class="slide">
+
+</div>
+
+<!-- YouTube 얇은 플레이어 -->
+<iframe class="youtube-bar"
+    src="https://www.youtube.com/embed/영상ID?autoplay=1&controls=1&loop=1&playlist=영상ID"
+    allow="autoplay"
+></iframe>
+
+<script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function nextSlide() {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+    }
+
+    setInterval(nextSlide, 20000);
+</script>
+
+</body>
+</html>
