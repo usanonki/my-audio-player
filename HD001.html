@@ -66,28 +66,15 @@
         }
 
         /* YouTube 얇은 플레이어 */
-        <style>
-    ... 기존 CSS ...
-
-    /* 여기에 제가 드린 .youtube-small 스타일을 넣으면 됩니다 */
-        .youtube-small {
-        position: fixed;
-        bottom: 20px;     /* 화면 아래에서 20px */
-        right: 20px;      /* 화면 오른쪽에서 20px */
-        width: 200px;     /* 작은 크기 */
-        height: 112px;    /* 16:9 비율 유지 */
-        border-radius: 8px;
-        overflow: hidden;
-        z-index: 9999;
-        opacity: 0.85;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-    /* hover 시 확대 */
-        .youtube-small:hover {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-
+        .youtube-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 3%;
+            width: 94%;
+            height: 28px; /* 얇게 만드는 핵심 */
+            z-index: 9999;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -97,10 +84,20 @@
     <!-- 자막 -->
     <div class="caption-container">
         <div class="scrolling-text">
-            봄마중 꽃마중 가는 불금♪♬✿˘◡˘✿✿⊱⊹~✿⊱⊹~✿⊱⊹~✿⊱⊹~
-            신나게 출~~~~발 합니다ε=ε= ᕕ( ᐛ )ᕗ
-            ㉵㉶!㉵㉶!㉵㉶!화이팅ᕙ(•̀‸•́‶)ᕗ
-            회원님네 가정에 항상 좋은 일만 가득하세요ㅡ☜ ((♡+:..:+"*☆♡)) ☞ㅡ 🐸 🌸 🌼 ✨
+            차 한 잔이 그리운 날
+청복(淸福 )한 송이  
+차 한 잔이 그리운 날
+나를 유혹하는 차의 향긋함 속
+내 마음을 흔들어가는 이 시간
+차 한 잔을 함께 나눌 수 있는
+그대가 내 옆에 있어서 좋아요
+
+여유로움 속 이 시간
+주홍빛 물든 지난날 내 그리움
+작은 행복이라지만 내 마음속에
+간직했던 아름다운 시절이기에
+다시 한번 그 시간을 그려보면서
+꽃 같은 향기에 젖어보는 날입니다. 🐸 🌸 🌼 ✨
         </div>
     </div>
 
@@ -117,7 +114,7 @@
 </div>
 
 <!-- YouTube 얇은 플레이어 -->
-<iframe class="youtube-small"
+<iframe class="youtube-bar"
     src="https://www.youtube.com/embed/pmO9KUfnzVE?autoplay=1&controls=1&loop=1&playlist=pmO9KUfnzVE,xttgWc1KEp0"
     allow="autoplay"
 ></iframe>
@@ -137,6 +134,3 @@
 
 </body>
 </html>
-
-
-
