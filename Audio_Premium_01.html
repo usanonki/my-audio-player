@@ -127,9 +127,15 @@
     }
 
     // 초기 설정
-    audio.volume = 0.1;
+    audio.volume = 0.3;
+    audio.muted = false; // 소리는 켜진 상태로 대기
     renderPlaylist();
-    playSong(0); // 첫 곡 세팅
+
+    // 첫 곡 정보만 로드하고 재생은 하지 않음
+currentIdx = 0;
+source.src = encodeURIComponent(songs[currentIdx]);
+titleDisplay.innerText = songs[currentIdx].replace('.mp3', '');
+audio.load(); 
 
     // 볼륨 조절
     document.getElementById('volSlider').oninput = (e) => {
@@ -153,4 +159,5 @@
 
 </body>
 </html>
+
 
