@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Premium Audio Player - usanonki</title>
+
+    <!-- Google Font: Gamja Flower -->
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            background: url('Test.jpg') no-repeat center center;
+            background-size: cover;
+            font-family: 'Gamja Flower', sans-serif;
+        }
+
+        /* 좌측 50% 영역 */
+        .left-area {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 우측 50% 영역 */
+        .right-area {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* 텍스트 박스 */
+        .text-box {
+            width: 80%;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.65);
+            border-radius: 20px;
+            font-size: 1.6em;
+            color: #333;
+            line-height: 1.6em;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            text-align: center;
+            white-space: pre-line;
+        }
+
+        /* 플레이어 박스 */
+        .player-container { 
+            width: 350px;
+            padding: 40px 25px;
+            border-radius: 25px;
+            font-family: 'Gamja Flower', sans-serif;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: linear-gradient(rgba(245, 245, 220, 0.2), rgba(245, 245, 220, 0.2)), url('Happy.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #current-title { 
+            display: block; 
+            font-size: 1.3em; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            color: #3e2723; 
+            text-align: center; 
+            height: 1.2em; 
+            overflow: hidden; 
+        }
+
+        /* 오디오 바 */
+        audio {
+            width: 100%;
+            height: 25px;
+            opacity: 0.85;
+            margin-bottom: 10px;
+            transform: scale(0.9);
+            transform-origin: center;
+        }
+
+        /* 볼륨 박스 */
+        .inner-volume-box {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 4px 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        /* 볼륨 슬라이더 */
+        #volumeSlider {
+            flex: 1;
+            margin: 0 10px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 3px;
+            background: #ccc;
+            border-radius: 5px;
+        }
+
+        #volumeSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10px;
+            height: 10px;
+            background: #ff4757;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #volumeSlider::-moz-range-thumb {
+            width: 10px;
+            height: 10px;
+            background: #ff4757;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        #volumeSlider::-moz-range-track {
+            height: 3px;
+            background: #ccc;
+            border-radius: 5px;
+        }
+
+        .vol-label { 
+            font-weight: bold; 
+            color: #3e2723; 
+            font-size: 1em; 
+        }
+
+        /* 플레이리스트 */
+        .playlist { 
+            list-style: none; 
+            padding: 0; 
+            margin: 0; 
+            max-height: 250px; 
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.3); 
+            border-radius: 15px;
+        }
+
+        .playlist li { 
+            padding: 12px 15px; 
+            cursor: pointer; 
+            color: #4a342e; 
+            font-weight: 500; 
+            font-size: 1.1em;
+            display: flex; 
+            align-items: center; 
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .playlist li:hover { 
+            background: rgba(255, 255, 255, 0.4); 
+        }
+
+        .playlist li.active { 
+            background: #ff4757; 
+            color: white; 
+            border-radius: 10px; 
+            font-weight: bold; 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 좌측: 오디오 플레이어 -->
+    <div class="left-area">
+        <div class="player-container">
+            <small style="color: #6d4c41; display:block; text-align:center; margin-bottom:5px; font-weight: bold;">Music Library</small>
+            <span id="current-title">노래를 재생하세요</span>
+
+            <audio id="myAudio" controls>
+                <source id="audioSource" src="" type="audio/mpeg">
+            </audio>
+
+            <div class="inner-volume-box">
+                <span class="vol-label">Vol</span>
+                <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.1">
+                <span id="volumeValue" class="vol-label">10%</span>
+            </div>
+
+            <ul class="playlist" id="playlistDisplay"></ul>
+        </div>
+    </div>
+
+    <!-- 우측: 문장 박스 -->
+    <div class="right-area">
+        <div class="text-box">
+오늘
+누군가 나를향해 활짝
+웃어주면 그날 하루가
+즐겁습니다
+
+나도 누군가을 향해
+환한 미소지으면 나도
+행복하고 그 사람도
+행복하지않을까요^^
+
+환한 미소지으며
+건강들 잘 살피시면서
+좋은하루 보내세요.
+        </div>
+    </div>
+
+<script>
+    const audio = document.getElementById('myAudio');
+    const source = document.getElementById('audioSource');
+    const titleDisplay = document.getElementById('current-title');
+    const playlistDisplay = document.getElementById('playlistDisplay');
+    const volSlider = document.getElementById('volumeSlider');
+    const volValueText = document.getElementById('volumeValue');
+
+    const songs = [
+        "YouAreCryingToo.mp3", 
+        "Memory Remains.mp3", 
+        "spring.mp3", 
+        "그대는어디에.mp3"
+    ];
+    let currentIdx = 0;
+
+    function renderPlaylist() {
+        playlistDisplay.innerHTML = "";
+        songs.forEach((song, index) => {
+            const li = document.createElement('li');
+            const isActive = (index === currentIdx);
+            const iconColor = isActive ? "white" : "#ff4757";
+            
+            li.innerHTML = `<span style="color: ${iconColor}; margin-right: 12px;">▶</span> ${song.replace('.mp3', '')}`;
+            if (isActive) li.className = "active";
+            li.onclick = () => playSong(index);
+            playlistDisplay.appendChild(li);
+        });
+    }
+
+    function playSong(index) {
+        currentIdx = index;
+        source.src = encodeURIComponent(songs[currentIdx]);
+        titleDisplay.innerText = songs[currentIdx].replace('.mp3', '');
+        audio.load();
+        audio.play().catch(e => console.log("재생을 위해 클릭이 필요합니다."));
+        renderPlaylist();
+    }
+
+    volSlider.oninput = (e) => {
+        const val = e.target.value;
+        audio.volume = val;
+        volValueText.innerText = Math.round(val * 100) + "%";
+    };
+
+    audio.volume = 0.1;
+    renderPlaylist();
+
+    currentIdx = 0;
+    source.src = encodeURIComponent(songs[currentIdx]);
+    titleDisplay.innerText = songs[currentIdx].replace('.mp3', '');
+    audio.load(); 
+
+    audio.onended = () => {
+        let nextIdx = (currentIdx + 1) % songs.length;
+        playSong(nextIdx);
+    };
+</script>
+
+</body>
+</html>
