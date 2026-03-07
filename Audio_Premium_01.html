@@ -73,7 +73,7 @@
             <small style="color: #6d4c41; display:block; text-align:center; margin-bottom:5px; font-weight: bold;">Music Library</small>
             <span id="current-title">노래를 재생하세요</span>
             
-            <audio id="myAudio" controls >
+            <audio id="myAudio" controls autoplay muted>
                 <source id="audioSource" src="" type="audio/mpeg">
             </audio>
 
@@ -122,21 +122,12 @@
         source.src = encodeURIComponent(songs[currentIdx]); // 한글 파일명 등 특수문자 처리
         titleDisplay.innerText = songs[currentIdx].replace('.mp3', '');
         audio.load();
-        // shouldPlay가 true일 때만 재생 (사용자가 곡을 클릭하거나 다음 곡으로 넘어갈 때)
-    if (shouldPlay) {
-        audio.play().catch(e => console.log("재생 버튼을 눌러주세요."));
-    }
-    renderPlaylist();
-}
-
-// 처음 로드할 때는 정보를 불러오되, 재생은 하지 않음
-renderPlaylist();
-playSong(0, false); 
+        audio.play().catch(e => console.log("자동 재생 정책으로 인해 클릭이 필요합니다."));
+        renderPlaylist();
     }
 
     // 초기 설정
-    audio.volume = 0.3;
-    audio.muted = false; // 소리는 켜진 상태로 대기
+    audio.volume = 0.1;
     renderPlaylist();
     playSong(0); // 첫 곡 세팅
 
@@ -150,7 +141,7 @@ playSong(0, false);
     const muteBtn = document.getElementById('muteBtn');
     muteBtn.onclick = () => {
         audio.muted = !audio.muted;
-        muteBtn.innerText = audio.muted ? "재생 시작" : "음소거";
+        muteBtn.innerText = audio.muted ? "소리 켜기" : "음소거";
     };
 
     // 곡이 끝나면 자동으로 다음 곡 재생
@@ -162,4 +153,3 @@ playSong(0, false);
 
 </body>
 </html>
-
