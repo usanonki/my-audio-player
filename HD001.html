@@ -66,15 +66,29 @@
         }
 
         /* YouTube 얇은 플레이어 */
-        .youtube-bar {
-            position: fixed;
-            bottom: 20px;
-            left: 3%;
-            width: 94%;
-            height: 14px; /* 얇게 만드는 핵심 */
-            z-index: 9999;
-            border: none;
-        }
+        <style>
+    ... 기존 CSS ...
+
+    /* 여기에 제가 드린 .youtube-bar 스타일을 넣으면 됩니다 */
+    .youtube-bar {
+        position: fixed;
+        bottom: 5px;
+        left: 3%;
+        width: 94%;
+        height: 14px;
+        opacity: 0.6;
+        background: rgba(0,0,0,0.25);
+        backdrop-filter: blur(3px);
+        border: none;
+        z-index: 9999;
+        transition: height 0.3s ease, opacity 0.3s ease;
+    }
+
+    .youtube-bar:hover {
+        height: 40px;
+        opacity: 1;
+    }
+
     </style>
 </head>
 <body>
@@ -124,4 +138,5 @@
 
 </body>
 </html>
+
 
