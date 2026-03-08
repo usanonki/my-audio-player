@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>HD004-E (완성본)</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+        }
+        .slide.active { opacity: 1; }
+
+        .caption-container {
+            position: absolute;
+            top: 40px; /* 위쪽 여유 공간 */
+            width: 100%;
+            z-index: 20;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .typewriter-line {
+            font-family: 'Gamja Flower', cursive;
+            font-size: 28px;
+            color: #adff2f;
+            text-shadow: 2px 2px 2px #000;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            opacity: 0;
+            border-right: 2px solid transparent;
+            /* [수정] 모든 라인을 컨테이너 상단에 겹쳐서 배치 */
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .ending {
+            font-size: 36px;
+            color: #ffb7d5;
+            text-shadow:
+                0 0 8px #ff9ac2,
+                0 0 12px #ff9ac2,
+                0 0 18px #ff9ac2;
+        }
+
+        @keyframes glow {
+            0%   { text-shadow: 0 0 5px #ff9ac2; }
+            50%  { text-shadow: 0 0 18px #ff9ac2; }
+            100% { text-shadow: 0 0 5px #ff9ac2; }
+        }
+
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+        /* 유튜브 및 볼륨 UI */
+        .youtube-bar {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            width: 240px;
+            height: 135px;
+            z-index: 9999;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            opacity: 0.55;
+            filter: brightness(0.85);
+        }
+
+        .inner-volume-box {
+            position: fixed;
+            bottom: 15px;
+            left: 270px;
+            display: flex;
+            align-items: center;
+            background: rgba(0,0,0,0.45);
+            padding: 6px 10px;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+        }
+
+        .vol-label { color: white; font-size: 12px; }
+        #volumeSlider { flex: 1; margin: 0 10px; cursor: pointer; height: 3px; }
+        .eq-gif { width: 70px; height:20px; margin-left: 10px; transition: opacity 0.4s; }
+        .eq-hidden { opacity: 0; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="caption-container" id="captionBox">
+        <!-- 반복 시(詩) -->
+        <div class="typewriter-line" id="line1">차 한 잔이 그리운 날</div>
+        <div class="typewriter-line" id="line2">청복(淸福)한 송이</div>
+        <div class="typewriter-line" id="line3">나를 유혹하는 차의 향긋함 속</div>
+        <div class="typewriter-line" id="line4">내 마음을 흔들어가는 이 시간</div>
+        <div class="typewriter-line" id="line5">차 한 잔을 함께 나눌 수 있는 그대가 좋아요</div>
+        <div class="typewriter-line" id="line6">여유로움 속 이 시간</div>
+        <div class="typewriter-line" id="line7">꽃 같은 향기에 젖어보는 날입니다 🌸</div>
+
+        <!-- 반복 명언 -->
+        <div class="typewriter-line" id="line8">꿈은 영원한 기쁨이자</div>
+        <div class="typewriter-line" id="line9">다 써버릴 수 없는 재산이고</div>
+        <div class="typewriter-line" id="line10">해가 갈수록 활력을 주는</div>
+        <div class="typewriter-line" id="line11">행운이다.   [케네디 오나시스] </div>
+
+        <!-- 엔딩 메시지 -->
+        <div class="typewriter-line ending" id="line12">Happy ❤️ Day 회원님,</div>
+        <div class="typewriter-line ending" id="line13">언제나</div>
+        <div class="typewriter-line ending" id="line14">건강하고 행복한 날</div>
+        <div class="typewriter-line ending" id="line15">되세요.~~~~~~~~~~</div>
+    </div>
+
+    <!-- 이미지 슬라이드 -->
+    <img src="https://usanonki.github.io" class="slide active">
+    <img src="https://usanonki.github.io" class="slide">
+    <img src="https://usanonki.github.io" class="slide">
+    <img src="https://usanonki.github.io" class="slide">
+    <img src="https://usanonki.github.io" class="slide">
+    <img src="https://usanonki.github.io" class="slide">
+    <img src="https://usanonki.github.io" class="slide">
+    <img src="https://usanonki.github.io" class="slide">
+</div>
+
+<iframe id="ytPlayer" class="youtube-bar"
+    src="https://www.youtube.com"
+    allow="autoplay"></iframe>
+
+<div class="inner-volume-box">
+    <span class="vol-label">Vol</span>
+    <input type="range" id="volumeSlider" min="0" max="100" value="35">
+    <span id="volumeValue" class="vol-label">35%</span>
+    <img src="equalizer.gif" class="eq-gif" id="eqGif">
+</div>
+
+<script>
+let currentIndex = 0;
+const slides = document.querySelectorAll('.slide');
+function nextSlide() {
+    slides[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % slides.length;
+    slides[currentIndex].classList.add('active');
+}
+setInterval(nextSlide, 6000);
+
+/* [수정] 자막 출력 함수: 각 그룹마다 0px 위치부터 시작하도록 설정 */
+function typeLines(lineIds, startDelay = 0) {
+    let delay = startDelay;
+    lineIds.forEach((id, index) => {
+        const el = document.getElementById(id);
+        el.style.top = (index * 45) + "px"; // 줄 간격 설정
+        
+        setTimeout(() => {
+            el.style.opacity = "1";
+            el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";
+        }, delay);
+        delay += 4000;
+    });
+    return delay;
+}
+
+function fadeOutLines(lineIds, startDelay = 0) {
+    let delay = startDelay;
+    lineIds.forEach(id => {
+        setTimeout(() => {
+            document.getElementById(id).style.animation = "fadeOut 2s ease forwards";
+        }, delay);
+        delay += 300;
+    });
+    return delay + 2000;
+}
+
+/* [추가] 엔딩 메시지: 화면 중앙 상단에 고정 */
+function showEnding() {
+    const endingGroup = ["line12", "line13", "line14", "line15"];
+    let t = 0;
+    endingGroup.forEach((id, index) => {
+        const el = document.getElementById(id);
+        setTimeout(() => {
+            el.style.top = (index * 60) + "px"; // 엔딩은 글자가 커서 간격을 더 넓게
+            el.style.opacity = "1";
+            el.style.width = "auto";
+            el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards, glow 3s ease-in-out infinite";
+        }, t);
+        t += 1500;
+    });
+}
+
+async function playSequence() {
+    const group1 = ["line1","line2","line3","line4","line5","line6","line7"];
+    const group2 = ["line8","line9","line10","line11"];
+
+    for (let i = 0; i < 2; i++) {
+        let t = 0;
+        t = typeLines(group1, t);
+        t = fadeOutLines(group1, t);
+        await new Promise(r => setTimeout(r, t + 1000));
+        
+        let t2 = 0;
+        t2 = typeLines(group2, t2);
+        t2 = fadeOutLines(group2, t2);
+        await new Promise(r => setTimeout(r, t2 + 1000));
+    }
+    showEnding();
+}
+
+/* 유튜브 API 연동 */
+let player;
+window.onYouTubeIframeAPIReady = function() {
+    player = new YT.Player('ytPlayer', {
+        events: { 'onReady': (e) => {
+            const slider = document.getElementById('volumeSlider');
+            e.target.setVolume(slider.value);
+            slider.addEventListener('input', (event) => {
+                const val = event.target.value;
+                e.target.setVolume(val);
+                document.getElementById('volumeValue').innerText = val + "%";
+                document.getElementById('eqGif').style.opacity = (val == 0) ? "0" : "1";
+            });
+        }}
+    });
+};
+
+window.onload = () => {
+    playSequence();
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com";
+    document.body.appendChild(tag);
+};
+</script>
+</body>
+</html>
