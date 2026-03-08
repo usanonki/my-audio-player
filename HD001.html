@@ -115,57 +115,54 @@
     }
     setInterval(nextSlide, 8000);
 
-    // 2. 타이핑 및 느린 여운 기능
-    const lines = ["line1", "line2", "line3", "line4", "line5", "line6", "line7"];
+    // 2. 타이핑 및 이미지 싱크 맞추기
+const lines = ["line1", "line2", "line3", "line4", "line5", "line6", "line7"];
 
-    function startTyping() {
-        lines.forEach(id => {
-            const el = document.getElementById(id);
-            el.style.opacity = "0";
-            el.style.width = "0";
-            el.style.animation = "none";
-            void el.offsetWidth; 
-        });
+function startTyping() {
 
-        let delay = 1000;
-
-        // 타이핑 순차 실행
-    lines.forEach((id) => {
+    // 초기화
+    lines.forEach(id => {
         const el = document.getElementById(id);
+        el.style.opacity = "0";
+        el.style.width = "0";
+        el.style.animation = "none";
+        void el.offsetWidth;
+    });
+
+    let delay = 0;
+
+    // 이미지 전환 템포 = 8초
+    const tempo = 8000;
+
+    lines.forEach((id, index) => {
+        const el = document.getElementById(id);
+
         setTimeout(() => {
+            // 타이핑 + 페이드인
             el.style.opacity = "1";
             el.style.animation =
                 "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";
+
+            // 페이드아웃 (2초)
+            setTimeout(() => {
+                el.style.animation = "fadeOut 2s ease forwards";
+            }, 6000); // 타이핑 3초 + 여운 3초
+
         }, delay);
-        delay += 4000;
+
+        delay += tempo;
     });
 
-    // 모든 타이핑이 끝난 후 페이드아웃 시작
-    const waitTime = delay + 6000;
-
-    setTimeout(() => {
-        let fadeDelay = 0;
-
-        lines.forEach(id => {
-            const el = document.getElementById(id);
-
-            setTimeout(() => {
-                el.style.animation = "fadeOut 6s ease forwards";
-            }, fadeDelay);
-
-            fadeDelay += 500; // 줄마다 0.5초씩 딜레이
-        });
-
-        // 전체 페이드아웃이 끝난 후 재시작
-        setTimeout(startTyping, fadeDelay + 6500);
-
-    }, waitTime);
+    // 전체 끝나면 다시 시작
+    setTimeout(startTyping, delay + 1000);
 }
 
 startTyping();
+
 </script>
 </body>
 </html>
+
 
 
 
