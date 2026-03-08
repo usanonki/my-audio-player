@@ -158,4 +158,192 @@
         <!-- 반복되는 시(詩) -->
         <div class="typewriter-line" id="line1">차 한 잔이 그리운 날</div>
         <div class="typewriter-line" id="line2">청복(淸福)한 송이</div>
-        <div class="typewriter-line" id="line3">나를 유혹하는 차의 향긋함 속
+        <div class="typewriter-line" id="line3">나를 유혹하는 차의 향긋함 속</div>
+        <div class="typewriter-line" id="line4">내 마음을 흔들어가는 이 시간</div>
+        <div class="typewriter-line" id="line5">차 한 잔을 함께 나눌 수 있는 그대가 좋아요</div>
+        <div class="typewriter-line" id="line6">여유로움 속 이 시간</div>
+        <div class="typewriter-line" id="line7">꽃 같은 향기에 젖어보는 날입니다 🌸</div>
+
+        <!-- 반복되는 명언 -->
+        <div class="typewriter-line" id="line8">꿈은 영원한 기쁨이자</div>
+        <div class="typewriter-line" id="line9">다 써버릴 수 없는 재산이고</div>
+        <div class="typewriter-line" id="line10">해가 갈수록 활력을 주는</div>
+        <div class="typewriter-line" id="line11">행운이다.   [케네디 오나시스] </div>
+
+        <!-- 엔딩 메시지 -->
+        <div class="typewriter-line ending" id="line12">Happy ❤️ Day 회원님,</div>
+        <div class="typewriter-line ending" id="line13">언제나</div>
+        <div class="typewriter-line ending" id="line14">건강하고 행복한 날</div>
+        <div class="typewriter-line ending" id="line15">되세요.~~~~~~~~~~</div>
+    </div>
+
+    <!-- 이미지 -->
+    <img src="https://usanonki.github.io/photo/011.gif" class="slide active">
+    <img src="https://usanonki.github.io/photo/041.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/013.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/058.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/015.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/061.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/017.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/063.gif" class="slide">
+</div>
+
+<!-- 유튜브 -->
+<iframe id="ytPlayer" class="youtube-bar"
+    src="https://www.youtube.com/embed/dwPXejUmbNg?enablejsapi=1&autoplay=1&controls=1&loop=1&playlist=dwPXejUmbNg,7d9rRNbOijc"
+    allow="autoplay"
+></iframe>
+
+<!-- 볼륨 UI -->
+<div class="inner-volume-box">
+    <span class="vol-label">Vol</span>
+    <input type="range" id="volumeSlider" min="0" max="100" step="1" value="35">
+    <span id="volumeValue" class="vol-label">35%</span>
+    <img src="equalizer.gif" class="eq-gif" id="eqGif">
+</div>
+
+<script>
+/* 이미지 슬라이드 */
+let currentIndex = 0;
+const slides = document.querySelectorAll('.slide');
+function nextSlide() {
+    slides[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % slides.length;
+    slides[currentIndex].classList.add('active');
+}
+setInterval(nextSlide, 6000);
+
+/* -----------------------------
+   타이핑 + 페이드 함수
+----------------------------- */
+function typeLines(lineIds, startDelay = 0) {
+    let delay = startDelay;
+
+    lineIds.forEach(id => {
+        const el = document.getElementById(id);
+        el.style.opacity = "0";
+        el.style.width = "0";
+        el.style.animation = "none";
+        void el.offsetWidth;
+
+        setTimeout(() => {
+            el.style.opacity = "1";
+            el.style.animation =
+                "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";
+        }, delay);
+
+        delay += 4000;
+    });
+
+    return delay;
+}
+
+function fadeOutLines(lineIds, startDelay = 0) {
+    let delay = startDelay;
+
+    lineIds.forEach(id => {
+        const el = document.getElementById(id);
+        setTimeout(() => {
+            el.style.animation = "fadeOut 3s ease forwards";
+        }, delay);
+        delay += 300;
+    });
+
+    return delay + 3000;
+}
+
+/* -----------------------------
+   전체 반복 시퀀스 (2회 반복)
+----------------------------- */
+async function playSequence() {
+    const group1 = ["line1","line2","line3","line4","line5","line6","line7"];
+    const group2 = ["line8","line9","line10","line11"];
+
+    for (let i = 0; i < 2; i++) {
+        let t = 0;
+
+        t = typeLines(group1, t);
+        t = fadeOutLines(group1, t);
+
+        t += 2000;
+
+        t = typeLines(group2, t);
+        t = fadeOutLines(group2, t);
+
+        t += 2000;
+
+        await new Promise(resolve => setTimeout(resolve, t));
+    }
+
+    showEnding();
+}
+
+/* -----------------------------
+   엔딩 메시지
+----------------------------- */
+function showEnding() {
+    const endLines = ["line12","line13","line14","line15"];
+    let delay = 0;
+
+    endLines.forEach(id => {
+        const el = document.getElementById(id);
+
+        setTimeout(() => {
+            el.style.opacity = "1";
+            el.style.animation =
+                "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards, glow 3s ease-in-out infinite";
+        }, delay);
+
+        delay += 4000;
+    });
+
+    setTimeout(() => {
+        endLines.forEach(id => {
+            document.getElementById(id).classList.add("fixed");
+        });
+    }, delay + 1000);
+}
+
+/* -----------------------------
+   시작
+----------------------------- */
+window.onload = () => {
+    playSequence();
+};
+
+/* YouTube API */
+let player;
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('ytPlayer', {
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerStateChange(event) {
+    const eq = document.getElementById("eqGif");
+    if (event.data === YT.PlayerState.PLAYING) eq.classList.remove("eq-hidden");
+    else eq.classList.add("eq-hidden");
+}
+
+function onPlayerReady() {
+    const slider = document.getElementById("volumeSlider");
+    const valueText = document.getElementById("volumeValue");
+
+    slider.addEventListener("input", () => {
+        const vol = slider.value;
+        player.setVolume(vol);
+        valueText.textContent = vol + "%";
+    });
+}
+</script>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
+
+       
+            
