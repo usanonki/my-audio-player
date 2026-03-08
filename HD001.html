@@ -68,8 +68,11 @@
 
         .typewriter-line {
         position: absolute;
-        top: 30px;
-        width: 100%;
+        width: 0; /* 시작은 너비 0 */
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
         text-align: center;
         font-family: 'Gamja Flower', cursive;
         font-size: 28px;
@@ -78,6 +81,8 @@
         opacity: 0;
         white-space: nowrap;
         overflow: hidden;
+        /* 애니메이션이 끝난 후 상태를 유지하도록 설정 */
+        animation-fill-mode: forwards;
       }
         #line1 { top: 20px; }
     #line2 { top: 60px; }
@@ -156,8 +161,10 @@ lines.forEach((id) => {
     const el = document.getElementById(id);
 
     setTimeout(() => {
-        el.style.opacity = 1;
-        el.style.animation = "typing 4s steps(40, end), fadeIn 2s ease";
+        // opacity를 1로 만들고, 애니메이션을 부여합니다.
+        el.style.opacity = "1";
+        // 타이핑 효과 4초 + 페이드인 효과 1초 병합
+        el.style.animation = "typing 4s steps(40, end) forwards, fadeIn 1s ease forwards";
     }, delay);
 
     delay += 5000; // 다음 줄은 5초 뒤
@@ -167,6 +174,7 @@ lines.forEach((id) => {
 
 </body>
 </html>
+
 
 
 
