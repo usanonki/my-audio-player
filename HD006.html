@@ -62,6 +62,7 @@
             transform: translateX(-50%);
         }
 
+        /* 엔딩 글자 스타일 */
         .ending {
             font-size: 36px;
             color: #ff007f;
@@ -69,7 +70,23 @@
                 0 0 8px #ff9ac2,
                 0 0 12px #ff9ac2,
                 0 0 18px #ff9ac2;
-        }
+}
+
+    /* 엔딩 전체를 감싸는 wrapper */
+        #endingWrapper {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: all 1.8s ease-in-out;
+}
+
+    /* 중앙 이동 시 적용되는 클래스 */
+        #endingWrapper.center {
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        text-align: center;
+}
+
 
         .ending-center {
             top: 50% !important;
@@ -139,10 +156,11 @@
         <!-- 반복 명언 -->
         <div class="typewriter-line" id="line8">꿈은 영원한 기쁨이자</div>
         <div class="typewriter-line" id="line9">다 써버릴 수 없는 재산이고</div>
-        <div class="typewriter-line" id="line10">해가 갈수록 활력을 주는</div>
-        <div class="typewriter-line" id="line11">행운이다.   [케네디 오나시스] </div>
+        <div class="typewriter-line" id="line10">해가 갈수록 활력을 주는 행운이다.</div>
+        <div class="typewriter-line" id="line11"> [케네디 오나시스] </div>
 
-        <!-- 엔딩 메시지 -->
+        <!-- ⭐ 엔딩 전용 wrapper -->
+        <div id="endingWrapper">
         <div class="typewriter-line ending" id="line12">Happy ❤️ Day 회원님,</div>
         <div class="typewriter-line ending" id="line13">언제나</div>
         <div class="typewriter-line ending" id="line14">건강하고 행복한 날</div>
