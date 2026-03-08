@@ -236,12 +236,24 @@
     let player;
 
     function onYouTubeIframeAPIReady() {
-        player = new YT.Player('ytPlayer', {
-            events: {
-                'onReady': onPlayerReady
-            }
-        });
+    player = new YT.Player('ytPlayer', {
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange   // 🔥 재생/정지 감지 추가
+        }
+    });
+}
+
+    function onPlayerStateChange(event) {
+    const eq = document.getElementById("eqGif");
+
+    if (event.data === YT.PlayerState.PLAYING) {
+        eq.classList.remove("eq-hidden");   // 🔊 재생 → GIF 보이기
+    } else {
+        eq.classList.add("eq-hidden");      // ⏸ 정지 → GIF 숨기기
     }
+}
+
 
     function onPlayerReady() {
         const slider = document.getElementById("volumeSlider");
