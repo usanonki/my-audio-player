@@ -75,6 +75,7 @@
     /* 엔딩 전체를 감싸는 wrapper */
         #endingWrapper {
         position: absolute;
+        top: 0;   /* ⭐ 반드시 추가 */
         left: 50%;
         transform: translateX(-50%);
         transition: all 1.8s ease-in-out;
@@ -88,13 +89,7 @@
 }
 
 
-        .ending-center {
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) !important;
-            text-align: center;
-            transition: all 1.8s ease-in-out;
-        }
+       
         
         @keyframes glow {
             0%   { text-shadow: 0 0 5px #ff9ac2; }
