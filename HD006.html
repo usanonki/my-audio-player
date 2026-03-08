@@ -77,9 +77,8 @@
             transform: translate(-50%, -50%) !important;
             text-align: center;
             transition: all 1.8s ease-in-out;
-}
-
-
+        }
+        
         @keyframes glow {
             0%   { text-shadow: 0 0 5px #ff9ac2; }
             50%  { text-shadow: 0 0 18px #ff9ac2; }
@@ -214,24 +213,28 @@ function fadeOutLines(lineIds, startDelay = 0) {
 function showEnding() {
     const endingGroup = ["line12", "line13", "line14", "line15"];
     let t = 0;
+
+    // 1단계: 왼쪽에서 타자 효과
     endingGroup.forEach((id, index) => {
         const el = document.getElementById(id);
         setTimeout(() => {
-            el.style.top = (index * 60) + "px"; // 엔딩은 글자가 커서 간격을 더 넓게
+            el.style.top = (index * 60) + "px";
             el.style.opacity = "1";
             el.style.width = "auto";
-            el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards, glow 3s ease-in-out infinite";
+            el.style.animation =
+                "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards, glow 3s ease-in-out infinite";
         }, t);
         t += 1500;
     });
 
-    // 엔딩 4줄 출력 완료 후 2.5초 뒤 중앙 이동
+    // 2단계: 출력 완료 후 중앙 이동
     setTimeout(() => {
         endingGroup.forEach(id => {
-        document.getElementById(id).classList.add("ending-center");
+            document.getElementById(id).classList.add("ending-center");
         });
-        }, t + 2500);
+    }, t + 2500);
 }
+
 
 async function playSequence() {
     const group1 = ["line1","line2","line3","line4","line5","line6","line7"];
