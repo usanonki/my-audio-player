@@ -119,7 +119,6 @@
 const lines = ["line1", "line2", "line3", "line4", "line5", "line6", "line7"];
 
 function startTyping() {
-
     // 초기화
     lines.forEach(id => {
         const el = document.getElementById(id);
@@ -129,39 +128,44 @@ function startTyping() {
         void el.offsetWidth;
     });
 
-    let delay = 0;
+    let delay = 1000;
 
-    // 이미지 전환 템포 = 8초
-    const tempo = 8000;
-
-    lines.forEach((id, index) => {
+    // 한 줄씩 타이핑만 담당
+    lines.forEach((id) => {
         const el = document.getElementById(id);
-
         setTimeout(() => {
-            // 타이핑 + 페이드인
             el.style.opacity = "1";
             el.style.animation =
                 "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";
-
-            // 페이드아웃 (2초)
-            setTimeout(() => {
-                el.style.animation = "fadeOut 5s ease forwards";
-            }, 6000); // 타이핑 3초 + 여운 3초
-
         }, delay);
-
-        delay += tempo;
+        delay += 4000;
     });
 
-    // 전체 끝나면 다시 시작
-    setTimeout(startTyping, delay + 1000);
+    // 🔹 모든 타이핑이 끝난 후에야, 순차 페이드아웃 시작
+    const waitTime = delay + 6000; // 전체 문장 유지 시간
+
+    setTimeout(() => {
+        let fadeDelay = 0;
+
+        lines.forEach(id => {
+            const el = document.getElementById(id);
+            setTimeout(() => {
+                el.style.animation = "fadeOut 5s ease forwards"; // 여운 길게
+            }, fadeDelay);
+            fadeDelay += 500; // 줄마다 0.5초 간격
+        });
+
+        setTimeout(startTyping, fadeDelay + 5500);
+    }, waitTime);
 }
 
 startTyping();
 
+
 </script>
 </body>
 </html>
+
 
 
 
