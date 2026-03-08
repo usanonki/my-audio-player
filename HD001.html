@@ -157,19 +157,19 @@
             delay += 4000;
         });
 
-        // 3. 모든 문장이 완성되고 10초 대기 후 사라지기 시작
-        // (마지막 줄 등장 시간 + 타이핑 3초 + 대기 10초)
-        const waitTime = delay + 10000; 
+       / 3. 여운 조절 구간
+        // 모든 문장 완성 후 대기 시간을 6초로 단축 (재시작 타이밍 당김)
+        const waitTime = delay + 6000; 
 
         setTimeout(() => {
-            // 모든 줄을 동시에 서서히 사라지게 함
+            // 모든 줄을 더 천천히(4초 동안) 사라지게 함
             lines.forEach(id => {
                 const el = document.getElementById(id);
-                el.style.animation = "fadeOut 2s ease forwards";
+                el.style.animation = "fadeOut 4s ease forwards";
             });
 
-            // 사라지는 애니메이션(2초)이 끝난 후 다시 시작
-            setTimeout(startTyping, 2500);
+            // 완전히 사라진 후(4초) 약간의 간격(0.5초)을 두고 재시작
+            setTimeout(startTyping, 4500);
         }, waitTime);
     }
 
@@ -179,6 +179,7 @@
 
 </body>
 </html>
+
 
 
 
