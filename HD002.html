@@ -114,6 +114,15 @@
             border-radius: 50%;
             cursor: pointer;
         }
+
+        /* 🎵 equalizer GIF */
+        .eq-gif {
+            width: 28px;
+            height: 28px;
+            margin-left: 10px;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 3px #000);
+        }
     </style>
 </head>
 <body>
@@ -151,6 +160,9 @@
     <span class="vol-label">Vol</span>
     <input type="range" id="volumeSlider" min="0" max="100" step="1" value="35">
     <span id="volumeValue" class="vol-label">25%</span>
+
+    <!-- 🔊 이퀄라이저 GIF 추가 -->
+    <img src="equalizer.gif" class="eq-gif">
 </div>
 
 <script>
