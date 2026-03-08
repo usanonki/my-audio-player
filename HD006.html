@@ -71,6 +71,15 @@
                 0 0 18px #ff9ac2;
         }
 
+        .ending-center {
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            text-align: center;
+            transition: all 1.8s ease-in-out;
+}
+
+
         @keyframes glow {
             0%   { text-shadow: 0 0 5px #ff9ac2; }
             50%  { text-shadow: 0 0 18px #ff9ac2; }
@@ -215,6 +224,13 @@ function showEnding() {
         }, t);
         t += 1500;
     });
+
+    // 엔딩 4줄 출력 완료 후 2.5초 뒤 중앙 이동
+    setTimeout(() => {
+        endingGroup.forEach(id => {
+        document.getElementById(id).classList.add("ending-center");
+        });
+        }, t + 2500);
 }
 
 async function playSequence() {
@@ -255,7 +271,7 @@ window.onYouTubeIframeAPIReady = function() {
 window.onload = () => {
     playSequence();
     const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com";
+    tag.src = "https://www.youtube.com/iframe_api";
     document.body.appendChild(tag);
 };
 </script>
