@@ -44,6 +44,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: all 1s; /* 중앙 이동 시 부드럽게 */
         }
 
         .typewriter-line {
@@ -63,11 +64,12 @@
 
         .ending {
             font-size: 36px;
-            color: #ffb7d5;
+            color: #ff007f;
             text-shadow:
-                0 0 8px #ff9ac2,
-                0 0 12px #ff9ac2,
-                0 0 18px #ff9ac2;
+               2px 2px 4px rgba(0,0,0,0.5), /* 검정 그림자로 가독성 확보 */
+            0 0 10px #ffffff; /* 흰색 광채로 배경과 분리 */
+        margin-bottom: 15px; /* 줄 간격 확보 (겹침 방지) */
+        width: auto !important;
             animation: glow 3s ease-in-out infinite;
         }
 
@@ -223,7 +225,7 @@ function typeLines(lineIds, startDelay = 0) {
     let delay = startDelay;
     lineIds.forEach((id, index) => {
         const el = document.getElementById(id);
-        el.style.top = (index * 45) + "px"; // 줄 간격 설정
+        
         
         setTimeout(() => {
             el.style.opacity = "1";
@@ -248,20 +250,7 @@ function fadeOutLines(lineIds, startDelay = 0) {
     return delay + 3000;
 }
 
-    /* [추가] 엔딩 메시지: 화면 중앙 상단에 고정 */
-function showEnding() {
-    const endingGroup = ["line12", "line13", "line14", "line15"];
-    let t = 0;
-    endingGroup.forEach((id, index) => {
-        const el = document.getElementById(id);
-        setTimeout(() => {
-            el.style.top = (index * 60) + "px"; // 엔딩은 글자가 커서 간격을 더 넓게
-            el.style.opacity = "1";
-            el.style.width = "auto";
-            el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards, glow 3s ease-in-out infinite";
-        }, t);
-        t += 1500;
-    });
+   
 }
 
 /* -----------------------------
