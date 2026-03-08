@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>차 한 잔이 그리운 날</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+        }
+        .slide.active { opacity: 1; }
+
+        .caption-container {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            z-index: 20;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .typewriter-line {
+            font-family: 'Gamja Flower', cursive;
+            font-size: 28px;
+            color: #adff2f;
+            text-shadow: 2px 2px 2px #000;
+            margin-bottom: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            opacity: 0;
+            border-right: 2px solid transparent;
+        }
+
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+        /* 🔹 유튜브 영상 */
+        .youtube-bar {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            width: 240px;
+            height: 135px;
+            z-index: 9999;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            opacity: 0.55;
+            filter: brightness(0.85);
+        }
+
+        /* 🔊 커스텀 볼륨 박스 */
+        .inner-volume-box {
+            position: fixed;
+            bottom: 15px;
+            left: 270px;
+            display: flex;
+            align-items: center;
+            background: rgba(0,0,0,0.45);
+            padding: 6px 10px;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+        }
+
+        .vol-label {
+            color: white;
+            font-size: 12px;
+        }
+
+        #volumeSlider {
+            flex: 1;
+            margin: 0 10px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 3px;
+            background: #ccc;
+            border-radius: 5px;
+        }
+
+        #volumeSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* 🎵 equalizer GIF */
+        .eq-gif {
+            width: 28px;
+            height: 28px;
+            margin-left: 10px;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 3px #000);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="caption-container" id="captionBox">
+        <div class="typewriter-line" id="line1">차 한 잔이 그리운 날</div>
+        <div class="typewriter-line" id="line2">청복(淸福)한 송이</div>
+        <div class="typewriter-line" id="line3">나를 유혹하는 차의 향긋함 속</div>
+        <div class="typewriter-line" id="line4">내 마음을 흔들어가는 이 시간</div>
+        <div class="typewriter-line" id="line5">차 한 잔을 함께 나눌 수 있는 그대가 좋아요</div>
+        <div class="typewriter-line" id="line6">여유로움 속 이 시간</div>
+        <div class="typewriter-line" id="line7">꽃 같은 향기에 젖어보는 날입니다 🌸</div>
+    </div>
+
+    <!-- 이미지 리스트 -->
+    <img src="https://usanonki.github.io/photo/011.gif" class="slide active">
+    <img src="https://usanonki.github.io/photo/041.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/013.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/058.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/015.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/061.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/017.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/063.gif" class="slide">
+</div>
+
+<!-- 🔹 유튜브 플레이어 -->
+<iframe id="ytPlayer" class="youtube-bar"
+    src="https://www.youtube.com/embed/dwPXejUmbNg?enablejsapi=1&autoplay=1&controls=1&loop=1&playlist=dwPXejUmbNg,7d9rRNbOijc"
+    allow="autoplay"
+></iframe>
+
+<!-- 🔊 커스텀 볼륨 UI + 이퀄라이저 -->
+<div class="inner-volume-box">
+    <span class="vol-label">Vol</span>
+    <input type="range" id="volumeSlider" min="0" max="100" step="1" value="35">
+    <span id="volumeValue" class="vol-label">35%</span>
+
+    <!-- 🎵 equalizer GIF -->
+    <img src="equalizer.gif" class="eq-gif">
+</div>
+
+<script>
+    /* -----------------------------
+       1. 이미지 슬라이드
+    ----------------------------- */
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    function nextSlide() {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+    }
+    setInterval(nextSlide, 6000);
+
+    /* -----------------------------
+       2. 타이핑 효과
+    ----------------------------- */
+    const lines = ["line1", "line2", "line3", "line4", "line5", "line6", "line7"];
+
+    function startTyping() {
+        lines.forEach(id => {
+            const el = document.getElementById(id);
+            el.style.opacity = "0";
+            el.style.width = "0";
+            el.style.animation = "none";
+            void el.offsetWidth;
+        });
+
+        let delay = 1000;
+
+        lines.forEach((id) => {
+            const el = document.getElementById(id);
+            setTimeout(() => {
+                el.style.opacity = "1";
+                el.style.animation =
+                    "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";
+            }, delay);
+            delay += 4000;
+        });
+
+        const waitTime = delay + 6000;
+
+        setTimeout(() => {
+            let fadeDelay = 0;
+
+            lines.forEach(id => {
+                const el = document.getElementById(id);
+                setTimeout(() => {
+                    el.style.animation = "fadeOut 5s ease forwards";
+                }, fadeDelay);
+                fadeDelay += 500;
+            });
+
+            setTimeout(startTyping, fadeDelay + 5500);
+        }, waitTime);
+    }
+
+    startTyping();
+
+    /* -----------------------------
+       3. YouTube API + 볼륨 조절
+    ----------------------------- */
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('ytPlayer', {
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    }
+
+    function onPlayerReady() {
+        const slider = document.getElementById("volumeSlider");
+        const valueText = document.getElementById("volumeValue");
+
+        // 🔊 초기 볼륨 설정
+        player.setVolume(35);
+        slider.value = 35;
+        valueText.textContent = "35%";
+
+        slider.addEventListener("input", () => {
+            const vol = slider.value;
+            player.setVolume(vol);
+            valueText.textContent = vol + "%";
+        });
+    }
+</script>
+
+<!-- YouTube API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
+</body>
+</html>
