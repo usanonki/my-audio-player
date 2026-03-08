@@ -69,6 +69,10 @@
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        /* 서서히 사라지는 효과 추가 */
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
 
         /* 유튜브 플레이어 (좌측 하단) */
@@ -116,7 +120,7 @@
 
 
 <script>
-    // 1. 이미지 슬라이드 기능
+        // 1. 이미지 슬라이드 기능
     let currentIndex = 0;
     const slides = document.querySelectorAll('.slide');
     function nextSlide() {
@@ -124,27 +128,57 @@
         currentIndex = (currentIndex + 1) % slides.length;
         slides[currentIndex].classList.add('active');
     }
-    setInterval(nextSlide, 8000); // 8초마다 교체
+    setInterval(nextSlide, 8000);
 
-    // 2. 타이핑 자막 기능
+    // 2. 타이핑 및 서서히 사라지는 기능
     const lines = ["line1", "line2", "line3", "line4", "line5", "line6", "line7"];
-    let delay = 1000; // 첫 줄 시작 대기 시간
 
-    lines.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) {
+    function startTyping() {
+        // 1. 초기화: 모든 줄을 투명하게
+        lines.forEach(id => {
+            const el = document.getElementById(id);
+            el.style.opacity = "0";
+            el.style.width = "0";
+            el.style.animation = "none";
+            void el.offsetWidth; // 리플로우 강제 발생
+        });
+
+        let delay = 1000;
+
+        // 2. 순차적 타이핑 등장
+        lines.forEach((id, index) => {
+            const el = document.getElementById(id);
             setTimeout(() => {
                 el.style.opacity = "1";
-                // 3초 동안 타이핑, 1초 동안 페이드인
                 el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";
             }, delay);
-            delay += 4000; // 다음 줄까지의 간격 (타이핑 시간보다 길게 설정)
-        }
-    });
+            delay += 4000;
+        });
+
+        // 3. 모든 문장이 완성되고 10초 대기 후 사라지기 시작
+        // (마지막 줄 등장 시간 + 타이핑 3초 + 대기 10초)
+        const waitTime = delay + 10000; 
+
+        setTimeout(() => {
+            // 모든 줄을 동시에 서서히 사라지게 함
+            lines.forEach(id => {
+                const el = document.getElementById(id);
+                el.style.animation = "fadeOut 2s ease forwards";
+            });
+
+            // 사라지는 애니메이션(2초)이 끝난 후 다시 시작
+            setTimeout(startTyping, 2500);
+        }, waitTime);
+    }
+
+    // 첫 실행
+    startTyping();
+
 </script>
 
 </body>
 </html>
+
 
 
 
