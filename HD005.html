@@ -5,7 +5,7 @@
     <title>HD004-E</title>
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
 
-    <style>
+        <style>
         body {
             margin: 0;
             display: flex;
@@ -35,61 +35,70 @@
         }
         .slide.active { opacity: 1; }
 
+        /* [수정] 높이 추가 및 정렬 방식 설정 */
         .caption-container {
             position: absolute;
-            top: 20px;
+            top: 0; /* JS에서 제어하기 위해 0으로 변경 */
+            padding-top: 30px; /* 초기 상단 여백 */
             width: 100%;
+            height: 100%; 
             z-index: 20;
             pointer-events: none;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: all 1s; /* 중앙 이동 시 부드럽게 */
+            justify-content: flex-start; /* 처음엔 위쪽 정렬 */
+            transition: all 1.5s ease-in-out; /* 중앙 이동 시 부드럽게 */
         }
 
+        /* [수정] transform 제거 및 position 변경 */
         .typewriter-line {
             font-family: 'Gamja Flower', cursive;
             font-size: 28px;
             color: #adff2f;
-            text-shadow: 2px 2px 2px #000;
-            margin-bottom: 10px;
+            text-shadow: 2px 2px 3px #000;
+            margin-bottom: 20px; /* 줄 간격 확보 */
             white-space: nowrap;
             overflow: hidden;
             width: 0;
             opacity: 0;
-            border-right: 2px solid transparent;
-            
-            transform: translateX(-50%);
+            position: relative; /* 자막들이 겹치지 않고 순서대로 쌓임 */
+            /* transform: translateX(-50%); <- 이 줄을 삭제했습니다 */
         }
 
+        /* [수정] 엔딩 자막: 색상 강화 및 그림자 추가 */
         .ending {
-            font-size: 36px;
-            color: #ff007f;
+            font-size: 38px;
+            color: #ff007f !important; /* 진한 핫핑크 */
+            font-weight: bold;
             text-shadow:
-               2px 2px 4px rgba(0,0,0,0.5), /* 검정 그림자로 가독성 확보 */
-            0 0 10px #ffffff; /* 흰색 광채로 배경과 분리 */
-        margin-bottom: 15px; /* 줄 간격 확보 (겹침 방지) */
-        width: auto !important;
-            animation: glow 3s ease-in-out infinite;
+                2px 2px 4px rgba(0,0,0,0.7), /* 진한 그림자 */
+                0 0 15px #ffffff;           /* 흰색 광채로 배경과 대비 */
+            margin-bottom: 25px;
+        }
+
+        /* [추가] 엔딩 시 중앙 정렬을 위한 클래스 */
+        .container-center {
+            padding-top: 0;
+            justify-content: center !important;
         }
 
         @keyframes glow {
-            0%   { text-shadow: 0 0 5px #ff9ac2; }
-            50%  { text-shadow: 0 0 18px #ff9ac2; }
-            100% { text-shadow: 0 0 5px #ff9ac2; }
+            0%   { text-shadow: 0 0 5px #ff9ac2, 2px 2px 4px rgba(0,0,0,0.7); }
+            50%  { text-shadow: 0 0 20px #ff007f, 2px 2px 4px rgba(0,0,0,0.7); }
+            100% { text-shadow: 0 0 5px #ff9ac2, 2px 2px 4px rgba(0,0,0,0.7); }
         }
 
+        /* 이하 애니메이션 및 유튜브 스타일은 기존과 동일하게 유지 */
         .ending.fixed {
             opacity: 1 !important;
             animation: glow 3s ease-in-out infinite !important;
             width: auto !important;
         }
-
         @keyframes typing { from { width: 0; } to { width: 100%; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 
-        /* 유튜브 */
         .youtube-bar {
             position: fixed;
             bottom: 15px;
@@ -103,7 +112,6 @@
             filter: brightness(0.85);
         }
 
-        /* 볼륨 UI */
         .inner-volume-box {
             position: fixed;
             bottom: 15px;
@@ -117,41 +125,13 @@
             z-index: 9999;
         }
 
-        .vol-label {
-            color: white;
-            font-size: 12px;
-        }
-
-        #volumeSlider {
-            flex: 1;
-            margin: 0 10px;
-            cursor: pointer;
-            height: 3px;
-            background: #ccc;
-            border-radius: 5px;
-        }
-
-        #volumeSlider::-webkit-slider-thumb {
-            width: 12px;
-            height: 12px;
-            background: white;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .eq-gif {
-            width: 70px;
-            height:20px;
-            margin-left: 10px;
-            opacity: 0.9;
-            filter: drop-shadow(0 0 3px #000);
-        }
-
-        .eq-hidden {
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
+        .vol-label { color: white; font-size: 12px; }
+        #volumeSlider { flex: 1; margin: 0 10px; cursor: pointer; height: 3px; background: #ccc; border-radius: 5px; }
+        #volumeSlider::-webkit-slider-thumb { width: 12px; height: 12px; background: white; border-radius: 50%; cursor: pointer; }
+        .eq-gif { width: 70px; height:20px; margin-left: 10px; opacity: 0.9; filter: drop-shadow(0 0 3px #000); }
+        .eq-hidden { opacity: 0; transition: opacity 0.4s ease; }
     </style>
+
 </head>
 
 <body>
@@ -207,7 +187,9 @@
 </div>
 
 <script>
-/* 이미지 슬라이드 */
+/* -----------------------------
+   이미지 슬라이드
+----------------------------- */
 let currentIndex = 0;
 const slides = document.querySelectorAll('.slide');
 function nextSlide() {
@@ -218,17 +200,15 @@ function nextSlide() {
 setInterval(nextSlide, 6000);
 
 /* -----------------------------
-   타이핑 + 페이드 함수
+   자막 출력 및 페이드 함수
 ----------------------------- */
-/* [수정] 자막 출력 함수: 각 그룹마다 0px 위치부터 시작하도록 설정 */
 function typeLines(lineIds, startDelay = 0) {
     let delay = startDelay;
-    lineIds.forEach((id, index) => {
+    lineIds.forEach((id) => {
         const el = document.getElementById(id);
-        
-        
         setTimeout(() => {
             el.style.opacity = "1";
+            el.style.width = "100%";
             el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";
         }, delay);
         delay += 4000;
@@ -238,23 +218,18 @@ function typeLines(lineIds, startDelay = 0) {
 
 function fadeOutLines(lineIds, startDelay = 0) {
     let delay = startDelay;
-
     lineIds.forEach(id => {
         const el = document.getElementById(id);
         setTimeout(() => {
-            el.style.animation = "fadeOut 3s ease forwards";
+            el.style.animation = "fadeOut 2s ease forwards";
         }, delay);
         delay += 300;
     });
-
-    return delay + 3000;
-}
-
-   
+    return delay + 2500;
 }
 
 /* -----------------------------
-   전체 반복 시퀀스 (2회 반복)
+   전체 반복 시퀀스 (2회 반복 후 엔딩)
 ----------------------------- */
 async function playSequence() {
     const group1 = ["line1","line2","line3","line4","line5","line6","line7"];
@@ -262,59 +237,47 @@ async function playSequence() {
 
     for (let i = 0; i < 2; i++) {
         let t = 0;
-
         t = typeLines(group1, t);
         t = fadeOutLines(group1, t);
-
-        t += 2000;
-
+        t += 1000;
         t = typeLines(group2, t);
         t = fadeOutLines(group2, t);
-
-        t += 2000;
-
-        await new Promise(resolve => setTimeout(resolve, t));
+        t += 1000;
+        await new Promise(res => setTimeout(res, t));
     }
-
-    showEnding();
+    showEnding(); // 2회 반복 후 엔딩 호출
 }
 
 /* -----------------------------
-   엔딩 메시지
+   마지막 엔딩 메시지 (중앙 고정)
 ----------------------------- */
 function showEnding() {
+    const container = document.querySelector(".caption-container");
     const endLines = ["line12","line13","line14","line15"];
-    let delay = 0;
+    
+    // 1. 컨테이너를 화면 중앙으로 부드럽게 이동
+    container.classList.add("container-center");
 
+    let delay = 0;
     endLines.forEach(id => {
         const el = document.getElementById(id);
-
         setTimeout(() => {
             el.style.opacity = "1";
-            el.style.animation =
-                "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards, glow 3s ease-in-out infinite";
+            el.style.width = "100%";
+            el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards, glow 3s ease-in-out infinite";
         }, delay);
-
-        delay += 4000;
+        delay += 1500;
     });
 
     setTimeout(() => {
-        endLines.forEach(id => {
-            document.getElementById(id).classList.add("fixed");
-        });
+        endLines.forEach(id => document.getElementById(id).classList.add("fixed"));
     }, delay + 1000);
 }
 
 /* -----------------------------
-   시작
+   유튜브 API 제어
 ----------------------------- */
-window.onload = () => {
-    playSequence();
-};
-
-/* YouTube API */
 let player;
-
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('ytPlayer', {
         events: {
@@ -333,16 +296,17 @@ function onPlayerStateChange(event) {
 function onPlayerReady() {
     const slider = document.getElementById("volumeSlider");
     const valueText = document.getElementById("volumeValue");
-
     slider.addEventListener("input", () => {
         const vol = slider.value;
         player.setVolume(vol);
         valueText.textContent = vol + "%";
     });
 }
-</script>
 
-<script src="https://www.youtube.com/iframe_api"></script>
+window.onload = playSequence;
+</script>
+<script src="https://www.youtube.com"></script>
+
 </body>
 </html>
 
