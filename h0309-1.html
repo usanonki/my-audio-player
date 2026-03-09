@@ -123,34 +123,25 @@
         /* 엔딩 라인 */ 
 
         .ending { 
+    font-family: 'Gamja Flower', cursive; 
+    font-size: 36px; 
+    color: #ff007f; 
+    text-shadow: 
+        0 0 8px #ff9ac2, 
+        0 0 12px #ff9ac2, 
+        0 0 18px #ff9ac2; 
 
-            font-family: 'Gamja Flower', cursive; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   /* ⭐ 중앙 고정 */
 
-            font-size: 36px; 
+    opacity: 0;
+    white-space: nowrap;
 
-            color: #ff007f; 
+    animation: zoomPulse 5s ease-in-out infinite;  /* ⭐ 확대/축소 반복 */
+}
 
-            text-shadow: 
-
-                0 0 8px #ff9ac2, 
-
-                0 0 12px #ff9ac2, 
-
-                0 0 18px #ff9ac2; 
-
-            align-self: flex-start !important;   /* ⭐ 핵심 */ 
-
-            left: 0 !important;   /* ⭐ 이것이 핵심 */ 
-
-            transform: none !important;   /* ⭐ 중앙 겹침 문제 해결 */ 
-
-            opacity: 0; 
-
-            white-space: nowrap; 
-
-            border-right: 2px solid transparent; 
-
-        } 
 
   
 
@@ -213,6 +204,12 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } 
 
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } } 
+
+        @keyframes zoomPulse {
+        0%   { transform: translate(-50%, -50%) scale(1); }
+        50%  { transform: translate(-50%, -50%) scale(1.25); }
+        100% { transform: translate(-50%, -50%) scale(1); }
+}
 
   
 
