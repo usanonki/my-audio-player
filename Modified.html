@@ -68,6 +68,7 @@
                 0 0 8px #ff9ac2,
                 0 0 12px #ff9ac2,
                 0 0 18px #ff9ac2;
+            align-self: flex-start !important;   /* ⭐ 핵심 */
             left: 0 !important;   /* ⭐ 이것이 핵심 */
             transform: none !important;   /* ⭐ 중앙 겹침 문제 해결 */
             opacity: 0;
@@ -78,8 +79,8 @@
         /* 엔딩 Wrapper */
         #endingWrapper {
             position: absolute;
-            top: 55%;     /* ⭐ group1과 겹치지 않도록 조정 */
-            left: 10%;
+            top: 40%;     /* ⭐ group1과 겹치지 않도록 조정 */
+            left: 0;
             width: 80%;
             z-index: 100;
             display: flex;
