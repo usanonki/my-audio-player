@@ -152,7 +152,157 @@
         <div class="typewriter-line" id="line6">여유로움 속 이 시간</div>
         <div class="typewriter-line" id="line7">꽃 같은 향기에 젖어보는 날입니다 🌸</div>
 
-        <!-- 반복 명언 -->
+       <!-- 반복 명언 -->
         <div class="typewriter-line" id="line8">꿈은 영원한 기쁨이자</div>
         <div class="typewriter-line" id="line9">다 써버릴 수 없는 재산이고</div>
-        <div class="typewriter-line" id="line10">
+        <div class="typewriter-line" id="line10">해가 갈수록 활력을 주는 행운이다.</div>
+        <div class="typewriter-line" id="line11">[케네디 오나시스]</div>
+
+        <!-- 엔딩 -->
+        <div id="endingWrapper">
+            <div class="typewriter-line ending" id="line12">Happy ❤️ Day 회원님,</div>
+            <div class="typewriter-line ending" id="line13">언제나</div>
+            <div class="typewriter-line ending" id="line14">건강하고 행복한 날</div>
+            <div class="typewriter-line ending" id="line15">되세요.~~~~~~~~~~</div>
+        </div>
+
+    </div>
+
+    <!-- 이미지 슬라이드 -->
+    <img src="https://usanonki.github.io/photo/011.gif" class="slide active">
+    <img src="https://usanonki.github.io/photo/041.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/013.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/058.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/015.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/061.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/017.gif" class="slide">
+    <img src="https://usanonki.github.io/photo/063.gif" class="slide">
+</div>
+
+<iframe id="ytPlayer" class="youtube-bar"
+    src="https://www.youtube.com/embed/dwPXejUmbNg?enablejsapi=1&autoplay=1&controls=1&loop=1&playlist=dwPXejUmbNg"
+    allow="autoplay"
+></iframe>
+
+<div class="inner-volume-box">
+    <span class="vol-label">Vol</span>
+    <input type="range" id="volumeSlider" min="0" max="100" value="35">
+    <span id="volumeValue" class="vol-label">35%</span>
+    <img src="equalizer.gif" class="eq-gif" id="eqGif">
+</div>
+
+<script>
+let currentIndex = 0;
+const slides = document.querySelectorAll('.slide');
+
+function nextSlide() {
+    slides[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % slides.length;
+    slides[currentIndex].classList.add('active');
+}
+setInterval(nextSlide, 6000);
+
+/* 자막 출력 */
+function typeLines(lineIds, startDelay = 0) {
+    let delay = startDelay;
+    lineIds.forEach((id, index) => {
+        const el = document.getElementById(id);
+        el.style.top = (index * 45) + "px";
+
+        setTimeout(() => {
+            el.style.opacity = "1";
+            el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";
+        }, delay);
+
+        delay += 4000;
+    });
+    return delay;
+}
+
+/* 자막 사라짐 */
+function fadeOutLines(lineIds, startDelay = 0) {
+    let delay = startDelay;
+    lineIds.forEach(id => {
+        setTimeout(() => {
+            document.getElementById(id).style.animation = "fadeOut 2s ease forwards";
+        }, delay);
+        delay += 4000;
+    });
+    return delay + 2000;
+}
+
+/* 엔딩 출력 */
+function showEnding() {
+    const endingGroup = ["line12", "line13", "line14", "line15"];
+    const wrapper = document.getElementById('endingWrapper');
+    let t = 0;
+
+    endingGroup.forEach((id, index) => {
+        const el = document.getElementById(id);
+
+        el.style.top = (index * 45) + "px";   /* ⭐ 줄 간격 */
+
+        setTimeout(() => {
+            el.style.opacity = "1";
+            el.style.animation =
+                "typing 3s steps(30) forwards, fadeIn 1s forwards, glow 3s infinite";
+        }, t);
+
+        t += 2500;
+    });
+
+    setTimeout(() => {
+        wrapper.classList.add('center');
+    }, t + 500);
+}
+
+/* 전체 시퀀스 */
+async function playSequence() {
+    const group1 = ["line1", "line2", "line3", "line4", "line5", "line6", "line7"];
+    const group2 = ["line8", "line9", "line10", "line11"];
+
+    for (let i = 0; i < 2; i++) {
+        let t1 = typeLines(group1, 0);
+        await new Promise(r => setTimeout(r, t1 + 1000));
+
+        let f1 = fadeOutLines(group1, 0);
+        await new Promise(r => setTimeout(r, f1));
+
+        let t2 = typeLines(group2, 0);
+        await new Promise(r => setTimeout(r, t2 + 1000));
+
+        let f2 = fadeOutLines(group2, 0);
+        await new Promise(r => setTimeout(r, f2));
+    }
+
+    showEnding();
+}
+
+/* 유튜브 볼륨 */
+let player;
+window.onYouTubeIframeAPIReady = function() {
+    player = new YT.Player('ytPlayer', {
+        events: { 'onReady': (e) => {
+            const slider = document.getElementById('volumeSlider');
+            e.target.setVolume(slider.value);
+
+            slider.addEventListener('input', (event) => {
+                const val = event.target.value;
+                e.target.setVolume(val);
+                document.getElementById('volumeValue').innerText = val + "%";
+                document.getElementById('eqGif').style.opacity = (val == 0) ? "0" : "1";
+            });
+        }}
+    });
+};
+
+window.onload = () => {
+    playSequence();
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+};
+</script>
+
+</body>
+</html>
