@@ -71,14 +71,13 @@
         0 0 12px #ff9ac2,
         0 0 18px #ff9ac2;
 
-    position: absolute;      /* ← 핵심: relative → absolute */
-    left: 50%;               /* 중앙 정렬 */
-    transform: translateX(-50%);
-    white-space: nowrap;     /* 타이핑처럼 한 줄 유지 */
-    overflow: hidden;
+    /* ⭐ typewriter-line의 absolute 구조를 그대로 사용하도록
+       position 관련 속성은 절대 넣지 않는다 */
     opacity: 0;
+    white-space: nowrap;
     border-right: 2px solid transparent;
 }
+
 
 
     /* 엔딩 래퍼: 왼쪽으로 흐르게 */
