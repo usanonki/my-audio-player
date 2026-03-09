@@ -72,25 +72,22 @@
                 0 0 18px #ff9ac2;
 }
 
-    /* 엔딩 전체를 감싸는 wrapper 초기 위치 */
+    /* 엔딩 래퍼: 처음부터 화면 정중앙에 고정 */
         #endingWrapper {
         position: absolute;
-        top: 60px;           /* 처음에 글자가 써지기 시작하는 위치 */
-        left: 50%;
-        transform: translateX(-50%); 
-        transition: all 2.5s cubic-bezier(0.25, 1, 0.5, 1); /* 중앙으로 모이는 부드러운 움직임 */
+        top: 50%;           /* 세로 중앙 */
+        left: 50%;          /* 가로 중앙 */
+        transform: translate(-50%, -50%); /* 완벽한 중앙 정렬 */
         width: 100%;
         text-align: center;
         z-index: 100;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 }
 
-    /* ⭐ 중앙 이동 시 완벽 고정 클래스 */
-        #endingWrapper.center {
-        top: 50% !important; 
-        left: 50% !important;
-    /* translate(-50%, -50%)가 하단 쏠림을 막고 정중앙에 고정해줍니다 */
-        transform: translate(-50%, -50%) !important; 
-}
+    /* 기존 #endingWrapper.center 관련 코드는 모두 삭제하세요 */
+
 
 
 
@@ -236,26 +233,25 @@ function showEnding() {
     const endingGroup = ["line12", "line13", "line14", "line15"];
     let t = 0;
 
-    // 1단계: 상단에서 한 줄씩 타이핑 효과로 나타나기
     endingGroup.forEach((id, index) => {
         const el = document.getElementById(id);
         setTimeout(() => {
-            el.style.top = (index * 65) + "px"; // 줄 간격 (65px)
+            // 위치를 상대적으로 설정하여 차곡차곡 쌓이게 함
+            el.style.position = "relative"; 
+            el.style.left = "auto";
+            el.style.transform = "none";
+            el.style.margin = "10px 0"; // 줄 간격
             el.style.opacity = "1";
-            el.style.width = "100%"; 
-            // 타이핑 속도를 3.5초로 조정하여 가독성 확보
-            el.style.animation = "typing 3.5s steps(30, end) forwards, fadeIn 1.2s forwards, glow 3s ease-in-out infinite";
+            el.style.width = "auto";
+            el.style.display = "inline-block";
+            
+            // 타이핑 효과 실행
+            el.style.animation = "typing 3s steps(30) forwards, fadeIn 1s forwards, glow 3s infinite";
         }, t);
-        t += 2500; // 다음 줄이 나오는 간격을 2.5초로 설정 (여유 있게 읽힘)
+        t += 2000; // 2초 간격으로 다음 줄 등장
     });
-
-    // 2단계: 모든 줄이 써진 후 1.5초 뒤 중앙으로 스르륵 이동
-    setTimeout(() => {
-        const wrapper = document.getElementById("endingWrapper");
-        wrapper.classList.add("center");
-        console.log("엔딩 정중앙 고정 완료");
-    }, t + 1500);
 }
+
 
 
 
