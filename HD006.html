@@ -63,7 +63,6 @@
 
         /* 엔딩 글자 스타일 */
         .ending {
-    /* --- 기존의 예쁜 스타일 유지 --- */
     font-family: 'Gamja Flower', cursive;
     font-size: 36px;
     color: #ff007f;
@@ -72,12 +71,13 @@
         0 0 12px #ff9ac2,
         0 0 18px #ff9ac2;
 
-    /* --- 위치 및 정렬 수정 (이 부분이 핵심) --- */
-    position: relative !important; /* 위에서부터 차곡차곡 쌓이게 */
-    width: fit-content !important; /* 글자 길이에 딱 맞게 박스 설정 */
-    margin-bottom: 15px;           /* 줄 간격 */
-    display: block;                /* 한 줄에 하나씩 */
-    opacity: 0;                    /* 처음엔 안 보이게 */
+    position: absolute;      /* ← 핵심: relative → absolute */
+    left: 50%;               /* 중앙 정렬 */
+    transform: translateX(-50%);
+    white-space: nowrap;     /* 타이핑처럼 한 줄 유지 */
+    overflow: hidden;
+    opacity: 0;
+    border-right: 2px solid transparent;
 }
 
 
