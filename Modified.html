@@ -209,7 +209,7 @@ function typeLines(lineIds, startDelay = 0) {
     let delay = startDelay;
     lineIds.forEach((id, index) => {
         const el = document.getElementById(id);
-        el.style.top = (index * 45) + "px";
+        el.style.top = (index * 40) + "px";
 
         setTimeout(() => {
             el.style.opacity = "1";
