@@ -65,6 +65,7 @@
         .ending {
             font-size: 36px;
             color: #ff007f;
+            width: auto !important;
             text-shadow:
                 0 0 8px #ff9ac2,
                 0 0 12px #ff9ac2,
@@ -74,7 +75,7 @@
     /* 엔딩 전체를 감싸는 wrapper */
         #endingWrapper {
         position: absolute;
-        top: 80px;   /* ⭐ 반드시 추가 */
+        top: 2200px;   /* ⭐ 반드시 추가 */
         left: 50%;
         transform: translateX(-50%);
         transition: all 1.8s ease-in-out;
@@ -267,7 +268,7 @@ async function playSequence() {
     }
 
     // ⭐ 엔딩이 반드시 실행되도록 보조 타이머 추가
-setTimeout(showEnding, 2000);
+    setTimeout(showEnding, 2000);
    
 }
 
