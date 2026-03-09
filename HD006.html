@@ -241,28 +241,29 @@ function fadeOutLines(lineIds, startDelay = 0) {
 }
 
 /* [추가] 엔딩 메시지: 처음엔 위쪽, 이후 중앙으로 이동 */
+/* [수정] 엔딩 메시지: 상단 출력 후 중앙으로 이동 */
 function showEnding() {
     const endingGroup = ["line12", "line13", "line14", "line15"];
+    const wrapper = document.getElementById('endingWrapper');
     let t = 0;
 
-    endingGroup.forEach((id, index) => {
+    // 1. 각 라인을 순차적으로 타이핑하며 등장 (상단 위치)
+    endingGroup.forEach((id) => {
         const el = document.getElementById(id);
         setTimeout(() => {
-            // 위치를 상대적으로 설정하여 차곡차곡 쌓이게 함
-            el.style.position = "relative"; 
-            el.style.left = "auto";
-            el.style.transform = "none";
-            el.style.margin = "10px 0"; // 줄 간격
-            el.style.opacity = "1";
-            el.style.width = "auto";
-            el.style.display = "inline-block";
-            
-            // 타이핑 효과 실행
+            el.style.opacity = "1"; // CSS에서 0으로 설정했으므로 1로 변경
             el.style.animation = "typing 3s steps(30) forwards, fadeIn 1s forwards, glow 3s infinite";
         }, t);
-        t += 2000; // 2초 간격으로 다음 줄 등장
+        t += 2500; // 다음 줄이 나오는 간격 (약 2.5초)
     });
+
+    // 2. 모든 자막 타이핑이 거의 끝날 때쯤(마지막 자막 등장 후 약 2초 뒤) 중앙으로 이동
+    setTimeout(() => {
+        console.log("중앙 이동 시작!");
+        wrapper.classList.add('center');
+    }, t + 500); 
 }
+
 
 
 
