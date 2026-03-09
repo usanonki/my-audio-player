@@ -443,51 +443,31 @@ function fadeOutLines(lineIds, startDelay = 0) {
 
 /* 엔딩 출력 */ 
 
+/* 기존 showEnding을 덮어쓰기 위해 맨 아래에 배치하세요 */
 function showEnding() { 
-
     const endingGroup = ["line12", "line13", "line14", "line15"]; 
-
     const wrapper = document.getElementById('endingWrapper'); 
-
+    
+    wrapper.classList.add('center');
     let t = 0; 
 
-  
-
-    endingGroup.forEach((id, index) => { 
-
+    endingGroup.forEach((id) => { 
         const el = document.getElementById(id); 
-
-  
-
-        el.style.top = (index * 45) + "px";   /* ⭐ 줄 간격 */ 
-
-  
+        el.style.top = "auto"; 
+        el.style.position = "relative";
 
         setTimeout(() => { 
-
             el.style.opacity = "1"; 
-
             el.style.animation = 
-
                 "typing 2s steps(30) forwards, fadeIn 0.8s forwards, glow 3s infinite"; 
-
         }, t); 
-
-  
-
         t += 2500; 
-
     }); 
 
-  
-
     setTimeout(() => { 
-
-        wrapper.classList.add('center'); 
-
+        wrapper.classList.add('zoom-active'); 
     }, t + 500); 
-
-} 
+}
 
   
 
