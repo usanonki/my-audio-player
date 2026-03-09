@@ -122,85 +122,65 @@
 
         /* 엔딩 라인 */ 
 
+                /* 엔딩 라인 (겹침 방지 및 정렬) */ 
         .ending { 
-    font-family: 'Gamja Flower', cursive; 
-    font-size: 36px; 
-    color: #ff007f; 
-    text-shadow: 
-        0 0 8px #ff9ac2, 
-        0 0 12px #ff9ac2, 
-        0 0 18px #ff9ac2; 
+            font-family: 'Gamja Flower', cursive; 
+            font-size: 36px; 
+            color: #ff007f; 
+            text-shadow: 
+                0 0 8px #ff9ac2, 
+                0 0 12px #ff9ac2, 
+                0 0 18px #ff9ac2; 
+            position: relative !important; /* 겹치지 않게 상대 위치로 변경 */
+            opacity: 0; 
+            white-space: nowrap; 
+            margin-bottom: 15px; /* 줄 간격 */
+            text-align: center;
+        } 
 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);   /* ⭐ 중앙 고정 */
-
-    opacity: 0;
-    white-space: nowrap;
-
-    animation: zoomPulse 5s ease-in-out infinite;  /* ⭐ 확대/축소 반복 */
-}
-
-
-  
-
-        /* 엔딩 Wrapper */ 
-
-        #endingWrapper {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: auto;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-
-  
-
-        #endingWrapper.center { 
-
-            top: 20%; 
-
+        /* 엔딩 Wrapper (화면 중앙 정렬) */ 
+        #endingWrapper { 
+            position: absolute; 
+            top: 50%; 
             left: 50%; 
-
             transform: translate(-50%, -50%); 
-
+            width: 100%; 
+            z-index: 100; 
+            display: flex; 
+            flex-direction: column; 
             align-items: center; 
-
-            text-align: center; 
-
+            transition: all 2s ease-in-out;
         } 
 
-  
+        /* 중앙 이동 효과 (기존 코드 유지용) */
+        #endingWrapper.center { 
+            top: 50% !important; 
+            left: 50% !important; 
+            transform: translate(-50%, -50%) !important; 
+        } 
 
+        /* 애니메이션 정의 */
         @keyframes glow { 
-
             0%   { text-shadow: 0 0 5px #ff9ac2; } 
-
             50%  { text-shadow: 0 0 18px #ff9ac2; } 
-
             100% { text-shadow: 0 0 5px #ff9ac2; } 
-
         } 
-
-  
 
         @keyframes typing { from { width: 0; } to { width: 100%; } } 
-
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } 
-
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } } 
 
+        /* ⭐ 줌 효과: translate 없이 scale만 조절 (겹침 방지) */
         @keyframes zoomPulse {
-        0%   { transform: translate(-50%, -50%) scale(1); }
-        50%  { transform: translate(-50%, -50%) scale(1.25); }
-        100% { transform: translate(-50%, -50%) scale(1); }
-}
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        /* 줌 효과 활성화 클래스 */
+        .zoom-active {
+            animation: zoomPulse 3s ease-in-out infinite !important;
+        }
 
   
 
