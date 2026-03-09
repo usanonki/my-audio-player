@@ -433,7 +433,7 @@ function typeLines(lineIds, startDelay = 0) {
 
             el.style.opacity = "1"; 
 
-            el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards"; 
+            el.style.animation = "typing 2s steps(30, end) forwards, fadeIn 0.8s ease forwards"; 
 
         }, delay); 
 
@@ -501,7 +501,7 @@ function showEnding() {
 
             el.style.animation = 
 
-                "typing 3s steps(30) forwards, fadeIn 1s forwards, glow 3s infinite"; 
+                "typing 2s steps(30) forwards, fadeIn 0.8s forwards, glow 3s infinite"; 
 
         }, t); 
 
@@ -537,7 +537,7 @@ async function playSequence() {
 
         let t1 = typeLines(group1, 0); 
 
-        await new Promise(r => setTimeout(r, t1 + 1000)); 
+        await new Promise(r => setTimeout(r, t1 + 800)); 
 
   
 
@@ -549,7 +549,7 @@ async function playSequence() {
 
         let t2 = typeLines(group2, 0); 
 
-        await new Promise(r => setTimeout(r, t2 + 1000)); 
+        await new Promise(r => setTimeout(r, t2 + 800)); 
 
   
 
@@ -623,5 +623,6 @@ window.onload = () => {
 
 
 </html> 
+
 
 
