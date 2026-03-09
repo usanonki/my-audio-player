@@ -79,7 +79,7 @@
         /* 엔딩 Wrapper */
         #endingWrapper {
             position: absolute;
-            top: 30%;     /* ⭐ group1과 겹치지 않도록 조정 */
+            top: 10%;     /* ⭐ group1과 겹치지 않도록 조정 */
             left: 0;
             width: 80%;
             z-index: 100;
@@ -90,7 +90,7 @@
         }
 
         #endingWrapper.center {
-            top: 40%;
+            top: 20%;
             left: 50%;
             transform: translate(-50%, -50%);
             align-items: center;
@@ -209,7 +209,7 @@ function typeLines(lineIds, startDelay = 0) {
     let delay = startDelay;
     lineIds.forEach((id, index) => {
         const el = document.getElementById(id);
-        el.style.top = (index * 40) + "px";
+        el.style.top = (index * 35) + "px";
 
         setTimeout(() => {
             el.style.opacity = "1";
