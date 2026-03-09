@@ -70,9 +70,7 @@
         0 0 8px #ff9ac2,
         0 0 12px #ff9ac2,
         0 0 18px #ff9ac2;
-
-    /* ⭐ typewriter-line의 absolute 구조를 그대로 사용하도록
-       position 관련 속성은 절대 넣지 않는다 */
+    transform: none !important;
     opacity: 0;
     white-space: nowrap;
     border-right: 2px solid transparent;
@@ -249,6 +247,7 @@ function showEnding() {
     // 1. 각 라인을 순차적으로 타이핑하며 등장 (상단 위치)
     endingGroup.forEach((id) => {
         const el = document.getElementById(id);
+         el.style.top = (index * 45) + "px";
         setTimeout(() => {
             el.style.opacity = "1"; // CSS에서 0으로 설정했으므로 1로 변경
             el.style.animation = "typing 3s steps(30) forwards, fadeIn 1s forwards, glow 3s infinite";
