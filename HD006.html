@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>HD004-E (완성본)</title>
+    <title>HD006 (수정본)</title>
      <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
 
     <style>
@@ -63,48 +63,47 @@
 
         /* 엔딩 글자 스타일 */
         .ending {
-            font-size: 36px;
-            color: #ff007f;
-            width: auto !important;
-            text-shadow:
-                0 0 8px #ff9ac2,
-                0 0 12px #ff9ac2,
-                0 0 18px #ff9ac2;
-            left: 0 !important;
-            transform: none !important;
-            text-align: left;
+    /* --- 기존의 예쁜 스타일 유지 --- */
+    font-family: 'Gamja Flower', cursive;
+    font-size: 36px;
+    color: #ff007f;
+    text-shadow:
+        0 0 8px #ff9ac2,
+        0 0 12px #ff9ac2,
+        0 0 18px #ff9ac2;
+
+    /* --- 위치 및 정렬 수정 (이 부분이 핵심) --- */
+    position: relative !important; /* 위에서부터 차곡차곡 쌓이게 */
+    width: fit-content !important; /* 글자 길이에 딱 맞게 박스 설정 */
+    margin-bottom: 15px;           /* 줄 간격 */
+    display: block;                /* 한 줄에 하나씩 */
+    opacity: 0;                    /* 처음엔 안 보이게 */
 }
+
 
     /* 엔딩 래퍼: 왼쪽으로 흐르게 */
        #endingWrapper {
         position: absolute;
-        top: 40%;      /* 이 값은 네가 원하는 위치로 조절 가능 */
-        left: 0;       /* 중앙 정렬 제거 */
-        transform: none;
-        width: 100%;
-        text-align: left;   /* 왼쪽 기준 */
+        top: 40%;      /* 라인 1~11과 같은 시작 높이 */
+        left: 10%;       /* 왼쪽 적당한 위치에서 시작 */
+        width: 80%;
         z-index: 100;
         display: flex;
         flex-direction: column;
-        align-items: flex-start; /* 왼쪽 정렬 */
-        transition: all 1.8s ease-in-out; /* 중앙 이동 시 부드럽게 */
+        align-items: flex-start;/* 처음엔 왼쪽 정렬 */
+        transition: all 2.0s ease-in-out; /* 중앙 이동 시 부드럽게 */
 }
 
 
-        #endingWrapper.center {
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        align-items: center;
+    /* 중앙으로 이동할 때 적용될 스타일 */
+#endingWrapper.center {
+    top: 50%;       /* 화면 중앙 높이 */
+    left: 50%;
+    transform: translate(-50%, -50%); /* 정확한 중앙 정렬 */
+    align-items: center; /* 텍스트 정렬도 중앙으로 */
+    text-align: center; /* ← 요걸 추가하면 긴 문장도 예쁘게 중앙 정렬됩니다 */
 }
-
-
-    /* 기존 #endingWrapper.center 관련 코드는 모두 삭제하세요 */
-
-
-
-
-
+ 
        
         
         @keyframes glow {
