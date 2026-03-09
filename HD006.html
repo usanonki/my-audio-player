@@ -72,30 +72,25 @@
                 0 0 18px #ff9ac2;
 }
 
-   /* 엔딩 전체를 감싸는 wrapper 초기 위치 수정 */
-#endingWrapper {
-    position: absolute;
-    top: 50px;       /* ⭐ 2200px에서 50px로 수정 (타이핑 시 보이기 위함) */
-    left: 50%;
-    transform: translateX(-50%);
-    transition: all 2.0s ease-in-out; /* 이동 속도 */
-    width: 100%;
-    text-align: center;
+    /* 엔딩 전체를 감싸는 wrapper 초기 위치 */
+        #endingWrapper {
+        position: absolute;
+        top: 50px;           /* 화면 상단에서 시작 */
+        left: 50%;
+        transform: translateX(-50%);
+        transition: all 2.0s ease-in-out; /* 중앙으로 이동하는 시간 */
+        width: 100%;
+        text-align: center;
+        z-index: 100;        /* 다른 요소보다 위에 보이게 설정 */
 }
 
-/* 중앙 이동 시 적용되는 클래스 */
-#endingWrapper.center {
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important; /* 가로세로 완벽 중앙 */
-}
-
-
-    /* 중앙 이동 시 적용되는 클래스 */
+    /* 중앙 이동 시 적용되는 클래스 (합쳐진 버전) */
         #endingWrapper.center {
         top: 50% !important;
-        transform: translate(-50%, -50%) !important;
+        transform: translate(-50%, -50%) !important; /* 상하좌우 완벽 중앙 정렬 */
         text-align: center;
 }
+
 
 
        
