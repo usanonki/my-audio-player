@@ -546,6 +546,8 @@ async function playSequence(repeatCount = 1) {
         let f2 = fadeOutLines(group2, 0); 
         await new Promise(r => setTimeout(r, f2)); 
     }
+    /* ⭐⭐⭐ 엔딩 실행 — 이 줄이 빠져 있었음 */
+    showEnding
 }
 
 
