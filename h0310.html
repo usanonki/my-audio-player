@@ -514,6 +514,19 @@ function showEnding() {
     }, t + 500); 
 
 } 
+    /* 엔딩 fade-out 함수 추가 */ 
+    function fadeOutEnding() {
+    const endingGroup = ["line12", "line13", "line14", "line15"];
+
+    endingGroup.forEach((id, index) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        setTimeout(() => {
+            el.style.animation = "fadeOut 2.5s ease forwards";
+        }, index * 500);   // 한 줄씩 약간씩 늦게 사라지게
+    });
+}
 
   
 
@@ -552,34 +565,32 @@ async function playSequence(repeatCount = 1) {
 let player; 
 
 window.onYouTubeIframeAPIReady = function() { 
-
     player = new YT.Player('ytPlayer', { 
+        events: { 
+            'onReady': (e) => { 
 
-        events: { 'onReady': (e) => { 
+                const slider = document.getElementById('volumeSlider'); 
+                e.target.setVolume(slider.value); 
 
-            const slider = document.getElementById('volumeSlider'); 
+                slider.addEventListener('input', (event) => { 
+                    const val = event.target.value; 
+                    e.target.setVolume(val); 
+                    document.getElementById('volumeValue').innerText = val + "%"; 
+                    document.getElementById('eqGif').style.opacity = (val == 0) ? "0" : "1"; 
+                }); 
 
-            e.target.setVolume(slider.value); 
+                // ⭐ 음악 끝나기 3초 전에 엔딩 fade-out
+                setInterval(() => {
+                    const duration = e.target.getDuration();
+                    const current = e.target.getCurrentTime();
 
-  
+                    if (duration > 0 && duration - current <= 3) {
+                        fadeOutEnding();
+                    }
+                }, 500);
+            }
+        } 
 
-            slider.addEventListener('input', (event) => { 
-
-                const val = event.target.value; 
-
-                e.target.setVolume(val); 
-
-                document.getElementById('volumeValue').innerText = val + "%"; 
-
-                document.getElementById('eqGif').style.opacity = (val == 0) ? "0" : "1"; 
-
-            }); 
-
-        }} 
-
-    }); 
-
-}; 
 
   
 
