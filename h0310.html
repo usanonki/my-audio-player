@@ -422,34 +422,24 @@ setInterval(nextSlide, 6000);
 /* 자막 출력 */ 
 
 function typeLines(lineIds, startDelay = 0) { 
-
     let delay = startDelay; 
 
     lineIds.forEach((id, index) => { 
-
         const el = document.getElementById(id); 
-
         el.style.top = (index * 35) + "px"; 
 
-  
-
         setTimeout(() => { 
-
             el.style.opacity = "1"; 
-
-            el.style.animation = "typing 2s steps(30, end) forwards, fadeIn 0.8s ease forwards"; 
-
+            el.style.animation =
+                "slideRightToLeft 1.2s ease-out forwards, typing 2s steps(30, end) forwards, fadeIn 0.8s ease forwards";
         }, delay); 
 
-  
-
         delay += 3000; 
-
     }); 
 
     return delay; 
+}
 
-} 
 
   
 
