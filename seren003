@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Desktop Wallpaper</title>
+  <style>
+    body, html {
+      margin: 0; padding: 0;
+      width: 100%; height: 100%;
+      overflow: hidden; background-color: #000;
+    }
+
+    /* 배경 컨테이너 */
+    .background-container {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; z-index: 1;
+    }
+
+    /* 조건: class="ql-video" 적용 */
+    .ql-video {
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* 자막 박스: 너비 제한 해제 및 디자인 개선 */
+    .subtitle-wrapper {
+      position: absolute; 
+      bottom: 60px; 
+      left: 40px;
+      z-index: 10; 
+      max-width: 80%; /* 화면의 80%까지 유연하게 확장 */
+      background: rgba(0, 0, 0, 0.4); /* 글자가 잘 보이게 반투명 배경 추가 */
+      padding: 15px 25px;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      border-left: 5px solid #ffce00;
+      
+      /* 우측에서 좌측으로 흐르듯 나타나는 효과 */
+      transform: translateX(50px);
+      opacity: 0;
+      animation: slideIn 1.2s forwards ease-out;
+    }
+
+    @keyframes slideIn {
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    #typing-content {
+      color: #ffffff; 
+      font-size: 20px; /* 글씨 크기를 조금 더 키움 */
+      font-weight: 600;
+      line-height: 1.6;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+      white-space: pre-wrap; /* 줄바꿈 허용 */
+      word-break: keep-all;  /* 단어가 끊기지 않게 예쁘게 줄바꿈 */
+    }
+
+    /* 커서 효과 */
+    .cursor {
+      display: inline-block; 
+      width: 10px;
+      height: 24px;
+      background-color: #ffce00; 
+      margin-left: 5px;
+      vertical-align: middle;
+      animation: blink 0.8s infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
+</head>
+<body>
+
+  <div class="background-container">
+    <!-- 자동재생(autoplay=1)과 음소거(mute=1) 적용 -->
+    <iframe 
+      class="ql-video"
+      src="https://play-tv.kakao.com/embed/player/cliplink/rvb3vr4ss2dxjpourucir2mah?service=player_share"
+    allow="autoplay; fullscreen"
+      allow="autoplay; fullscreen"
+      frameborder="0" 
+      scrolling="no">
+    </iframe>
+  </div>
+
+  <div class="subtitle-wrapper">
+    <span id="typing-content"></span><span class="cursor"></span>
+  </div>
+
+  <script>
+    // 변경된 긴 문장
+    const text = "흐르고 있는 곡은 'Adagio-New Trolls' 입니다...카카오 티비 에서 가져 왔습니다. --Serendipity--";
+    const content = document.getElementById('typing-content');
+    let index = 0;
+
+    function typeWriter() {
+      if (index < text.length) {
+        content.textContent += text.charAt(index);
+        index++;
+        // 타이핑 속도 (숫자가 작을수록 빠름)
+        setTimeout(typeWriter, 80); 
+      }
+    }
+
+    window.onload = () => {
+      // 1.5초 후 타이핑 시작
+      setTimeout(typeWriter, 1500); 
+    };
+  </script>
+
+</body>
+</html>
