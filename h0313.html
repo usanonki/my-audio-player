@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>재생중: YouAreCryingToo.mp3</title>
+
+    <style>
+        /* 전체 화면 기본 설정 */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: white;
+        }
+
+        /* GIF 배경 */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('002.gif') no-repeat center center;
+            background-size: cover; /* 화면에 꽉 차게 */
+            animation: zoomEffect 20s infinite alternate;
+            z-index: 0; /* -1 → 0 으로 수정 */
+        }
+
+        @keyframes zoomEffect {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        /* 내용 영역 */
+        .content {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        /* 자막 영역 */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 5px; /* 플레이어와 더 가까이 */
+        }
+
+        .marquee-text {
+            white-space: nowrap;
+            font-size: 22px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            animation: scrollText 25s linear infinite; /* 속도 느리게 */
+        }
+
+        @keyframes scrollText {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* 오디오 플레이어 */
+        audio {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 30px;
+            padding: 5px;
+        }
+
+      .youtube-bar {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 240px;
+    height: 135px;
+    border: none;
+    z-index: 10;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="bg-container"></div>
+
+    <div class="content">
+        <div class="marquee-container">
+            <div class="marquee-text">
+                ♬ 오늘은 Neil Sedaka의 You mean Everything to me, Oh! Carol 입니다. ♬
+            </div>
+        </div>
+    </div>
+
+    <!-- 유튜브 플레이어 -->
+    <iframe id="ytPlayer" class="youtube-bar"
+        src="https://www.youtube.com/embed/0L9cNROx9E0?enablejsapi=1&autoplay=1&controls=1&loop=1&playlist=0L9cNROx9E0,PekwWBHDKik"
+        allow="autoplay"
+    ></iframe>
+</body>
+
+</html>
