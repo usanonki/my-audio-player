@@ -546,39 +546,10 @@ async function playSequence() {
 
   
 
-/* 유튜브 볼륨 */ 
 
-let player; 
 
-window.onYouTubeIframeAPIReady = function() { 
 
-    player = new YT.Player('ytPlayer', { 
 
-        events: { 'onReady': (e) => { 
-
-            const slider = document.getElementById('volumeSlider'); 
-
-            e.target.setVolume(slider.value); 
-
-  
-
-            slider.addEventListener('input', (event) => { 
-
-                const val = event.target.value; 
-
-                e.target.setVolume(val); 
-
-                document.getElementById('volumeValue').innerText = val + "%"; 
-
-                document.getElementById('eqGif').style.opacity = (val == 0) ? "0" : "1"; 
-
-            }); 
-
-        }} 
-
-    }); 
-
-}; 
 
   
 
