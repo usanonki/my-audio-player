@@ -351,9 +351,7 @@
 
   
 
-<audio src="https://64.media.tumblr.com/57f117dfbe50e2827daeff8daac1e480/7191751f55dc32fb-68/
-    77e8d01c4237a0f2f34228fc4f11f9b035f6f362.mp3" 
-     autoplay loop>수봉배달메 - 시골길에 핀 민들레</audio>
+<audio src="https://64.media.tumblr.com/57f117dfbe50e2827daeff8daac1e480/7191751f55dc32fb-68/77e8d01c4237a0f2f34228fc4f11f9b035f6f362.mp3" autoplay loop>수봉배달메 - 시골길에 핀 민들레</audio>
 
   
 
@@ -581,17 +579,25 @@ window.onYouTubeIframeAPIReady = function() {
 
   
 
-window.onload = () => { 
+window.onload = () => {
+    playSequence();
 
-    playSequence(); 
+    const audio = document.querySelector("audio");
+    const slider = document.getElementById("volumeSlider");
+    const value = document.getElementById("volumeValue");
+    const eq = document.getElementById("eqGif");
 
-    const tag = document.createElement('script'); 
+    // 초기 볼륨 설정
+    audio.volume = slider.value / 100;
 
-    tag.src = "https://www.youtube.com/iframe_api"; 
+    slider.addEventListener("input", () => {
+        const v = slider.value;
+        audio.volume = v / 100;
+        value.innerText = v + "%";
+        eq.style.opacity = (v == 0) ? "0" : "1";
+    });
+};
 
-    document.body.appendChild(tag); 
-
-}; 
 
 </script> 
 
