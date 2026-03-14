@@ -1,233 +1,382 @@
 <!DOCTYPE html>  
- 
+
+  
+
 <html>  
+
+  
 
 <head>  
 
+  
+
     <meta charset="UTF-8">  
- 
+
+  
+
     <title>시골길에 핀 민들레</title>  
- 
+
+  
+
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">  
-     
+
+  
+
+   
+
+  
+
     <style>  
- 
+
+  
+
         body {  
-              margin: 0;  
- 
-            display: flex;  
- 
-            justify-content: center;  
+
   
-            align-items: center;  
-  
-            background: #000;  
-  
-            height: 100vh;  
-  
-            overflow: hidden;  
+
+            margin: 0;  
+
+             display: flex;  
+
+             justify-content: center;  
+
+             align-items: center;  
+
+             background: #000;  
+
+             height: 100vh;  
+
+             overflow: hidden;  
+
   
 
         }  
 
-       
+  
+
+   
+
+  
+
         .container {  
- 
+
+  
+
             position: relative;  
-              width: 100%;  
-              max-width: 800px;  
-              height: 500px;  
-              overflow: hidden;  
-              border-radius: 10px;  
- 
+
+             width: 100%;  
+
+             max-width: 800px;  
+
+             height: 500px;  
+
+             overflow: hidden;  
+
+             border-radius: 10px;  
+
+  
 
         }  
+
   
+
    
+
   
+
         .slide {  
-  
-            position: absolute;  
-              top: 0; left: 0;  
-              width: 100%; height: 100%;  
-              object-fit: cover;  
-              opacity: 0;  
-              transition: opacity 3s ease-in-out;  
 
   
+
+            position: absolute;  
+
+             top: 0; left: 0;  
+
+             width: 100%; height: 100%;  
+
+             object-fit: cover;  
+
+             opacity: 0;  
+
+             transition: opacity 3s ease-in-out;  
+
+  
+
         }  
 
   
+
         .slide.active { opacity: 1; }  
- 
-    
-        .caption-container {  
- 
-            position: absolute;  
-              top: 40px;  
-              width: 100%;  
-              height: 500px;  
-              z-index: 20;  
-              pointer-events: none;  
 
-          }  
      
+
+        .caption-container {  
+
   
-        .typewriter-line {  
-  
-            font-family: 'Gamja Flower', cursive;  
-              font-size: 26px;  
-              color: #adff2f;  
-              text-shadow: 2px 2px 2px #000;  
-              white-space: nowrap;  
-              overflow: hidden;  
-              width: auto;  
-              opacity: 0;  
-              border-right: 2px solid transparent;  
-              position: absolute;  
-              left: 50%;  
-              transform: translateX(-50%);  
+
+            position: absolute;  
+
+             top: 40px;  
+
+             width: 100%;  
+
+             height: 500px;  
+
+             z-index: 20;  
+
+             pointer-events: none;  
+
   
 
         }  
 
   
+
    
+
   
+
+        .typewriter-line {  
+
+  
+
+            font-family: 'Gamja Flower', cursive;  
+
+             font-size: 26px;  
+
+             color: #adff2f;  
+
+             text-shadow: 2px 2px 2px #000;  
+
+             white-space: nowrap;  
+
+             overflow: hidden;  
+
+             width: auto;  
+
+             opacity: 0;  
+
+             border-right: 2px solid transparent;  
+
+             position: absolute;  
+
+             left: 50%;  
+
+             transform: translateX(-50%);  
+
+  
+
+        }  
+
+  
+
+   
+
+  
+
         /* 엔딩 라인 */  
 
   
+
         .ending {  
 
   
+
             font-family: 'Gamja Flower', cursive;  
-              font-size: 36px;  
-              color: #ff007f;  
-              text-shadow:  
-                  0 0 8px #ff9ac2,  
-                  0 0 12px #ff9ac2,  
-                  0 0 18px #ff9ac2;  
-              align-self: flex-start !important;   /* ⭐ 핵심 */  
-             left: 0 !important;   /* ⭐ 이것이 핵심 */  
-              transform: none !important;   /* ⭐ 중앙 겹침 문제 해결 */  
-              opacity: 0;  
-              white-space: nowrap;  
-              border-right: 2px solid transparent;  
+
+             font-size: 36px;  
+
+             color: #ff007f;  
+
+             text-shadow:  
 
   
+
+                0 0 8px #ff9ac2,  
+
+                 0 0 12px #ff9ac2,  
+
+                 0 0 18px #ff9ac2;  
+
+  
+
+            align-self: flex-start !important;   /* ⭐ 핵심 */  
+
+             left: 0 !important;   /* ⭐ 이것이 핵심 */  
+
+             transform: none !important;   /* ⭐ 중앙 겹침 문제 해결 */  
+
+             opacity: 0;  
+
+             white-space: nowrap;  
+
+             border-right: 2px solid transparent;  
+
+  
+
         }  
+
+  
 
    
 
   
+
         /* 엔딩 Wrapper */  
 
+  
 
         #endingWrapper {  
+
   
 
             position: absolute;  
-              top: 10%;     /* ⭐ group1과 겹치지 않도록 조정 */  
-              left: 0;  
-              width: 80%;  
-              z-index: 100;  
-              display: flex;  
-              flex-direction: column;  
-              align-items: flex-start;  
-              transition: all 2s ease-in-out;  
+
+             top: 10%;     /* ⭐ group1과 겹치지 않도록 조정 */  
+
+             left: 0;  
+
+             width: 80%;  
+
+             z-index: 100;  
+
+             display: flex;  
+
+             flex-direction: column;  
+
+             align-items: flex-start;  
+
+             transition: all 2s ease-in-out;  
+
   
+
         }  
 
-     
-        #endingWrapper.center {  
   
-            top: 20%;  
-              left: 50%;  
-              transform: translate(-50%, -50%);  
-             align-items: center;  
-              text-align: center;  
 
-  
-        }  
-
-  
    
+
+  
+
+        #endingWrapper.center {  
+
+  
+
+            top: 20%;  
+
+             left: 50%;  
+
+             transform: translate(-50%, -50%);  
+
+             align-items: center;  
+
+             text-align: center;  
+
+  
+
+        }  
+
+  
+
+   
+
   
 
         @keyframes glow {  
+
   
 
             0%   { text-shadow: 0 0 5px #ff9ac2; }  
-              50%  { text-shadow: 0 0 18px #ff9ac2; }  
-              100% { text-shadow: 0 0 5px #ff9ac2; }  
+
+             50%  { text-shadow: 0 0 18px #ff9ac2; }  
+
+             100% { text-shadow: 0 0 5px #ff9ac2; }  
+
   
+
         }  
 
   
+
+   
+
   
-  
+
         @keyframes typing { from { width: 0; } to { width: 100%; } }  
+
          @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }  
-          @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }  
-       
+
+         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }  
+
+  
+
+   
+
+  
+
         /* 유튜브 및 볼륨 UI */  
+
   
+
         .youtube-bar {  
-              position: fixed;  
-              bottom: 15px;  
-             left: 15px;  
-              width: 240px;  
-              height: 135px;  
-              z-index: 9999;  
-              border: 2px solid rgba(255, 255, 255, 0.3);  
-             border-radius: 8px;  
 
   
-            opacity: 0.55;  
-              filter: brightness(0.85);  
-  
-        }  
-
-
-    
-
-        .inner-volume-box {  
- 
 
             position: fixed;  
- 
 
-            bottom: 15px;  
+             bottom: 15px;  
+
+             left: 15px;  
+
+             width: 240px;  
+
+             height: 135px;  
+
+             z-index: 9999;  
+
+             border: 2px solid rgba(255, 255, 255, 0.3);  
+
+             border-radius: 8px;  
+
+             opacity: 0.55;  
+
+             filter: brightness(0.85);  
 
   
-            left: 270px;  
+
+        }  
 
   
-            display: flex;  
+
+   
 
   
 
-            align-items: center;  
+        .inner-volume-box {  
+
+  
+
+            position: fixed;  
+
+             bottom: 15px;  
+
+             left: 270px;  
+
+             display: flex;  
+
+             align-items: center;  
 
   
 
             background: rgba(0,0,0,0.45);  
 
-  
+             padding: 6px 10px;  
 
-            padding: 6px 10px;  
+             border-radius: 6px;  
 
-  
+             backdrop-filter: blur(4px);  
 
-            border-radius: 6px;  
-
-  
-
-            backdrop-filter: blur(4px);  
-
-  
-
-            z-index: 9999;  
+             z-index: 9999;  
 
   
 
@@ -235,9 +384,13 @@
 
   
 
-        .vol-label { color: white; font-size: 12px; }  
+   
 
   
+
+        .vol-label { color: white; font-size: 12px; }  
+
+ 
 
         #volumeSlider { flex: 1; margin: 0 10px; cursor: pointer; height: 3px; }  
 
@@ -253,11 +406,17 @@
 
 </head>  
 
+  
 
+   
+
+  
 
 <body>  
 
   
+
+   
 
   
 
@@ -267,7 +426,10 @@
 
     <div class="caption-container" id="captionBox">  
 
- 
+  
+
+   
+
   
 
         <!-- 반복 시 -->  
@@ -298,7 +460,9 @@
 
          <div class="typewriter-line" id="line7">하루가 될거 같습니다.</div>  
 
- 
+   
+
+  
 
        <!-- 반복 명언 -->  
 
@@ -306,17 +470,15 @@
 
         <div class="typewriter-line" id="line8">이름 모를 노래 한 곡과....</div>  
 
-  
+         <div class="typewriter-line" id="line9">커피 한잔으로....</div>  
 
-        <div class="typewriter-line" id="line9">커피 한잔으로....</div>  
+         <div class="typewriter-line" id="line10">허기진 내 맘과, </div>  
 
-  
-
-        <div class="typewriter-line" id="line10">허기진 내 맘과, </div>  
+         <div class="typewriter-line" id="line11"> 그리움도 채워 보렵니다.</div>  
 
   
 
-        <div class="typewriter-line" id="line11"> 그리움도 채워 보렵니다.</div>  
+   
 
   
 
@@ -330,40 +492,33 @@
 
             <div class="typewriter-line ending" id="line12">Happy ❤️ Day 회원님,</div>  
 
-  
-
-            <div class="typewriter-line ending" id="line13">잠시나마 
+             <div class="typewriter-line ending" id="line13">잠시나마 
 
 봄꽃과 소풍하면서,</div>  
 
-  
+           <div class="typewriter-line ending" id="line14">소중한 휴식시간,</div>  
 
-            <div class="typewriter-line ending" id="line14">소중한 휴식시간,</div>  
-
-  
-
-            <div class="typewriter-line ending" id="line15">차와 함께 즐기고 있습니다..💕💕💕</div>  
+             <div class="typewriter-line ending" id="line15">차와 함께 즐기고 있습니다..💕💕💕</div>  
 
   
 
         </div>  
 
- 
+   
+
+  
 
     </div>  
 
- 
-  
+    
 
-    <!-- 이미지 슬라이드 -->  
+     <!-- 이미지 슬라이드 -->  
 
   
 
     <img src="https://usanonki.github.io/photo/064.gif" class="slide active">  
 
-  
-
-    <img src="https://usanonki.github.io/photo/116.jpg " class="slide ">  
+     <img src="https://usanonki.github.io/photo/116.jpg " class="slide ">  
 
     <img src="https://usanonki.github.io/photo/112.jpg " class="slide ">  
 
@@ -375,11 +530,14 @@
 
 </div>  
 
-
-
-<audio src="https://64.media.tumblr.com/57f117dfbe50e2827daeff8daac1e480/7191751f55dc32fb-68/77e8d01c4237a0f2f34228fc4f11f9b035f6f362.mp3" autoplay loop>수봉배달메 - 시골길에 핀 민들레</audio> 
+  
 
   
+
+<audio src="https://64.media.tumblr.com/57f117dfbe50e2827daeff8daac1e480/7191751f55dc32fb68/77e8d01c4237a0f2f34228fc4f11f9b035f6f362.mp3" autoplay loop>수봉배달메 - 시골길에 핀 민들레</audio> 
+
+    
+
   
 
 <div class="inner-volume-box">  
@@ -388,23 +546,21 @@
 
     <span class="vol-label">Vol</span>  
 
-  
+     <input type="range" id="volumeSlider" min="0" max="100" value="50">  
 
-    <input type="range" id="volumeSlider" min="0" max="100" value="50">  
+     <span id="volumeValue" class="vol-label">50%</span>  
 
-  
-
-    <span id="volumeValue" class="vol-label">50%</span>  
-
-  
-
-    <img src="equalizer.gif" class="eq-gif" id="eqGif">  
+     <img src="equalizer.gif" class="eq-gif" id="eqGif">  
 
   
 
 </div>  
 
+  
 
+   
+
+  
 
 <script>  
 
@@ -416,6 +572,9 @@ let currentIndex = 0;
 
 const slides = document.querySelectorAll('.slide');  
 
+  
+
+   
 
   
 
@@ -425,23 +584,19 @@ function nextSlide() {
 
     slides[currentIndex].classList.remove('active');  
 
-  
+     currentIndex = (currentIndex + 1) % slides.length;  
 
-    currentIndex = (currentIndex + 1) % slides.length;  
+     slides[currentIndex].classList.add('active');  
 
-  
-
-    slides[currentIndex].classList.add('active');  
-
-  
-
-}  
+ }  
 
   
 
 setInterval(nextSlide, 6000);  
 
   
+
+   
 
   
 
@@ -455,19 +610,16 @@ function typeLines(lineIds, startDelay = 0) {
 
     let delay = startDelay;  
 
-  
+     lineIds.forEach((id, index) => {  
 
-    lineIds.forEach((id, index) => {  
+         const el = document.getElementById(id);  
 
-  
-
-        const el = document.getElementById(id);  
+         el.style.top = (index * 35) + "px";  
 
   
 
-        el.style.top = (index * 35) + "px";  
+   
 
- 
   
 
         setTimeout(() => {  
@@ -476,15 +628,14 @@ function typeLines(lineIds, startDelay = 0) {
 
             el.style.opacity = "1";  
 
-  
+             el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";  
 
-            el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";  
-
-  
-
-        }, delay);  
+         }, delay);  
 
   
+
+   
+
   
 
         delay += 4000;  
@@ -501,6 +652,9 @@ function typeLines(lineIds, startDelay = 0) {
 
 }  
 
+ 
+
+  
 
   
 
@@ -514,25 +668,17 @@ function fadeOutLines(lineIds, startDelay = 0) {
 
     let delay = startDelay;  
 
-  
+     lineIds.forEach(id => {  
 
-    lineIds.forEach(id => {  
+         setTimeout(() => {  
 
-  
-
-        setTimeout(() => {  
-
-  
-
-            document.getElementById(id).style.animation = "fadeOut 2s ease forwards";  
+             document.getElementById(id).style.animation = "fadeOut 2s ease forwards";  
 
   
 
         }, delay);  
 
-  
-
-        delay += 4000;  
+         delay += 4000;  
 
   
 
@@ -546,7 +692,10 @@ function fadeOutLines(lineIds, startDelay = 0) {
 
 }  
 
- 
+  
+
+   
+
   
 
 /* 엔딩 출력 */  
@@ -567,7 +716,11 @@ function showEnding() {
 
     let t = 0;  
 
- 
+  
+
+   
+
+  
 
     endingGroup.forEach((id, index) => {  
 
@@ -575,11 +728,17 @@ function showEnding() {
 
         const el = document.getElementById(id);  
 
+  
+
    
+
+  
 
         el.style.top = (index * 45) + "px";   /* ⭐ 줄 간격 */  
 
   
+
+   
 
   
 
@@ -601,7 +760,10 @@ function showEnding() {
 
         }, t);  
 
- 
+  
+
+   
+
   
 
         t += 2500;  
@@ -610,7 +772,11 @@ function showEnding() {
 
     });  
 
- 
+  
+
+   
+
+  
 
     setTimeout(() => {  
 
@@ -626,7 +792,9 @@ function showEnding() {
 
 }  
 
-  
+ 
+
+   
 
   
 
@@ -646,6 +814,8 @@ async function playSequence() {
 
   
 
+   
+
   
 
     for (let i = 0; i < 1; i++) {  
@@ -658,7 +828,11 @@ async function playSequence() {
 
         await new Promise(r => setTimeout(r, t1 + 1000));  
 
+  
 
+   
+
+  
 
         let f1 = fadeOutLines(group1, 0);  
 
@@ -668,11 +842,19 @@ async function playSequence() {
 
   
 
+   
+
+  
+
         let t2 = typeLines(group2, 0);  
 
   
 
         await new Promise(r => setTimeout(r, t2 + 1000));  
+
+  
+
+   
 
   
 
@@ -688,6 +870,7 @@ async function playSequence() {
 
   
 
+   
 
   
 
@@ -697,7 +880,23 @@ async function playSequence() {
 
 }  
 
+  
 
+   
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+   
 
   
 
@@ -737,15 +936,20 @@ window.onload = () => {
 
 }; 
 
-   
+  
+
+  
 
 </script>  
 
   
+
+   
 
   
 
 </body>  
 
   
+
 </html>  
