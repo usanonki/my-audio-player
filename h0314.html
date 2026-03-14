@@ -276,6 +276,24 @@
 
         .eq-gif { width: 70px; height:20px; margin-left: 10px; transition: opacity 0.4s; } 
 
+        .audio-box {
+    position: fixed;
+    bottom: 15px;
+    left: 430px;   /* 볼륨박스 오른쪽에 자연스럽게 붙음 */
+    background: rgba(0,0,0,0.45);
+    padding: 6px 10px;
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+}
+
+#audioPlayer {
+    height: 28px;     /* 볼륨바 높이와 균형 */
+    width: 180px;     /* 적당한 폭 */
+    filter: brightness(0.9);
+}
+
+
     </style> 
 
 </head> 
@@ -370,7 +388,9 @@
 
 </div> 
 
-  
+ <div class="audio-box">
+    <audio id="audioPlayer" controls></audio>
+</div> 
 
 <script> 
 
