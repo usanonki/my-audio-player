@@ -306,44 +306,33 @@
 
   
 
-        .inner-volume-box {  
-
-  
-
-            position: fixed;  
-
-             bottom: 15px;  
-
-             left: 270px;  
-
-             display: flex;  
-
-             align-items: center;  
-
-  
-
-            background: rgba(0,0,0,0.45);  
-
-             padding: 6px 10px;  
-
-             border-radius: 6px;  
-
-             backdrop-filter: blur(4px);  
-
-             z-index: 9999;  
-
-  
-
-        }  
-
+        /* 볼륨바 위치 및 디자인 수정 */
+.inner-volume-box {
+    position: fixed;
+    bottom: 15px;
+    left: 15px; /* 왼쪽 하단으로 배치 */
+    display: flex;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+    padding: 8px 15px;
+    border-radius: 30px; /* 둥근 캡슐 모양 */
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    border: 1px solid rgba(255,255,255,0.2);
+}
   
   
 
-        .vol-label { color: white; font-size: 12px; }  
+      .vol-label { color: white; font-size: 13px; margin: 0 8px; min-width: 35px; }
 
  
 
-        #volumeSlider { flex: 1; margin: 0 10px; cursor: pointer; height: 3px; }  
+       #volumeSlider { 
+    width: 100px; 
+    height: 4px; 
+    cursor: pointer; 
+    accent-color: #adff2f; /* 볼륨바 색상 */
+}
 
   
 
@@ -468,16 +457,13 @@
 
 
 <div class="inner-volume-box">  
-
-  
-
+    <!-- 재생/정지 버튼 추가 -->
+    <button id="playPauseBtn">▶</button>
+    
     <span class="vol-label">Vol</span>  
-
-     <input type="range" id="volumeSlider" min="0" max="100" value="50">  
-
-     <span id="volumeValue" class="vol-label">50%</span>  
-
-     <img src="equalizer.gif" class="eq-gif" id="eqGif">  
+    <input type="range" id="volumeSlider" min="0" max="100" value="50">  
+    <span id="volumeValue" class="vol-label">50%</span>  
+    <img src="equalizer.gif" class="eq-gif" id="eqGif" style="opacity: 0;">  
 
   
 
@@ -737,32 +723,53 @@ async function playSequence() {
 window.onload = () => { 
     playSequence(); 
 
-    const audio = document.querySelector("audio"); 
+    const audio = document.getElementById("bgAudio"); 
+    const btn = document.getElementById("playPauseBtn");
     const slider = document.getElementById("volumeSlider"); 
     const value = document.getElementById("volumeValue"); 
     const eq = document.getElementById("eqGif"); 
 
-    // 1. 소리 파일 경로를 절대 주소로 바꾸셨는지 꼭 확인하세요!
-    // 2. 브라우저 차단 정책을 피하기 위해 화면 클릭 시 재생 시도
-    document.body.addEventListener('click', () => {
+    // 재생 상태 업데이트 함수
+    function updateInterface() {
+        if (audio.paused) {
+            btn.innerText = "▶";
+            eq.style.opacity = "0";
+        } else {
+            btn.innerText = "||";
+            eq.style.opacity = (audio.volume > 0) ? "1" : "0";
+        }
+    }
+
+    // 재생/정지 버튼 클릭 이벤트
+    btn.addEventListener("click", () => {
         if (audio.paused) {
             audio.play();
+        } else {
+            audio.pause();
         }
-    }, { once: true }); // 딱 한 번만 실행
+        updateInterface();
+    });
 
-    // 초기 볼륨 설정 
-    audio.volume = slider.value / 100; 
+    // 크롬 대응: 화면 아무곳이나 클릭하면 재생 시작
+    document.body.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play().then(() => updateInterface()).catch(e => console.log("자동재생 차단됨"));
+        }
+    }, { once: true });
 
+    // 볼륨 조절
     slider.addEventListener("input", () => { 
         const v = slider.value; 
         audio.volume = v / 100; 
         value.innerText = v + "%"; 
-        eq.style.opacity = (v == 0) ? "0" : "1"; 
-        
-        // 슬라이더를 만졌을 때도 재생 시도 (차단 해제용)
-        if (audio.paused) audio.play();
+        updateInterface();
+        if (audio.paused) audio.play(); // 바를 움직이면 바로 재생
     }); 
+
+    // 초기 볼륨 설정
+    audio.volume = slider.value / 100; 
 };
+
 
 
 </script>  
