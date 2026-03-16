@@ -39,7 +39,7 @@
         object-fit: cover;
         opacity: 0;
         transition: opacity 3s ease-in-out;
-        border-radius: 20px; /* ← 모서리 둥글게 */
+        border-radius: 20px;
       }
       .slide.active {
         opacity: 1;
@@ -54,8 +54,8 @@
         height: 100%;
         object-fit: cover;
         pointer-events: none;
-        z-index: 12; /* 사진 위, 자막 아래 */
-        opacity: 0.8; /* 필요하면 조절 가능 */
+        z-index: 12;
+        opacity: 0.8;
       }
 
       /* 자막 */
@@ -66,8 +66,6 @@
         overflow: hidden;
         white-space: nowrap;
         z-index: 20;
-        background: transparent;
-        pointer-events: none;
       }
 
       .scrolling-text {
@@ -92,23 +90,6 @@
         100% {
           transform: translateX(-100%);
         }
-      }
-
-      /* 오디오 플레이어 */
-      audio {
-        position: absolute;
-        bottom: 25px;
-        left: 3%;
-        width: 94%;
-        height: 10px;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        z-index: 10;
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 5px;
-      }
-      .container:hover audio {
-        opacity: 0.8;
       }
 
       /* 미니 오디오 플레이어 */
@@ -158,6 +139,7 @@
       }
     </style>
   </head>
+
   <body>
     <div class="container">
       <!-- 비누방울 GIF 오버레이 -->
@@ -178,6 +160,7 @@
         </div>
       </div>
 
+      <!-- 메인 오디오 (하나만 사용) -->
       <audio id="bgm" src="LPN9.mp3" autoplay loop></audio>
 
       <!-- 자막 -->
@@ -192,73 +175,3 @@
       <!-- GitHub 이미지 001~008 -->
       <img src="001.jpg" class="slide active" />
       <img src="002.jpg" class="slide" />
-      <img src="003.jpg" class="slide" />
-      <img src="004.jpg" class="slide" />
-      <img src="005.jpg" class="slide" />
-      <img src="006.jpg" class="slide" />
-      <img src="007.jpg" class="slide" />
-      <img src="008.jpg" class="slide" />
-      
-    </div>
-
-    <script>
-      let currentIndex = 0;
-      const slides = document.querySelectorAll('.slide');
-
-      function nextSlide() {
-        slides[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % slides.length;
-        slides[currentIndex].classList.add('active');
-      }
-
-      // 20초마다 사진 변경
-      setInterval(nextSlide, 20000);
-
-      // 클릭 시 음악 재생 보장
-      window.addEventListener(
-        'click',
-        function () {
-          var audio = document.getElementById('myAudio');
-          if (audio.paused) {
-            audio.play();
-          }
-        },
-        { once: true },
-      );
-
-      // 미니 플레이어 기능
-      const audio = document.getElementById('bgm');
-      const playBtn = document.getElementById('playBtn');
-      const seekBar = document.getElementById('seekBar');
-
-      // 자동 재생 성공 시 버튼 상태 업데이트
-      audio.addEventListener('play', () => {
-        playBtn.textContent = '❚❚';
-      });
-
-      // 일시정지 시 버튼 상태 업데이트
-      audio.addEventListener('pause', () => {
-        playBtn.textContent = '▶';
-      });
-
-      // 버튼 클릭 시 재생/정지
-      playBtn.addEventListener('click', () => {
-        if (audio.paused) {
-          audio.play();
-        } else {
-          audio.pause();
-        }
-      });
-
-      // 재생 위치 업데이트
-      audio.addEventListener('timeupdate', () => {
-        seekBar.value = (audio.currentTime / audio.duration) * 100;
-      });
-
-      // seekBar 드래그로 이동
-      seekBar.addEventListener('input', () => {
-        audio.currentTime = (seekBar.value / 100) * audio.duration;
-      });
-    </script>
-  </body>
-</html>
