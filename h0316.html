@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Love Potion Number 9</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+        }
+        .slide.active { opacity: 1; }
+
+        .caption-container {
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            height: 500px;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .typewriter-line {
+            font-family: 'Gamja Flower', cursive;
+            font-size: 26px;
+            color: #adff2f;
+            text-shadow: 2px 2px 2px #000;
+            white-space: nowrap;
+            overflow: hidden;
+            width: auto;
+            opacity: 0;
+            border-right: 2px solid transparent;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .ending {
+            font-family: 'Gamja Flower', cursive;
+            font-size: 36px;
+            color: #ff007f;
+            text-shadow:
+                0 0 8px #ff9ac2,
+                0 0 12px #ff9ac2,
+                0 0 18px #ff9ac2;
+            align-self: flex-start !important;
+            left: 0 !important;
+            transform: none !important;
+            opacity: 0;
+            white-space: nowrap;
+            border-right: 2px solid transparent;
+        }
+
+        #endingWrapper {
+            position: absolute;
+            top: 10%;
+            left: 0;
+            width: 80%;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: all 2s ease-in-out;
+        }
+
+        #endingWrapper.center {
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            align-items: center;
+            text-align: center;
+        }
+
+        @keyframes glow {
+            0%   { text-shadow: 0 0 5px #ff9ac2; }
+            50%  { text-shadow: 0 0 18px #ff9ac2; }
+            100% { text-shadow: 0 0 5px #ff9ac2; }
+        }
+
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+        /* 볼륨 UI */
+        .inner-volume-box {
+            position: fixed;
+            bottom: 15px;
+            left: 270px;
+            display: flex;
+            align-items: center;
+            background: rgba(0,0,0,0.45);
+            padding: 6px 10px;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+        }
+
+        .vol-label { color: white; font-size: 12px; }
+        #volumeSlider { flex: 1; margin: 0 10px; cursor: pointer; height: 3px; }
+        .eq-gif { width: 70px; height:20px; margin-left: 10px; transition: opacity 0.4s; }
+
+        /* 감성 아트 오디오 플레이어 */
+        .mini-player {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            width: 240px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: rgba(0,0,0,0.45);
+            border-radius: 10px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
+            z-index: 9999;
+        }
+
+        .album-art {
+            width: 55px;
+            height: 55px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .player-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            font-size: 13px;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        #playBtn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            cursor: pointer;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        #seekBar {
+            width: 100%;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 감성 아트 오디오 플레이어 -->
+<div class="mini-player">
+    <img src="https://usanonki.github.io/photo/064.gif" class="album-art">
+    
+    <div class="player-info">
+        <div class="title">Love Potion Number 9</div>
+        <div class="controls">
+            <button id="playBtn">▶</button>
+        </div>
+        <input type="range" id="seekBar" value="0" min="0" max="100">
+    </div>
+</div>
+
+<div class="container">
+    <div class="caption-container" id="captionBox">
+
+        <div class="typewriter-line" id="line1">햇살 가득한 하늘이</div>
+        <div class="typewriter-line" id="line2">마음을 설레이게하는</div>
+        <div class="typewriter-line" id="line3">늦은 월요일 아침 입니다.</div>
+        <div class="typewriter-line" id="line4">따스한 햇살</div>
+        <div class="typewriter-line" id="line5">파란 하늘</div>
+        <div class="typewriter-line" id="line6">저절로 기분이 좋아지는</div>
+        <div class="typewriter-line" id="line7">하루가 될거 같습니다.</div>
+
+        <div class="typewriter-line" id="line8">추억의 곡을 소횐하여,</div>
+        <div class="typewriter-line" id="line9">커피 한잔과 함께</div>
+        <div class="typewriter-line" id="line10">허전한 내 맘과,</div>
+        <div class="typewriter-line" id="line11">아스라한 그리움도 채워 봅니다.</div>
+
+        <div id="endingWrapper">
+            <div class="typewriter-line ending" id="line12">Happy ❤️ Day 회원님,</div>
+            <div class="typewriter-line ending" id="line13">잠시나마 봄꽃과 소풍하면서,</div>
+            <div class="typewriter-line ending" id="line14">소중한 휴식시간,</div>
+            <div class="typewriter-line ending" id="line15">커피와 함께 즐기고 있습니다..💕💕💕</div>
+        </div>
+    </div>
+
+    <img src="https://usanonki.github.io/photo/064.gif" class="slide active">
+    <img src="https://usanonki.github.io/photo/116.jpg" class="slide">
+    <img src="https://usanonki.github.io/photo/112.jpg" class="slide">
+    <img src="https://usanonki.github.io/photo/117.jpg" class="slide">
+    <img src="https://usanonki.github.io/photo/113.jpg" class="slide">
+</div>
+
+<audio id="bgm" src="https://usanonki.github.io/music/LPN9.mp3"  loop></audio>
+
+<div class="inner-volume-box">
+    <span class="vol-label">Vol</span>
+    <input type="range" id="volumeSlider" min="0" max="100" value="50">
+    <span id="volumeValue" class="vol-label">50%</span>
+    <img src="equalizer.gif" class="eq-gif" id="eqGif">
+</div>
+
+<script>
+let currentIndex = 0;
+const slides = document.querySelectorAll('.slide');
+
+function nextSlide() {
+    slides[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % slides.length;
+    slides[currentIndex].classList.add('active');
+}
+setInterval(nextSlide, 6000);
+
+/* 자막 출력 */
+function typeLines(lineIds, startDelay = 0) {
+    let delay = startDelay;
+    lineIds.forEach((id, index) => {
+        const el = document.getElementById(id);
+        el.style.top = (index * 35) + "px";
+
+        setTimeout(() => {
+            el.style.opacity = "1";
+            el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";
+        }, delay);
+
+        delay += 4000;
+    });
+    return delay;
+}
+
+/* 자막 사라짐 */
+function fadeOutLines(lineIds, startDelay = 0) {
+    let delay = startDelay;
+    lineIds.forEach(id => {
+        setTimeout(() => {
+            document.getElementById(id).style.animation = "fadeOut 2s ease forwards";
+        }, delay);
+        delay += 4000;
+    });
+    return delay + 2000;
+}
+
+/* 엔딩 출력 */
+function showEnding() {
+    const endingGroup = ["line12", "line13", "line14", "line15"];
+    const wrapper = document.getElementById('endingWrapper');
+    let t = 0;
+
+    endingGroup.forEach((id, index) => {
+        const el = document.getElementById(id);
+        el.style.top = (index * 45) + "px";
+
+        setTimeout(() => {
+            el.style.opacity = "1";
+            el.style.animation =
+                "typing 3s steps(30) forwards, fadeIn 1s forwards, glow 3s infinite";
+        }, t);
+
+        t += 2500;
+    });
+
+    setTimeout(() => {
+        wrapper.classList.add('center');
+    }, t + 500);
+}
+
+/* 전체 시퀀스 */
+async function playSequence() {
+    const group1 = ["line1", "line2", "line3", "line4", "line5", "line6", "line7"];
+    const group2 = ["line8", "line9", "line10", "line11"];
+
+    let t1 = typeLines(group1, 0);
+    await new Promise(r => setTimeout(r, t1 + 1000));
+
+    let f1 = fadeOutLines(group1, 0);
+    await new Promise(r => setTimeout(r, f1));
+
+    let t2 = typeLines(group2, 0);
+    await new Promise(r => setTimeout(r, t2 + 1000));
+
+    let f2 = fadeOutLines(group2, 0);
+    await new Promise(r => setTimeout(r, f2));
+
+    showEnding();
+}
+
+/* 오디오 플레이어 */
+window.onload = () => {
+    playSequence();
+
+    const audio = document.getElementById("bgm");
+    const slider = document.getElementById("volumeSlider");
+    const value = document.getElementById("volumeValue");
+    const eq = document.getElementById("eqGif");
+
+    audio.volume = slider.value / 100;
+
+    slider.addEventListener("input", () => {
+        const v = slider.value;
+        audio.volume = v / 100;
+        value.innerText = v + "%";
+        eq.style.opacity = (v == 0) ? "0" : "1";
+    });
+
+    /* 미니 플레이어 */
+    const playBtn = document.getElementById("playBtn");
+    const seekBar = document.getElementById("seekBar");
+
+    playBtn.addEventListener("click", () => {
+        if (audio.paused) {
+            audio.play();
+            playBtn.textContent = "❚❚";
+        } else {
+            audio.pause();
+            playBtn.textContent = "▶";
+        }
+    });
+
+    audio.addEventListener("timeupdate", () => {
+        seekBar.value = (audio.currentTime / audio.duration) * 100;
+    });
+
+    seekBar.addEventListener("input", () => {
+        audio.currentTime = (seekBar.value / 100) * audio.duration;
+    });
+};
+</script>
+
+</body>
+</html>
