@@ -89,9 +89,9 @@
              font-size: 36px;  
              color: #ff007f;  
              text-shadow:  
-                  0 0 8px #ff9ac2,  
-                 0 0 12px #ff9ac2,  
-                 0 0 18px #ff9ac2;  
+                0 0 8px #ff9ac2,  
+                0 0 12px #ff9ac2,  
+                0 0 18px #ff9ac2;  
   
             align-self: flex-start !important;   /* ⭐ 핵심 */  
 
@@ -109,53 +109,53 @@
         #endingWrapper {  
   
             position: absolute;  
-             top: 10%;     /* ⭐ group1과 겹치지 않도록 조정 */  
-             left: 0;  
-             width: 80%;  
-             z-index: 100;  
-             display: flex;  
-             flex-direction: column;  
-             align-items: flex-start;  
-             transition: all 2s ease-in-out;  
+            top: 10%;     /* ⭐ group1과 겹치지 않도록 조정 */  
+            left: 0;  
+            width: 80%;  
+            z-index: 100;  
+            display: flex;  
+            flex-direction: column;  
+            align-items: flex-start;  
+            transition: all 2s ease-in-out;  
   
         }  
  
         #endingWrapper.center {  
   
             top: 20%;  
-             left: 50%;  
-             transform: translate(-50%, -50%);  
-             align-items: center;  
-             text-align: center;  
+            left: 50%;  
+            transform: translate(-50%, -50%);  
+            align-items: center;  
+            text-align: center;  
   
         }  
   
         @keyframes glow {  
   
             0%   { text-shadow: 0 0 5px #ff9ac2; }  
-             50%  { text-shadow: 0 0 18px #ff9ac2; }  
-             100% { text-shadow: 0 0 5px #ff9ac2; }  
+            50%  { text-shadow: 0 0 18px #ff9ac2; }  
+            100% { text-shadow: 0 0 5px #ff9ac2; }  
   
         }  
   
         @keyframes typing { from { width: 0; } to { width: 100%; } }  
-         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }  
-         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }  
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }  
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }  
   
         /* 유튜브 및 볼륨 UI */  
   
         .youtube-bar {  
   
             position: fixed;  
-             bottom: 15px;  
-             left: 15px;  
-             width: 240px;  
-             height: 135px;  
-             z-index: 9999;  
-             border: 2px solid rgba(255, 255, 255, 0.3);  
-             border-radius: 8px;  
-             opacity: 0.55;  
-             filter: brightness(0.85);  
+            bottom: 15px;  
+            left: 15px;  
+            width: 240px;  
+            height: 135px;  
+            z-index: 9999;  
+            border: 2px solid rgba(255, 255, 255, 0.3);  
+            border-radius: 8px;  
+            opacity: 0.55;  
+            filter: brightness(0.85);  
   
         }  
   
@@ -278,9 +278,9 @@ function nextSlide() {
   
     slides[currentIndex].classList.remove('active');  
 
-     currentIndex = (currentIndex + 1) % slides.length;  
+    currentIndex = (currentIndex + 1) % slides.length;  
 
-     slides[currentIndex].classList.add('active');  
+    slides[currentIndex].classList.add('active');  
 
  }  
  
@@ -297,7 +297,7 @@ function typeLines(lineIds, startDelay = 0) {
 
      lineIds.forEach((id, index) => {  
 
-         const el = document.getElementById(id);  
+    const el = document.getElementById(id);  
 
          el.style.top = (index * 35) + "px";  
   
@@ -306,7 +306,7 @@ function typeLines(lineIds, startDelay = 0) {
 
             el.style.opacity = "1";  
 
-             el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";  
+            el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";  
 
          }, delay);  
 
@@ -357,17 +357,17 @@ function showEnding() {
 
     endingGroup.forEach((id, index) => {  
   
-        const el = document.getElementById(id);  
+    const el = document.getElementById(id);  
  
         el.style.top = (index * 45) + "px";   /* ⭐ 줄 간격 */  
   
         setTimeout(() => {  
   
-            el.style.opacity = "1";  
+        el.style.opacity = "1";  
   
-            el.style.animation =  
+        el.style.animation =  
   
-                "typing 3s steps(30) forwards, fadeIn 1s forwards, glow 3s infinite";  
+        "typing 3s steps(30) forwards, fadeIn 1s forwards, glow 3s infinite";  
   
 
         }, t);  
