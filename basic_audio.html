@@ -157,6 +157,25 @@
         color: #ddd;
         margin-top: 4px;
       }
+
+      .time-volume-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.volume-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vol-label {
+  font-size: 12px;
+  color: #ddd;
+}
+
     </style>
   </head>
 
@@ -177,7 +196,18 @@
           </div>
 
           <input type="range" id="seekBar" value="0" min="0" max="100" />
-          <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="1" />
+
+      <div class="time-volume-row">
+      <div class="time-display">
+      <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+      </div>
+
+      <div class="volume-box">
+      <span class="vol-label">볼륨</span>
+      <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="1" />
+      </div>
+      </div>
+
 
           <div class="time-display">
             <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
