@@ -100,23 +100,30 @@
         display: flex;
         align-items: center;
         background: rgba(0, 0, 0, 0.55);
-        padding: 10px 14px;
-        border-radius: 12px;
+        padding: 12px 16px;
+        border-radius: 14px;
         backdrop-filter: blur(4px);
         z-index: 30;
       }
 
       .album-art {
-        width: 48px;
-        height: 48px;
+        width: 52px;
+        height: 52px;
         border-radius: 8px;
-        margin-right: 10px;
+        margin-right: 12px;
+        animation: rotateAlbum 12s linear infinite;
+        animation-play-state: paused;
+      }
+
+      @keyframes rotateAlbum {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
       }
 
       .player-info {
         display: flex;
         flex-direction: column;
-        width: 180px;
+        width: 200px;
       }
 
       .title {
@@ -132,10 +139,23 @@
         font-size: 22px;
         cursor: pointer;
         margin-bottom: 4px;
+        transition: transform 0.2s ease;
       }
 
-      #seekBar {
+      .controls button:active {
+        transform: scale(0.85);
+      }
+
+      #seekBar,
+      #volumeBar {
         width: 100%;
+        margin-top: 4px;
+      }
+
+      .time-display {
+        font-size: 12px;
+        color: #ddd;
+        margin-top: 4px;
       }
     </style>
   </head>
@@ -157,10 +177,15 @@
           </div>
 
           <input type="range" id="seekBar" value="0" min="0" max="100" />
+          <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="1" />
+
+          <div class="time-display">
+            <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+          </div>
         </div>
       </div>
 
-      <!-- 메인 오디오 (하나만 사용) -->
+      <!-- 메인 오디오 -->
       <audio id="bgm" src="LPN9.mp3" autoplay loop></audio>
 
       <!-- 자막 -->
@@ -200,25 +225,46 @@
       const audio = document.getElementById('bgm');
       const playBtn = document.getElementById('playBtn');
       const seekBar = document.getElementById('seekBar');
+      const volumeBar = document.getElementById('volumeBar');
+      const currentTimeEl = document.getElementById('currentTime');
+      const durationEl = document.getElementById('duration');
+      const albumArt = document.querySelector('.album-art');
 
-      audio.addEventListener('play', () => {
-        playBtn.textContent = '❚❚';
+      function formatTime(sec) {
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+      }
+
+      audio.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(audio.duration);
       });
 
-      audio.addEventListener('pause', () => {
-        playBtn.textContent = '▶';
+      audio.addEventListener('timeupdate', () => {
+        seekBar.value = (audio.currentTime / audio.duration) * 100;
+        currentTimeEl.textContent = formatTime(audio.currentTime);
       });
 
       playBtn.addEventListener('click', () => {
         audio.paused ? audio.play() : audio.pause();
       });
 
-      audio.addEventListener('timeupdate', () => {
-        seekBar.value = (audio.currentTime / audio.duration) * 100;
+      audio.addEventListener('play', () => {
+        playBtn.textContent = '❚❚';
+        albumArt.style.animationPlayState = 'running';
+      });
+
+      audio.addEventListener('pause', () => {
+        playBtn.textContent = '▶';
+        albumArt.style.animationPlayState = 'paused';
       });
 
       seekBar.addEventListener('input', () => {
         audio.currentTime = (seekBar.value / 100) * audio.duration;
+      });
+
+      volumeBar.addEventListener('input', () => {
+        audio.volume = volumeBar.value;
       });
 
       /* 클릭 시 자동재생 보장 */
