@@ -351,6 +351,15 @@ window.onload = () => {
         }
     });
 
+    audio.addEventListener("play", () => {
+    playBtn.textContent = "❚❚";
+    });
+
+    audio.addEventListener("pause", () => {
+    playBtn.textContent = "▶";
+    });
+
+
     audio.addEventListener("timeupdate", () => {
         seekBar.value = (audio.currentTime / audio.duration) * 100;
     });
