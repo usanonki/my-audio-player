@@ -58,10 +58,10 @@
         opacity: 0.8;
       }
 
-      /* 자막 */
+      /* 자막 — 상단으로 이동 */
       .caption-container {
         position: absolute;
-        bottom: 45px;
+        top: 20px;
         width: 100%;
         overflow: hidden;
         white-space: nowrap;
@@ -84,12 +84,8 @@
       }
 
       @keyframes marquee {
-        0% {
-          transform: translateX(0);
-        }
-        100% {
-          transform: translateX(-100%);
-        }
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
       }
 
       /* 미니 오디오 플레이어 */
@@ -146,8 +142,7 @@
         transform: scale(0.85);
       }
 
-      #seekBar,
-      #volumeBar {
+      #seekBar {
         width: 100%;
         margin-top: 4px;
       }
@@ -158,19 +153,25 @@
         margin-top: 4px;
       }
 
-     
+      /* 🔥 볼륨바를 완전히 외부 오른쪽으로 */
+      .volume-outside {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(0,0,0,0.55);
+        padding: 8px 12px;
+        border-radius: 10px;
+        backdrop-filter: blur(4px);
+        z-index: 40;
+      }
 
-.volume-box {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.vol-label {
-  font-size: 12px;
-  color: #ddd;
-}
-
+      .vol-label {
+        font-size: 12px;
+        color: #ddd;
+      }
     </style>
   </head>
 
@@ -192,29 +193,27 @@
 
           <input type="range" id="seekBar" value="0" min="0" max="100" />
 
-      <div class="time-volume-row">
-      <div class="time-display">
-      <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+          <div class="time-display">
+            <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+          </div>
+        </div>
       </div>
 
-      <div class="volume-box">
-      <span class="vol-label">볼륨</span>
-      <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="1" />
-      </div>
-      </div>
-          
-        </div>
+      <!-- 🔥 볼륨바를 완전히 외부로 분리 -->
+      <div class="volume-outside">
+        <span class="vol-label">볼륨</span>
+        <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="1" />
       </div>
 
       <!-- 메인 오디오 -->
       <audio id="bgm" src="LPN9.mp3" autoplay loop></audio>
 
-      <!-- 자막 -->
+      <!-- 자막 (상단) -->
       <div class="caption-container">
         <div class="scrolling-text">
           🐸 겨울 잠을 자던 개구리가 깨어 나고 새싹이 돋아나는 경칩입니다. 🌸
-          경칩이 지나면 봄은 한걸음 더 가까이 오겠죠? 🌼 기온 차가 있는 환절기에
-          건강 조심 하시고 오늘 하루도 행복하게 보내시기 바랍니다. ✨
+          경칩이 지나면 봄은 한걸음 더 가까이 오겠죠? 🌼 환절기 건강 조심하시고
+          오늘 하루도 행복하게 보내세요. ✨
         </div>
       </div>
 
@@ -299,3 +298,4 @@
     </script>
   </body>
 </html>
+
