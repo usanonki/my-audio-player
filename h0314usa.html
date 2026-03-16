@@ -37,7 +37,6 @@
 
         .slide {  
 
-
             position: absolute;  
             top: 0; left: 0;  
             width: 100%; height: 100%;  
@@ -46,7 +45,6 @@
             transition: opacity 3s ease-in-out;  
 
         }  
-
 
         .slide.active { opacity: 1; }  
 
@@ -83,8 +81,7 @@
 
   
         .ending {  
-  
-
+ 
             font-family: 'Gamja Flower', cursive;  
              font-size: 36px;  
              color: #ff007f;  
@@ -102,8 +99,7 @@
              border-right: 2px solid transparent;  
  
         }  
-  
-  
+    
         /* 엔딩 Wrapper */  
   
         #endingWrapper {  
@@ -159,30 +155,29 @@
   
         }  
   
-
         /* 볼륨바 위치 및 디자인 수정 */
-.inner-volume-box {
-    position: fixed;
-    bottom: 15px;
-    left: 15px; /* 왼쪽 하단으로 배치 */
-    display: flex;
-    align-items: center;
-    background: rgba(0,0,0,0.6);
-    padding: 8px 15px;
-    border-radius: 30px; /* 둥근 캡슐 모양 */
-    backdrop-filter: blur(8px);
-    z-index: 9999;
-    border: 1px solid rgba(255,255,255,0.2);
-}
+     .inner-volume-box {
+            position: fixed;
+            bottom: 15px;
+            left: 15px; /* 왼쪽 하단으로 배치 */
+            display: flex;
+            align-items: center;
+            background: rgba(0,0,0,0.6);
+            padding: 8px 15px;
+            border-radius: 30px; /* 둥근 캡슐 모양 */
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            border: 1px solid rgba(255,255,255,0.2);
+    }
     
       .vol-label { color: white; font-size: 13px; margin: 0 8px; min-width: 35px; }
  
        #volumeSlider { 
-    width: 100px; 
-    height: 4px; 
-    cursor: pointer; 
-    accent-color: #adff2f; /* 볼륨바 색상 */
-}
+        width: 100px; 
+        height: 4px; 
+        cursor: pointer; 
+        accent-color: #adff2f; /* 볼륨바 색상 */
+    }
   
         .eq-gif { width: 70px; height:20px; margin-left: 10px; transition: opacity 0.4s; }  
   
@@ -211,8 +206,7 @@
         <div class="typewriter-line" id="line6"> 저절로 기분이 좋아지는</div>  
 
         <div class="typewriter-line" id="line7">하루가 될거 같습니다.</div>  
-  
-  
+    
        <!-- 반복 명언 -->  
   
         <div class="typewriter-line" id="line8">이름 모를 노래 한 곡과....</div>  
@@ -237,7 +231,6 @@
   
         </div>  
      
-
     </div>  
     
      <!-- 이미지 슬라이드 -->  
@@ -252,7 +245,6 @@
 
     <img src="https://usanonki.github.io/photo/113.jpg " class="slide ">  
   
-
 </div>  
  
 <audio src="https://usanonki.github.io/my-audio-player/h0314.mp3" autoplay loop>수봉배달메 - 시골길에 핀 민들레</audio> 
@@ -284,13 +276,10 @@ function nextSlide() {
 
  }  
  
-
 setInterval(nextSlide, 6000);  
   
-
 /* 자막 출력 */  
   
-
 function typeLines(lineIds, startDelay = 0) {  
   
     let delay = startDelay;  
@@ -303,7 +292,6 @@ function typeLines(lineIds, startDelay = 0) {
   
         setTimeout(() => {  
   
-
             el.style.opacity = "1";  
 
             el.style.animation = "typing 3s steps(30, end) forwards, fadeIn 1s ease forwards";  
@@ -314,17 +302,12 @@ function typeLines(lineIds, startDelay = 0) {
   
     });  
   
-
     return delay;  
   
-
 }  
-  
 
 /* 자막 사라짐 */  
-  
-
-function fadeOutLines(lineIds, startDelay = 0) {  
+ function fadeOutLines(lineIds, startDelay = 0) {  
  
     let delay = startDelay;  
 
@@ -346,7 +329,6 @@ function fadeOutLines(lineIds, startDelay = 0) {
 
 /* 엔딩 출력 */  
  
-
 function showEnding() {  
   
     const endingGroup = ["line12", "line13", "line14", "line15"];  
@@ -369,7 +351,6 @@ function showEnding() {
   
         "typing 3s steps(30) forwards, fadeIn 1s forwards, glow 3s infinite";  
   
-
         }, t);  
   
         t += 2500;  
@@ -384,7 +365,6 @@ function showEnding() {
   
 }  
   
-
 /* 전체 시퀀스 */  
   
 async function playSequence() {  
