@@ -15,36 +15,22 @@
         body {  
 
             margin: 0;  
-
              display: flex;  
-
              justify-content: center;  
-
              align-items: center;  
-
              background: #000;  
-
              height: 100vh;  
-
              overflow: hidden;  
 
-
         }  
-
   
         .container {  
 
-
             position: relative;  
-
              width: 100%;  
-
              max-width: 800px;  
-
              height: 500px;  
-
              overflow: hidden;  
-
              border-radius: 10px;  
 
         }  
@@ -53,17 +39,11 @@
 
 
             position: absolute;  
-
              top: 0; left: 0;  
-
              width: 100%; height: 100%;  
-
              object-fit: cover;  
-
              opacity: 0;  
-
              transition: opacity 3s ease-in-out;  
-
 
         }  
 
@@ -72,17 +52,11 @@
 
         .caption-container {  
 
-
             position: absolute;  
-
              top: 40px;  
-
              width: 100%;  
-
              height: 500px;  
-
              z-index: 20;  
-
              pointer-events: none;  
   
         }  
@@ -90,27 +64,16 @@
         .typewriter-line {  
  
             font-family: 'Gamja Flower', cursive;  
-
              font-size: 26px;  
-
              color: #adff2f;  
-
              text-shadow: 2px 2px 2px #000;  
-
              white-space: nowrap;  
-
              overflow: hidden;  
-
              width: auto;  
-
              opacity: 0;  
-
              border-right: 2px solid transparent;  
-
              position: absolute;  
-
              left: 50%;  
-
              transform: translateX(-50%);  
   
         }  
@@ -123,29 +86,19 @@
   
 
             font-family: 'Gamja Flower', cursive;  
-
              font-size: 36px;  
-
              color: #ff007f;  
-
              text-shadow:  
-  
-                0 0 8px #ff9ac2,  
-
+                  0 0 8px #ff9ac2,  
                  0 0 12px #ff9ac2,  
-
                  0 0 18px #ff9ac2;  
   
             align-self: flex-start !important;   /* ⭐ 핵심 */  
 
              left: 0 !important;   /* ⭐ 이것이 핵심 */  
-
              transform: none !important;   /* ⭐ 중앙 겹침 문제 해결 */  
-
              opacity: 0;  
-
              white-space: nowrap;  
-
              border-right: 2px solid transparent;  
  
         }  
@@ -156,21 +109,13 @@
         #endingWrapper {  
   
             position: absolute;  
-
              top: 10%;     /* ⭐ group1과 겹치지 않도록 조정 */  
-
              left: 0;  
-
              width: 80%;  
-
              z-index: 100;  
-
              display: flex;  
-
              flex-direction: column;  
-
              align-items: flex-start;  
-
              transition: all 2s ease-in-out;  
   
         }  
@@ -178,13 +123,9 @@
         #endingWrapper.center {  
   
             top: 20%;  
-
              left: 50%;  
-
              transform: translate(-50%, -50%);  
-
              align-items: center;  
-
              text-align: center;  
   
         }  
@@ -192,17 +133,13 @@
         @keyframes glow {  
   
             0%   { text-shadow: 0 0 5px #ff9ac2; }  
-
              50%  { text-shadow: 0 0 18px #ff9ac2; }  
-
              100% { text-shadow: 0 0 5px #ff9ac2; }  
   
         }  
   
         @keyframes typing { from { width: 0; } to { width: 100%; } }  
-
          @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }  
-
          @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }  
   
         /* 유튜브 및 볼륨 UI */  
@@ -210,27 +147,17 @@
         .youtube-bar {  
   
             position: fixed;  
-
              bottom: 15px;  
-
              left: 15px;  
-
              width: 240px;  
-
              height: 135px;  
-
              z-index: 9999;  
-
              border: 2px solid rgba(255, 255, 255, 0.3);  
-
              border-radius: 8px;  
-
              opacity: 0.55;  
-
              filter: brightness(0.85);  
   
         }  
-
   
 
         /* 볼륨바 위치 및 디자인 수정 */
@@ -407,21 +334,18 @@ function fadeOutLines(lineIds, startDelay = 0) {
 
              document.getElementById(id).style.animation = "fadeOut 2s ease forwards";  
   
-
         }, delay);  
 
          delay += 4000;  
   
-
     });  
-
   
     return delay + 2000;  
   
 }  
 
 /* 엔딩 출력 */  
-  
+ 
 
 function showEnding() {  
   
@@ -430,20 +354,15 @@ function showEnding() {
     const wrapper = document.getElementById('endingWrapper');  
   
     let t = 0;  
- 
 
     endingGroup.forEach((id, index) => {  
   
-
         const el = document.getElementById(id);  
  
-
         el.style.top = (index * 45) + "px";   /* ⭐ 줄 간격 */  
   
-
         setTimeout(() => {  
   
-
             el.style.opacity = "1";  
   
             el.style.animation =  
@@ -452,20 +371,15 @@ function showEnding() {
   
 
         }, t);  
-
   
         t += 2500;  
-  
-
-    });  
-
  
-
+    });  
+ 
     setTimeout(() => {  
   
         wrapper.classList.add('center');  
   
-
     }, t + 500);  
   
 }  
@@ -556,6 +470,5 @@ window.onload = () => {
 </script>  
 
 </body>  
-  
-
+ 
 </html>  
