@@ -181,28 +181,34 @@
       <img src="waterspot.gif" class="bubble-overlay" />
 
       <!-- 감성 미니 오디오 플레이어 -->
-      <div class="mini-player">
-        <img src="https://usanonki.github.io/photo/064.gif" class="album-art" />
+<div class="mini-player">
+  <img src="https://usanonki.github.io/photo/064.gif" class="album-art" />
 
-        <div class="player-info">
-          <div class="title">Love Potion No. 9</div>
+  <div class="player-info">
+    <div class="title">Love Potion No. 9</div>
 
-          <div class="controls">
-            <button id="playBtn">▶</button>
-          </div>
+    <!-- 버튼만 들어가는 박스 -->
+    <div class="controls">
+      <button id="playBtn">▶</button>
+    </div>
 
-          <input type="range" id="seekBar" value="0" min="0" max="100" />
-
-          <div class="time-display">
-            <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
-          </div>
-        </div>
+    <!-- 버튼 오른쪽으로 이동한 시간 표시 -->
+    <div class="play-row">
+      <div class="time-display">
+        <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
       </div>
+    </div>
+
+    <!-- 시크바 -->
+    <input type="range" id="seekBar" value="0" min="0" max="100" />
+  </div>
+</div>
+
 
       <!-- 🔥 볼륨바를 완전히 외부로 분리 -->
       <div class="volume-outside">
         <span class="vol-label">볼륨</span>
-        <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="1" />
+        <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.4" />
       </div>
 
       <!-- 메인 오디오 -->
