@@ -175,3 +175,60 @@
       <!-- GitHub 이미지 001~008 -->
       <img src="001.jpg" class="slide active" />
       <img src="002.jpg" class="slide" />
+      <img src="003.jpg" class="slide" />
+      <img src="004.jpg" class="slide" />
+      <img src="005.jpg" class="slide" />
+      <img src="006.jpg" class="slide" />
+      <img src="007.jpg" class="slide" />
+      <img src="008.jpg" class="slide" />
+    </div>
+
+    <script>
+      /* 사진 슬라이드 */
+      let currentIndex = 0;
+      const slides = document.querySelectorAll('.slide');
+
+      function nextSlide() {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+      }
+
+      setInterval(nextSlide, 20000);
+
+      /* 미니 플레이어 기능 */
+      const audio = document.getElementById('bgm');
+      const playBtn = document.getElementById('playBtn');
+      const seekBar = document.getElementById('seekBar');
+
+      audio.addEventListener('play', () => {
+        playBtn.textContent = '❚❚';
+      });
+
+      audio.addEventListener('pause', () => {
+        playBtn.textContent = '▶';
+      });
+
+      playBtn.addEventListener('click', () => {
+        audio.paused ? audio.play() : audio.pause();
+      });
+
+      audio.addEventListener('timeupdate', () => {
+        seekBar.value = (audio.currentTime / audio.duration) * 100;
+      });
+
+      seekBar.addEventListener('input', () => {
+        audio.currentTime = (seekBar.value / 100) * audio.duration;
+      });
+
+      /* 클릭 시 자동재생 보장 */
+      window.addEventListener(
+        'click',
+        () => {
+          if (audio.paused) audio.play();
+        },
+        { once: true },
+      );
+    </script>
+  </body>
+</html>
