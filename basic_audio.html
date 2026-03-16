@@ -1,0 +1,272 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>경칩 인사말 갤러리</title>
+
+    <!-- 구글 폰트 감자꽃 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        height: 500px;
+        overflow: hidden;
+      }
+
+      /* 사진 페이드 효과 */
+      .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 3s ease-in-out;
+        border-radius: 20px; /* ← 모서리 둥글게 */
+      }
+      .slide.active {
+        opacity: 1;
+      }
+
+      /* 비누방울 GIF 오버레이 */
+      .bubble-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+        z-index: 12; /* 사진 위, 자막 아래 */
+        opacity: 0.8; /* 필요하면 조절 가능 */
+      }
+
+      /* 자막 */
+      .caption-container {
+        position: absolute;
+        bottom: 45px;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        z-index: 20;
+        background: transparent;
+        pointer-events: none;
+      }
+
+      .scrolling-text {
+        display: inline-block;
+        font-family: 'Gamja Flower', cursive;
+        font-size: 28px;
+        color: #adff2f;
+        text-shadow:
+          2px 2px 2px #000,
+          -1px -1px 0 #000,
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+          1px 1px 0 #000;
+        padding-left: 100%;
+        animation: marquee 40s linear infinite;
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      /* 오디오 플레이어 */
+      audio {
+        position: absolute;
+        bottom: 25px;
+        left: 3%;
+        width: 94%;
+        height: 10px;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+      }
+      .container:hover audio {
+        opacity: 0.8;
+      }
+
+      /* 미니 오디오 플레이어 */
+      .mini-player {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        display: flex;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.55);
+        padding: 10px 14px;
+        border-radius: 12px;
+        backdrop-filter: blur(4px);
+        z-index: 30;
+      }
+
+      .album-art {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        margin-right: 10px;
+      }
+
+      .player-info {
+        display: flex;
+        flex-direction: column;
+        width: 180px;
+      }
+
+      .title {
+        font-size: 16px;
+        color: #fff;
+        margin-bottom: 4px;
+      }
+
+      .controls button {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 22px;
+        cursor: pointer;
+        margin-bottom: 4px;
+      }
+
+      #seekBar {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 비누방울 GIF 오버레이 -->
+      <img src="waterspot.gif" class="bubble-overlay" />
+
+      <!-- 감성 미니 오디오 플레이어 -->
+      <div class="mini-player">
+        <img src="https://usanonki.github.io/photo/064.gif" class="album-art" />
+
+        <div class="player-info">
+          <div class="title">Love Potion No. 9</div>
+
+          <div class="controls">
+            <button id="playBtn">▶</button>
+          </div>
+
+          <input type="range" id="seekBar" value="0" min="0" max="100" />
+        </div>
+      </div>
+
+      <audio id="bgm" src="LPN9.mp3" autoplay loop></audio>
+
+      <!-- 자막 -->
+      <div class="caption-container">
+        <div class="scrolling-text">
+          🐸 겨울 잠을 자던 개구리가 깨어 나고 새싹이 돋아나는 경칩입니다. 🌸
+          경칩이 지나면 봄은 한걸음 더 가까이 오겠죠? 🌼 기온 차가 있는 환절기에
+          건강 조심 하시고 오늘 하루도 행복하게 보내시기 바랍니다. ✨
+        </div>
+      </div>
+
+      <!-- GitHub 이미지 001~008 -->
+      <img src="001.jpg" class="slide active" />
+      <img src="002.jpg" class="slide" />
+      <img src="003.jpg" class="slide" />
+      <img src="004.jpg" class="slide" />
+      <img src="005.jpg" class="slide" />
+      <img src="006.jpg" class="slide" />
+      <img src="007.jpg" class="slide" />
+      <img src="008.jpg" class="slide" />
+
+      <!-- 오디오 -->
+      <audio
+        id="myAudio"
+        src="https://blog.kakaocdn.net/dn/bOwEhD/btsJViDbb39/oBBKaGG1ymGzXSwpQ8QC4K/tfile.mp3"
+        controls
+        autoplay
+        loop
+      ></audio>
+    </div>
+
+    <script>
+      let currentIndex = 0;
+      const slides = document.querySelectorAll('.slide');
+
+      function nextSlide() {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+      }
+
+      // 20초마다 사진 변경
+      setInterval(nextSlide, 20000);
+
+      // 클릭 시 음악 재생 보장
+      window.addEventListener(
+        'click',
+        function () {
+          var audio = document.getElementById('myAudio');
+          if (audio.paused) {
+            audio.play();
+          }
+        },
+        { once: true },
+      );
+
+      // 미니 플레이어 기능
+      const audio = document.getElementById('bgm');
+      const playBtn = document.getElementById('playBtn');
+      const seekBar = document.getElementById('seekBar');
+
+      // 자동 재생 성공 시 버튼 상태 업데이트
+      audio.addEventListener('play', () => {
+        playBtn.textContent = '❚❚';
+      });
+
+      // 일시정지 시 버튼 상태 업데이트
+      audio.addEventListener('pause', () => {
+        playBtn.textContent = '▶';
+      });
+
+      // 버튼 클릭 시 재생/정지
+      playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      });
+
+      // 재생 위치 업데이트
+      audio.addEventListener('timeupdate', () => {
+        seekBar.value = (audio.currentTime / audio.duration) * 100;
+      });
+
+      // seekBar 드래그로 이동
+      seekBar.addEventListener('input', () => {
+        audio.currentTime = (seekBar.value / 100) * audio.duration;
+      });
+    </script>
+  </body>
+</html>
