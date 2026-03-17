@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* 1. 영상 컨테이너의 초기 설정 (왼쪽 하단 고정) */
+        #video-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 240px;
+            height: 135px;
+            z-index: 9999;
+            /* 2. 크기 변화 시 부드러운 애니메이션 효과 */
+            transition: all 1s ease-in-out;
+        }
+
+        /* 3. 30초 후 적용될 풀 사이즈 스타일 */
+        #video-container.full-size {
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="video-container">
+        <!-- 유튜브 공유 -> 퍼가기(Embed) 코드를 여기에 넣으세요 -->
+        <iframe src="https://www.youtube.com/embed/pmO9KUfnzVE?enablejsapi=1&autoplay=1&controls=1&loop=1&playlist=pmO9KUfnzVE" 
+                allow="autoplay; fullscreen"></iframe>
+    </div>
+
+    <script>
+        // 4. 페이지 로드 30초(30000ms) 후에 'full-size' 클래스 추가
+        setTimeout(function() {
+            const container = document.getElementById('video-container');
+            container.classList.add('full-size');
+        }, 30000);
+    </script>
+
+</body>
+</html>
