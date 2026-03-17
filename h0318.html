@@ -1,20 +1,56 @@
-<!DOCTYPE html>
+<!DOCTYPE html>    
 <html>
 <head>
     <style>
-        /* 1. 영상 컨테이너의 초기 설정 (왼쪽 하단 고정) */
+        body {
+            background-image: url('https://usanonki.github.io/photo/scblues.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            margin: 0;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        /* 1. 자막 컨테이너 설정 */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: absolute;
+            top: 50px;
+            /* 투명도 변화에 1초의 시간을 할당 (Fade-out 효과) */
+            transition: opacity 1s ease-in-out;
+            opacity: 1; /* 초기 상태: 보임 */
+            z-index: 10;
+        }
+
+        .marquee-container h1 {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 15s linear infinite;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 3rem;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        /* 2. 유튜브 영상 설정 */
         #video-container {
             position: fixed;
             bottom: 20px;
             left: 20px;
             width: 240px;
             height: 135px;
-            z-index: 9999;
-            /* 2. 크기 변화 시 부드러운 애니메이션 효과 */
+            z-index: 9999; /* 자막보다 위에 위치 */
             transition: all 1s ease-in-out;
         }
 
-        /* 3. 30초 후 적용될 풀 사이즈 스타일 */
         #video-container.full-size {
             bottom: 0;
             left: 0;
@@ -22,27 +58,32 @@
             height: 100vh;
         }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
+    <div class="marquee-container" id="marquee-text">
+        <h1>오늘은 신촌블루스-비의 블루스 입니다. - Happy Day!</h1>
+    </div>
+
     <div id="video-container">
-        <!-- 유튜브 공유 -> 퍼가기(Embed) 코드를 여기에 넣으세요 -->
+        <!-- 유튜브 ID를 실제 ID로 교체하세요 -->
         <iframe src="https://www.youtube.com/embed/pmO9KUfnzVE?enablejsapi=1&autoplay=1&controls=1&loop=1&playlist=pmO9KUfnzVE" 
                 allow="autoplay; fullscreen"></iframe>
     </div>
 
     <script>
-        // 4. 페이지 로드 60초(60000ms) 후에 'full-size' 클래스 추가
         setTimeout(function() {
-            const container = document.getElementById('video-container');
-            container.classList.add('full-size');
-        }, 60000);
+            const video = document.getElementById('video-container');
+            const marquee = document.getElementById('marquee-text');
+
+            // 영상은 풀 사이즈로 키우고
+            video.classList.add('full-size');
+
+            // 자막은 투명도를 0으로 만들어 Fade-out 시킴
+            marquee.style.opacity = '0';
+        }, 45000); // 45초 후 실행
     </script>
 
 </body>
