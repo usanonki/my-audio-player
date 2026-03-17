@@ -1,6 +1,7 @@
 <!DOCTYPE html>    
 <html>
 <head>
+     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
     <style>
         body {
             background-image: url('https://usanonki.github.io/photo/scblues.jpg');
@@ -10,20 +11,20 @@
             background-position: center;
             margin: 0;
             overflow: hidden;
-            font-family: sans-serif;
+            font-family: 'Gamja Flower', cursive;
         }
 
         /* 1. 자막 컨테이너 설정 */
-        .marquee-container {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            position: absolute;
-            top: 50px;
-            /* 투명도 변화에 1초의 시간을 할당 (Fade-out 효과) */
-            transition: opacity 1s ease-in-out;
-            opacity: 1; /* 초기 상태: 보임 */
-            z-index: 10;
+        .marquee-container h1 {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 15s linear infinite;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 4rem; /* 폰트 특성에 맞춰 크기를 조금 키웠습니다 */
+            
+            /* 2. 자막에 '감자꽃' 폰트 적용 */
+            font-family: 'Gamja Flower', cursive;
         }
 
         .marquee-container h1 {
@@ -64,7 +65,7 @@
 <body>
 
     <div class="marquee-container" id="marquee-text">
-        <h1>오늘은 신촌블루스-비의 블루스 입니다. - Happy Day!</h1>
+        <h1>오늘은 신촌블루스-비의 블루스 입니다. - 좋아 하는 회원님 많으면 좋갰어요^^ - Happy Day! </h1>
     </div>
 
     <div id="video-container">
