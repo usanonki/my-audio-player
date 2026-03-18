@@ -65,7 +65,8 @@ body::after {
          /* 중요: 글자가 아래로 떨어지지 않게 한 줄로 고정 */
           white-space: nowrap; 
           padding-left: 100%;
-         animation: marquee 15s linear infinite;
+         /* 15s에서 25s로 변경 (숫자가 커질수록 느려집니다) */
+         animation: marquee 25s linear infinite;
          color: white;
          text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
          font-size: 2.5rem; /* 4애서 2.5로 축소 글자크기 약 40프로 감소*/
