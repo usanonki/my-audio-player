@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8"> <!-- 한글 깨짐 방지를 위해 이 줄도 꼭 필요합니다 -->
     <title>신촌블루스</title>
-    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+
+     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
     <style>
         /* 기본 레이아웃 설정 */
 body {
@@ -64,11 +65,10 @@ body::after {
          /* 중요: 글자가 아래로 떨어지지 않게 한 줄로 고정 */
           white-space: nowrap; 
           padding-left: 100%;
-         /* 15s에서 25s로 변경 (숫자가 커질수록 느려집니다) */
-         animation: marquee 25s linear infinite;
+         animation: marquee 15s linear infinite;
          color: #FFF0F5;
-         text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-         font-size: 2.5rem; /* 4애서 2.5로 축소 글자크기 약 40프로 감소*/
+         text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+         font-size: 2.5rem; 
          font-family: 'Gamja Flower', cursive;
           }
 
@@ -78,7 +78,7 @@ body::after {
             100% { transform: translate(-100%, 0); }
         }
 
-       /* 2. 유튜브 영상 설정 */
+        /* 2. 유튜브 영상 설정 */
         #video-container {
             position: fixed;
             bottom: 20px;
@@ -94,16 +94,9 @@ body::after {
             left: 0;
             width: 100vw;
             height: 100vh;
-      /* 추가: 영상을 화면보다 살짝 키워서 여백을 밀어냄 */
-            transform: scale(1.05); 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
         }
 
-
-        iframe { width: 100%; height: 100%; border: none; object-fit: fill; /* <--- 이 줄을 추가하세요. 비율 무시하고 꽉 채웁니다. */}
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
@@ -127,7 +120,6 @@ body::after {
             video.classList.add('full-size');
 
             // 자막은 투명도를 0으로 만들어 Fade-out 시킴
-              유튜브 영상 위에도 자막이 나오게끔 아래 코를 비활성화(// 추가해서) 시킴
             marquee.style.opacity = '0';
         }, 30000); // 30초 후 실행
     </script>
