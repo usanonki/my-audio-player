@@ -78,25 +78,23 @@ body::after {
             100% { transform: translate(-100%, 0); }
         }
 
-        /* 2. 유튜브 영상 설정 *코파일럿3월17/
+       /* 2. 유튜브 영상 설정 */
+        #video-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 240px;
+            height: 135px;
+            z-index: 9999; /* 자막보다 위에 위치 */
+            transition: all 1s ease-in-out;
+        }
+
         #video-container.full-size {
-         position: fixed;
-         bottom: 0;
-         left: 0;
-         width: 100vw;
-         height: 100vh;
-         overflow: hidden; /* 중요! 넘치는 부분 잘라냄 */
-     }
-
-
-        #video-container.full-size iframe {
-         width: 120vw;   /* 화면보다 더 크게 */
-         height: 120vh;
-         position: absolute;
-         top: 50%;
-         left: 50%;
-         transform: translate(-50%, -50%); /* 가운데 정렬 */
-     }
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
 
 
         iframe { width: 100%; height: 100%; border: none; }
