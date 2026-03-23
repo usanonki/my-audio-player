@@ -6,50 +6,40 @@
     <title>음악 재생 페이지</title>
     <!-- 제공해주신 외부 스타일시트 -->
     <link rel="stylesheet" href="//artworld.ai.kr/css/goodcafe.php?color=82A0C1">
-    <style>
+   <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden; /* 스크롤 방지 */
+            overflow: hidden;
+            background-color: #000;
         }
 
-        /* 1280x720 배경 이미지 설정 */
+        /* 1280x720 배경 이미지 */
         .background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://64.media.tumblr.com/28867a32d780b20b660ce3675da7ce64/6bf8b3d44d7b9328-16/s540x810/8840596c9b66af172f43f3d3cd56221b00af2398.gifv');
-            background-size: cover;    /* 화면에 꽉 차게 조절 */
-            background-position: center; /* 이미지 중앙 정렬 */
-            z-index: -1;               /* 재생기보다 뒤에 위치 */
+            background-image: url('https://64.media.tumblr.com/28867a32d780b20b660ce3675da7ce64/6bf8b3d44d7b9328-16/s540x810/8840596c9b66af172f43f3d3cd56221b00af2398.gifv')no-repeat center center;
+            background-size: cover;
+            z-index: 1;
         }
 
-        /* 재생기 위치 중앙 정렬 */
-        .player-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end; /* 하단 배치 */
-            height: 100vh;
-            padding-bottom: 30px; /* 하단 여백 살짝 줄임 */
-            box-sizing: border-box;align-items: center;
-           
-        }
-
+        /* 오디오 재생기 설정 */
         audio {
-            /* 가로 길이는 800px로 넓게 설정 */
-            width: 800px; 
+            position: absolute;
+            bottom: 30px;        /* 하단 여백 */
+            left: 50%;           /* 가로 중앙 정렬을 위한 시작점 */
+            transform: translateX(-50%) scaleY(0.7); /* 중앙 정렬 + 세로 높이 슬림하게 축소 */
             
-            /* 전체 크기를 0.5배(50%)로 축소 */
-            /* 축소하면 가로 800px이 400px처럼 보일 수 있으므로, 
-               실제 체감 길이를 위해 scale과 width를 조합했습니다. */
-            transform: scale(0.6); 
-            transform-origin: bottom center;
+            width: 800px;        /* 가로 너비 800px */
+            height: 35px;        /* 기본 높이를 낮게 설정 */
             
-            opacity: 0.7; /* 배경과 잘 어우러지도록 살짝 투명하게 */
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+            z-index: 10;         /* 이미지보다 앞에 위치 */
+            opacity: 0.9;        /* 항상 선명하게 보이도록 설정 */
+            outline: none;
         }
     </style>
 </head>
