@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>이미지 위 글자 넣기-star효과</title>
+    <!-- 구글 폰트 감자꽃 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* 1. 전체 배경 박스 (1280x720) */
+      .main-container {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+
+        background: linear-gradient(135deg, #ffeaf4, #ffdff0, #ffeef8);
+        background-blend-mode: soft-light;
+
+        overflow: hidden;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* 2. 이미지와 별을 묶는 그룹 (530x740 크기 고정) */
+      .image-wrapper {
+        position: relative;
+        width: 530px;
+        height: 740px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      /* PNG 이미지 (맨 아래) */
+      .bg-png {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      /* 쏟아지는 별 GIF (이미지 위 레이어) */
+      .star-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2; /* 이미지보다 위 */
+        background-image: url('star.gif');
+        background-size: cover; /* 별이 이미지 영역에 꽉 차게 */
+        pointer-events: none; /* 마우스 클릭 방해 금지 */
+      }
+
+      /* 글자 (최상단) */
+      .text-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* 정확한 정중앙 배치 */
+        z-index: 3; /* 별보다 위 */
+        color: #444;
+        font-family: 'Gamja Flower', sans-serif;
+        font-size: 50px;
+        font-weight: bold;
+        text-align: center;
+        white-space: normal;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+      }
+
+      .audio-player {
+        position: absolute;
+        right: 30px; /* PNG 오른쪽에서 20px */
+        bottom: 30px; /* PNG 아래에서 20px */
+        width: 250px; /* 원하는 너비 */
+        height: 20px; /* 슬림한 높이 */
+        z-index: 5; /* GIF보다 위, 글자보다 아래도 가능 */
+        opacity: 0.9; /* 살짝 투명하게 감성 느낌 */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- 이미지와 별이 겹쳐지는 영역 -->
+      <div class="image-wrapper">
+        <!-- 배경 PNG -->
+        <img src="jh01.png" class="bg-png" />
+
+        <!-- 이미지 크기에 딱 맞춘 별 효과 -->
+        <div class="star-layer"></div>
+
+        <!-- 그 위의 글자 -->
+        <div class="text-overlay">별이 쏟아지는<br />나만의 공간</div>
+
+        <audio
+          id="myAudio"
+          class="audio-player"
+          src="https://blog.kakaocdn.net/dn/bOwEhD/btsJViDbb39/oBBKaGG1ymGzXSwpQ8QC4K/tfile.mp3"
+          controls
+          autoplay
+          loop
+        ></audio>
+      </div>
+    </div>
+  </body>
+</html>
