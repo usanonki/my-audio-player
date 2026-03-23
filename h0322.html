@@ -2,43 +2,57 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>16:9 나는 당신께~~~~</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음악 재생 페이지</title>
+    <!-- 제공해주신 외부 스타일시트 -->
+    <link rel="stylesheet" href="//artworld.ai.kr/css/goodcafe.php?color=82A0C1">
     <style>
-        .ql-align-center {
-            display: block;
-            margin: 20px auto; /* 위아래 여백 20px, 좌우 자동 중앙 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* 스크롤 방지 */
         }
 
-        .ql-video-container {
-            width: 90%;
-            max-width: 800px; /* 가로 크기를 조금 더 키웠습니다 */
-            aspect-ratio: 16 / 9; /* 가로 16 : 세로 9 표준 비율 */
-            background-color: #000;
-            overflow: hidden;
-            border-radius: 4px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .ql-video {
+        /* 1280x720 배경 이미지 설정 */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            /* 'contain'은 영상 전체를 보여주되 틀에 맞춤, 
-               'cover'는 여백 없이 꽉 채움 (약간 잘릴 수 있음) */
-            object-fit: contain; 
+            background-image: url('https://t1.daumcdn.net/cafeattach/1ZdFf/5ccd259ff8b4589ea7960406c8c069737f41efb7');
+            background-size: cover;    /* 화면에 꽉 차게 조절 */
+            background-position: center; /* 이미지 중앙 정렬 */
+            z-index: -1;               /* 재생기보다 뒤에 위치 */
+        }
+
+        /* 재생기 위치 중앙 정렬 */
+        .player-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        audio {
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); /* 재생기에 그림자 효과 */
+            opacity: 0.8; /* 배경과 어우러지게 약간 투명하게 설정 가능 */
         }
     </style>
 </head>
 <body>
 
-    <div class="ql-video-container ql-align-center">
-        <video class="ql-video" 
-               controls 
-               playsinline 
+    <!-- 배경 이미지 레이어 -->
+    <div class="background"></div>
+
+    <!-- 오디오 재생기 -->
+    <div class="player-container">
+        <audio src="https://t1.daumcdn.net/cafeattach/1ZdFf/400502e7d4c88caebbeda25edfb7dbf8b5bad265" 
                autoplay 
-               muted>
-            <source src="https://va.media.tumblr.com/tumblr_tcbo7524jz1b09833_720.mp4">
-            브라우저가 비디오를 지원하지 않습니다.
-        </video>
+               loop 
+               controls>
+        </audio>
     </div>
 
 </body>
