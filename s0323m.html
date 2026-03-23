@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>이미지 위 글자 넣기 - star효과 (반응형 축소)</title>
+
+    <!-- 구글 폰트 감자꽃 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ================================
+         0. 전체를 감싸는 반응형 축소 박스
+      ================================= */
+      .scale-wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* ================================
+         1. 원본 레이아웃 (1280x720 유지)
+      ================================= */
+      .main-container {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+
+        background: linear-gradient(135deg, #ffeaf4, #ffdff0, #ffeef8);
+        background-blend-mode: soft-light;
+
+        overflow: hidden;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        transform-origin: top left; /* 축소 기준점 */
+      }
+
+      /* ================================
+         2. 이미지 + 별 + 글자 그룹
+      ================================= */
+      .image-wrapper {
+        position: relative;
+        width: 530px;
+        height: 740px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .bg-png {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      .star-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background-image: url('https://usanonki.github.io/photo/star.gif');
+        background-size: cover;
+        pointer-events: none;
+      }
+
+      .text-overlay {
+        position: absolute;
+        top: 40%;
+        left: 35%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+        color: #444;
+        font-family: 'Gamja Flower', sans-serif;
+        line-height: 0.8;
+        font-size: 35px;
+        font-weight: bold;
+        text-align: center;
+        white-space: normal;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+      }
+
+      .text-overlay .title {
+        font-size: 45px;
+        font-weight: 900;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .text-overlay .sub {
+        font-size: 28px;
+        opacity: 0.9;
+        display: block;
+      }
+
+      .text-overlay .name {
+        font-size: 22px;
+        color: #666;
+        display: block;
+        margin-top: -8px;
+      }
+
+      .audio-player {
+        position: absolute;
+        right: 30px;
+        bottom: 30px;
+        width: 250px;
+        height: 20px;
+        z-index: 5;
+        opacity: 0.9;
+      }
+
+      /* ================================
+         3. 화면이 1280px보다 작아지면 자동 축소
+      ================================= */
+      @media screen and (max-width: 1280px) {
+        .scale-wrapper {
+          --scale: calc(100vw / 1280);
+        }
+        .main-container {
+          transform: scale(var(--scale));
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="scale-wrapper">
+      <div class="main-container">
+        <div class="image-wrapper">
+          <img src="https://usanonki.github.io/photo/jh01.png" class="bg-png" />
+
+          <div class="star-layer"></div>
+
+          <div class="text-overlay">
+            <span class="title">유리창엔 비</span><br />
+            <span class="sub">Acoustic Ver</span><br />
+            <span class="name">이햇사레cover</span>
+          </div>
+
+          <audio
+            id="myAudio"
+            class="audio-player"
+            src="https://usanonki.github.io/music/rain.mp3"
+            controls
+            autoplay
+            loop
+          ></audio>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
