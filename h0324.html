@@ -1,0 +1,128 @@
+<!DOCTYPE html>    
+<html>
+     <lang="ko"> <!-- 여기에 작성합니다 -->
+<head>
+    <meta charset="UTF-8"> <!-- 한글 깨짐 방지를 위해 이 줄도 꼭 필요합니다 -->
+    <title>신촌블루스</title>
+
+     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 레이아웃 설정 */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000; /* 이미지 교체 시 배경색 */
+}
+
+/* 두 장의 이미지를 공통적으로 화면 꽉 차게 설정 */
+body::before, body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1; /* 모든 콘텐츠보다 뒤로 보냄 */
+    animation: fadeRotation 20s infinite ease-in-out; /* 20초 주기 반복 */
+}
+
+/* 첫 번째 이미지 설정 */
+body::before {
+    background-image: url('https://usanonki.github.io/photo/emma.jpg');
+}
+
+/* 두 번째 이미지 설정 (emma1.jpg) */
+body::after {
+    background-image: url('https://usanonki.github.io/photo/emma1.jpg');
+    animation-delay: -10s; /* 첫 번째 이미지와 반대 주기로 시작 */
+}
+
+/* 부드럽게 나타났다 사라지는 애니메이션 */
+@keyframes fadeRotation {
+    0%, 100% { opacity: 1; }  /* 보임 */
+    45%, 55% { opacity: 0; }  /* 안 보임 */
+}
+
+
+        /* 1. 자막 컨테이너 설정 */
+          .marquee-container {
+              width: 100%;
+              overflow: hidden;
+              position: absolute;
+              top: 50px;
+              transition: opacity 1s ease-in-out;
+              opacity: 1;
+              z-index: 10;
+          }
+
+      /* 2. 자막 글자 설정 (중복 제거 및 줄바꿈 방지 추가) */
+          .marquee-container h1 {
+         display: inline-block;
+         /* 중요: 글자가 아래로 떨어지지 않게 한 줄로 고정 */
+          white-space: nowrap; 
+          padding-left: 100%;
+         animation: marquee 15s linear infinite;
+         color: #FFF0F5;
+         text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+         font-size: 2.5rem; 
+         font-family: 'Gamja Flower', cursive;
+          }
+
+
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        /* 2. 유튜브 영상 설정 */
+        #video-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 240px;
+            height: 135px;
+            z-index: 9999; /* 자막보다 위에 위치 */
+            transition: all 1s ease-in-out;
+        }
+
+        #video-container.full-size {
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+    <div class="marquee-container" id="marquee-text">
+        <h1>흐르는 영상은 "Spente le stelle-Emma Shapplin" 입니다.- Happy Day! </h1>
+    </div>
+
+    <div id="video-container">
+        <!-- 유튜브 ID를 실제 ID로 교체하세요 -->
+        <iframe src="https://www.youtube.com/embed/_rOJVcHJtKo?enablejsapi=1&autoplay=1&controls=1&loop=1&playlist=_rOJVcHJtKo" 
+                allow="autoplay; fullscreen"></iframe>
+    </div>
+
+    <script>
+        setTimeout(function() {
+            const video = document.getElementById('video-container');
+            const marquee = document.getElementById('marquee-text');
+
+            // 영상은 풀 사이즈로 키우고
+            video.classList.add('full-size');
+
+            // 자막은 투명도를 0으로 만들어 Fade-out 시킴
+            marquee.style.opacity = '0';
+        }, 30000); // 30초 후 실행
+    </script>
+
+</body>
+</html>
