@@ -65,7 +65,7 @@ body::after {
          /* 중요: 글자가 아래로 떨어지지 않게 한 줄로 고정 */
           white-space: nowrap; 
           padding-left: 100%;
-         animation: marquee 15s linear infinite;
+         animation: marquee 25s linear infinite;
          color: #FFF0F5;
          text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
          font-size: 2.5rem; 
@@ -74,8 +74,14 @@ body::after {
 
 
         @keyframes marquee {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100%, 0); }
+          0% {
+        transform: translateX(0%); /* 오른쪽 바깥에서 시작 */}
+          30% {
+        transform: translateX(-20%); /* 화면 중앙 근처에서 멈춤 */}
+          60% {
+        transform: translateX(-20%); /* 멈춤 유지 */}
+          100% {
+        transform: translateX(-100%); /* 왼쪽으로 사라짐 */}
         }
 
         /* 2. 유튜브 영상 설정 */
