@@ -65,47 +65,39 @@ body::after {
          /* 중요: 글자가 아래로 떨어지지 않게 한 줄로 고정 */
           white-space: nowrap; 
           padding-left: 100%;
-         animation: marquee 15s linear infinite,beatShake 1.2s ease-in-out infinite,pulseGlow 2s ease-in-out infinite;
+         animation: marquee 15s linear infinite;
          color: #FFF0F5;
          text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
          font-size: 2.5rem; 
          font-family: 'Gamja Flower', cursive;
           }
 
+         /* 안쪽 span: 흔들림 + 밝기 */
+          .marquee-container h1 .beat.glow {
+          animation: beatShake 2s ease-in-out infinite, pulseGlow 2.5s ease-in-out infinite;
+          }
+         
+
 
         @keyframes marquee {
-          0% {
-        transform: translateX(0%); /* 오른쪽 바깥에서 시작 */}
-          30% {
-        transform: translateX(-50%); /* 화면 중앙 근처에서 멈춤 */}
-          60% {
-        transform: translateX(-50%); /* 멈춤 유지 */}
-          100% {
-        transform: translateX(-100%); /* 왼쪽으로 사라짐 */}
+          0% {transform: translateX(0%); /* 오른쪽 바깥에서 시작 */}
+          30% {transform: translateX(-50%); /* 화면 중앙 근처에서 멈춤 */}
+          60% {transform: translateX(-50%); /* 멈춤 유지 */}
+          100% {transform: translateX(-100%); /* 왼쪽으로 사라짐 */}
         }
 
-         @keyframes beatShake {
-       0%, 100% {
-    transform: translateX(-50%) scale(1);
-  }
-  25% {
-    transform: translateX(-50%) scale(1.03);
-  }
-  50% {
-    transform: translateX(-50%) scale(0.97);
-  }
-  75% {
-    transform: translateX(-50%) scale(1.02);
-  }
+       @keyframes beatShake {
+       0%, 100% {transform:  scale(1);}
+       25% {transform:  scale(1.01);}
+       50% {transform:  scale(0.99);}
+       75% {transform: scale(1.01);}
          }
               @keyframes pulseGlow {
-  0%, 100% {
-    opacity: 1;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+       0%, 100% {
+         opacity: 1;
+         text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
   }
-  50% {
-    opacity: 0.7;
-    text-shadow: 2px 2px 12px rgba(255, 200, 220, 0.9);
+       50% {opacity: 0.7;text-shadow: 2px 2px 12px rgba(255, 200, 220, 0.9);
   }
 }
 
@@ -133,8 +125,11 @@ body::after {
 <body>
 
     <div class="marquee-container" id="marquee-text">
-        <h1 class="beat glow">흐르는 영상음악은 "Spente le stelle-Emma Shapplin" 입니다. </h1>
-    </div>
+  <h1>
+    <span class="beat glow">흐르는 영상음악은 "Spente le stelle-Emma Shapplin" 입니다.</span>
+  </h1>
+</div>
+
 
     <div id="video-container">
         <!-- 유튜브 ID를 실제 ID로 교체하세요 -->
