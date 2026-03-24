@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>강아지 왈츠</title>
     <style>
-      /* 1. 배경 설정 (다음 카페 스타일 응용) */
+      /* 1. 배경 설정 */
       body {
         margin: 0;
         padding: 0;
-        /* 레이어: 그라데이션 -> GIF 포인트 -> 전체 배경 이미지 */
         background-image:
           linear-gradient(
             90deg,
@@ -18,13 +17,11 @@
             transparent,
             transparent
           ),
-          url('https://usanonki.github.io/photo/bubble.gif'), url('https://usanonki.github.io/photo/siyeon.gif');
-
+          url('https://usanonki.github.io/photo/bubble.gif'),
+          url('https://usanonki.github.io/photo/siyeon.gif');
         background-attachment: fixed;
-        background-color: #e4d363; /* 기본 바탕 노란색 */
+        background-color: #e4d363;
         background-repeat: no-repeat;
-
-        /* GIF 위치와 배경 이미지 위치 조절 */
         background-position:
           right bottom,
           right 110px bottom -15px,
@@ -33,7 +30,6 @@
           100% 100%,
           750px 650px,
           67% 100%;
-
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -42,15 +38,16 @@
         overflow-x: hidden;
       }
 
-      /* 2. 영상 영역 (768x432 16:9 규격) */
+      /* 2. 영상 영역 */
       .video-container {
         width: 768px;
         height: 432px;
         background: #000;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); /* 입체감 */
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
         border-radius: 10px;
         overflow: hidden;
         z-index: 5;
+        margin-bottom: 50px; /* 아래 요소와 겹치지 않게 여백 */
       }
 
       .ql-video {
@@ -59,53 +56,22 @@
         border: none;
       }
 
-      /* 3. 음악 정보 텍스트 (플레이어 바로 위로 배치) */
+      /* 3. 음악 정보 텍스트 (위치 및 수직 정렬 최적화) */
       .music-info {
-        position: fixed; /* 화면에 고정 */
-        right: 5px; /* 오른쪽에서 9px 띄움 */
-        bottom: 35px; /* 바닥에서 50px 띄움 (오디오 플레이어 높이만큼 확보) */
-
-        /* 수직 정렬의 핵심 */
-        display: flex;            /* 레이아웃 방식 변경 */
-        align-items: center;      /* 수직 방향 중앙 정렬 */
-        justify-content: center;  /* 수평 방향 중앙 정렬 */
-
-        height: 25px;             /* 오디오와 동일한 높이 */
-        box-sizing: border-box;   /* 패딩을 넣어도 25px 유지 (중요!) */
-        padding: 0 15px;          /* 좌우 여백만 줌 */
-
-        /* 너비 설정 */
-        width: auto;              /* 글자 길이에 따라 자동으로 늘어남 */
-         min-width: 250px;         /* 그래도 오디오보다는 작지 않게 최소폭 설정 */
-        
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(8px);
-        border-radius: 30px;
-        color: #4a5c31;
-        font-weight: bold;
-        font-size: 0.85em;
-        z-index: 100; /* 다른 요소보다 위에 보이게 설정 */
-        white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-      }
-      
-      /* 오디오 컨트롤러 (화면 제일 우측 하단) */
-      audio {
-        position: fixed; /* 화면에 고정 */
-        right: 5px; /* 오른쪽에서 9px 띄움 */
-        bottom: 5px; /* 바닥에서 10px 띄움 */
-
-        height: 20px; /* 플레이어 높이 */
-        width: 250px; /* 플레이어 너비 조절 가능 */
-        opacity: 0.94;
-        z-index: 100; /* 다른 요소보다 위에 보이게 설정 */
-      }
-
-       /* 배경 및 테두리 (그린 계열 일치) */
+        position: fixed;
+        right: 9px;
+        bottom: 52px; /* 플레이어 박스(36px) + 바닥(8px) + 간격(8px) */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25px;
+        min-width: 250px;
+        padding: 0 15px;
+        box-sizing: border-box;
         background: rgba(255, 255, 255, 0.5);
-        border: 1.5px solid #b8c9a7; 
+        border: 1.5px solid #b8c9a7;
         border-radius: 30px;
         backdrop-filter: blur(8px);
-
         color: #4a5c31;
         font-weight: bold;
         font-size: 0.85em;
@@ -113,57 +79,50 @@
         white-space: nowrap;
       }
 
-      /* 2. 오디오 플레이어 감싸는 상자 (그림자와 테두리 핵심) */
-    .audio-wrapper {
+      /* 4. 오디오 플레이어 감싸는 상자 */
+      .audio-wrapper {
         position: fixed;
         right: 9px;
         bottom: 8px;
-    
         width: 250px;
-        height: 36px; /* 플레이어보다 살짝 여유 있게 */
-    
+        height: 31px;
         display: flex;
         align-items: center;
-        padding: 0 5px; /* 플레이어가 상자 안에서 살짝 안으로 들어가게 */
+        padding: 0 5px;
         box-sizing: border-box;
-
-    /* 그린 계통 스타일링 */
-        background: rgba(219, 231, 206, 0.7); /* 바탕화면 dbe7ce 계열 */
-        border: 1.5px solid #b8c9a7;          /* 정보박스와 동일한 테두리 */
+        background: rgba(219, 231, 206, 0.7);
+        border: 1.5px solid #b8c9a7;
         border-radius: 30px;
-    
-    /* 입체감 있는 그린 그림자 */
-        box-shadow: 0 4px 15px rgba(74, 92, 49, 0.3); 
+        box-shadow: 0 4px 15px rgba(74, 92, 49, 0.3);
         backdrop-filter: blur(5px);
         z-index: 100;
-    }
+      }
 
-  /* 3. 실제 오디오 태그 (박스 안을 꽉 채움) */
-  .bgm-player {
-      width: 100%;
-      height: 28px;
-      opacity: 0.9;
-    }
+      .bgm-player {
+        width: 100%;
+        height: 20px;
+        opacity: 0.9;
+      }
     </style>
   </head>
   <body>
-    <!-- 음악 정보 표시 -->
+    <!-- 음악 정보 -->
     <div class="music-info">
       🎹 Chopin - Waltz No. 6 in D-flat major, Op. 64, No. 1 'Minute'
     </div>
 
-    <!-- 오디오 레이어 (자동 재생 및 반복 설정) -->
+    <!-- 오디오 플레이어 -->
     <div class="audio-wrapper">
-    <audio controls autoplay loop>
-      <source
-        src="https://64.media.tumblr.com/dc202627000d1e4d7d7e4348634b1c94/04d0c9bca8a7e5e7-d8/c3d72c03f4ee5422e9dbc94e0d426e19e367d052.mp3"
-        type="audio/mpeg"/>
-      브라우저가 오디오를 지원하지 않습니다.
+      <audio class="bgm-player" controls autoplay loop>
+        <source
+          src="https://64.media.tumblr.com/dc202627000d1e4d7d7e4348634b1c94/04d0c9bca8a7e5e7-d8/c3d72c03f4ee5422e9dbc94e0d426e19e367d052.mp3"
+          type="audio/mpeg"
+        />
+        브라우저가 오디오를 지원하지 않습니다.
       </audio>
-      </div>
+    </div>
 
     <script>
-      // 최근 브라우저는 사용자 클릭 없이 소리가 안 날 수 있어 안내 팝업을 띄울 수 있습니다.
       window.addEventListener(
         'click',
         () => {
@@ -177,3 +136,5 @@
     </script>
   </body>
 </html>
+
+     
