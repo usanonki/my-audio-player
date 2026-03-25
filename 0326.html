@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Waltz No. 6</title>
+    <style>
+      /* 1. 배경 설정 */
+      body {
+        margin: 0;
+        padding: 0;
+        background-image:
+          linear-gradient(
+            90deg,
+            #edf3e5,
+            #dbe7ce 33%,
+            transparent,
+            transparent
+          ),
+          url('https://usanonki.github.io/photo/bubble.gif'),
+          url('https://usanonki.github.io/photo/jh013.jpg');
+        background-attachment: fixed;
+        background-color: #e4d363;
+        background-repeat: no-repeat;
+        background-position:
+          right bottom,
+          right 110px bottom -15px,
+          right bottom;
+        background-size:
+          100% 100%,
+          750px 650px,
+          67% 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* 2. 영상 영역 */
+      .video-container {
+        width: 768px;
+        height: 432px;
+        background: #000;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        overflow: hidden;
+        z-index: 5;
+        margin-bottom: 50px; /* 아래 요소와 겹치지 않게 여백 */
+      }
+
+      .ql-video {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* 3. 음악 정보 텍스트 (위치 및 수직 정렬 최적화) */
+      .music-info {
+        position: fixed;
+        right: 9px;
+        bottom: 52px; /* 플레이어 박스(36px) + 바닥(8px) + 간격(8px) */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25px;
+        min-width: 250px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.5);
+        border: 1.5px solid #b8c9a7;
+        border-radius: 30px;
+        backdrop-filter: blur(8px);
+        color: #4a5c31;
+        font-weight: bold;
+        font-size: 0.85em;
+        z-index: 101;
+        white-space: nowrap;
+      }
+
+      /* 4. 오디오 플레이어 감싸는 상자 */
+      .audio-wrapper {
+        position: fixed;
+        right: 9px;
+        bottom: 8px;
+        width: 250px;
+        height: 31px;
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+        box-sizing: border-box;
+        background: rgba(219, 231, 206, 0.7);
+        border: 1.5px solid #b8c9a7;
+        border-radius: 30px;
+        box-shadow: 0 4px 15px rgba(74, 92, 49, 0.3);
+        backdrop-filter: blur(5px);
+        z-index: 100;
+      }
+
+      .bgm-player {
+        width: 100%;
+        height: 20px;
+        opacity: 0.9;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 음악 정보 -->
+    <div class="music-info">
+      🎹 임 석인 - Waltz No. 6 출처:임석인의 음악세상
+    </div>
+
+    <!-- 오디오 플레이어 -->
+    <div class="audio-wrapper">
+      <audio class="bgm-player" controls autoplay loop>
+        <source
+          src="https://64.media.tumblr.com/dc202627000d1e4d7d7e4348634b1c94/04d0c9bca8a7e5e7-d8/c3d72c03f4ee5422e9dbc94e0d426e19e367d052.mp3"
+          type="audio/mpeg"
+        />
+        브라우저가 오디오를 지원하지 않습니다.
+      </audio>
+    </div>
+
+    <script>
+      window.addEventListener(
+        'click',
+        () => {
+          const audio = document.querySelector('audio');
+          if (audio.paused) {
+            audio.play();
+          }
+        },
+        { once: true },
+      );
+    </script>
+  </body>
+</html>
