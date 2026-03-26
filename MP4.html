@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MP4 Player Final</title>
+    <style>
+      body {
+        margin: 0;
+        background: #000;
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .mp43 {
+        position: relative;
+        width: 100%;
+        max-width: 1280px;
+        overflow: hidden;
+        background-color: #000;
+      }
+      .mp43 video {
+        width: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      /* 오디오 플레이어 하단 배치 */
+      .audio-player {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px 20px;
+        box-sizing: border-box;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #fff;
+        z-index: 10;
+      }
+
+      /* 아이콘 공통 스타일 */
+      .icon-btn {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
+      .icon-btn svg {
+        fill: white;
+        width: 24px;
+        height: 24px;
+      }
+
+      /* 시간 표시 스타일 */
+      .time-display {
+        font-size: 13px;
+        min-width: 75px;
+        white-space: nowrap;
+        color: #eee;
+      }
+
+      /* 스크롤 바 (남은 공간 꽉 채우기) */
+      #seek {
+        flex: 1;
+        cursor: pointer;
+        accent-color: #ffffff;
+      }
+
+      /* 볼륨 조절 */
+      .volume-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      #volume-bar {
+        width: 0;
+        transition: width 0.3s;
+        cursor: pointer;
+        accent-color: #ffffff;
+      }
+      .volume-wrapper:hover #volume-bar {
+        width: 70px;
+      }
+
+      /* 옵션 메뉴 */
+      .options-container {
+        position: relative;
+      }
+      #options-menu {
+        display: none;
+        position: absolute;
+        bottom: 40px;
+        right: 0;
+        background: rgba(30, 30, 30, 0.95);
+        border-radius: 8px;
+        padding: 10px 0;
+        min-width: 130px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      }
+      #options-menu.active {
+        display: block;
+      }
+      .menu-item {
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 13px;
+        color: white;
+      }
+      .menu-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      #player {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mp43">
+      <video
+        src="https://usanonki.github.io/music/springrain.mp4"
+        autoplay
+        loop
+        muted
+        playsinline
+      ></video>
+      <audio
+        id="player"
+        src="https://64.media.tumblr.com/9a462e63f637d56bd9e0a61ba0de35fc/c2bdee631695c56f-8b/001fcc81bd440df27a1dbe8fe79fb734a0a2a688.mp3"
+        autoplay
+        loop
+      ></audio>
+
+      <div class="audio-player">
+        <!-- 1. 재생 버튼 -->
+        <button id="play-pause" class="icon-btn">
+          <svg id="play-icon" viewBox="0 0 24 24">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          </svg>
+        </button>
+
+        <!-- 2. 시간 표시 (재생버튼 바로 옆) -->
+        <div class="time-display">
+          <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+        </div>
+
+        <!-- 3. 스크롤 바 -->
+        <input id="seek" type="range" min="0" max="100" value="0" />
+
+        <!-- 4. 볼륨 및 옵션 -->
+        <div class="volume-wrapper">
+          <div class="icon-btn">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"
+              />
+            </svg>
+          </div>
+          <input
+            id="volume-bar"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+          />
+        </div>
+
+        <div class="options-container">
+          <button id="options-btn" class="icon-btn">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+              />
+            </svg>
+          </button>
+          <div id="options-menu">
+            <div class="menu-item" onclick="setSpeed(0.5)">0.5x 속도</div>
+            <div class="menu-item" onclick="setSpeed(1.0)">1.0x (기본)</div>
+            <div class="menu-item" onclick="setSpeed(1.5)">1.5x 속도</div>
+            <div class="menu-item" onclick="setSpeed(2.0)">2.0x 속도</div>
+            <div
+              class="menu-item"
+              onclick="downloadAudio()"
+              style="border-top: 1px solid #444"
+            >
+              📥 다운로드
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const audio = document.getElementById('player');
+      const playPauseBtn = document.getElementById('play-pause');
+      const playIcon = document.getElementById('play-icon');
+      const currentTimeEl = document.getElementById('current-time');
+      const durationEl = document.getElementById('duration');
+      const seek = document.getElementById('seek');
+      const volumeBar = document.getElementById('volume-bar');
+      const optionsBtn = document.getElementById('options-btn');
+      const optionsMenu = document.getElementById('options-menu');
+
+      const playPath = 'M8 5v14l11-7z';
+      const pausePath = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
+
+      function formatTime(sec) {
+        const m = Math.floor(sec / 60) || 0;
+        const s = Math.floor(sec % 60) || 0;
+        return `${m}:${s.toString().padStart(2, '0')}`;
+      }
+
+      playPauseBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          playIcon.innerHTML = `<path d="${pausePath}"/>`;
+        } else {
+          audio.pause();
+          playIcon.innerHTML = `<path d="${playPath}"/>`;
+        }
+      });
+
+      audio.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(audio.duration);
+      });
+      audio.addEventListener('timeupdate', () => {
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+        seek.value = (audio.currentTime / audio.duration) * 100 || 0;
+      });
+      seek.addEventListener('input', () => {
+        audio.currentTime = (seek.value / 100) * audio.duration;
+      });
+      volumeBar.addEventListener('input', () => {
+        audio.volume = volumeBar.value;
+      });
+
+      optionsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        optionsMenu.classList.toggle('active');
+      });
+      document.addEventListener('click', () =>
+        optionsMenu.classList.remove('active'),
+      );
+
+      function setSpeed(speed) {
+        audio.playbackRate = speed;
+        optionsMenu.classList.remove('active');
+      }
+      function downloadAudio() {
+        const link = document.createElement('a');
+        link.href = audio.src;
+        link.download = 'audio_track.mp3';
+        link.click();
+      }
+    </script>
+  </body>
+</html>
