@@ -105,7 +105,14 @@
         <!-- 스피커 + 볼륨바 -->
         <div class="volume-wrapper">
           <button id="volume-icon">🔊</button>
-          <input id="volume-bar" type="range" min="0" max="1" step="0.01" value="1">
+          <input
+            id="volume-bar"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+          />
         </div>
 
         <!-- 옵션 점3개 (세로) -->
@@ -147,4 +154,33 @@
       // 재생 위치 업데이트
       audio.addEventListener('timeupdate', () => {
         currentTimeEl.textContent = formatTime(audio.currentTime);
-        const percent = (audio.currentTime
+        const percent = (audio.currentTime / audio.duration) * 100;
+        seek.value = percent || 0;
+      });
+
+      // 시크바 이동
+      seek.addEventListener('input', () => {
+        const time = (seek.value / 100) * audio.duration;
+        audio.currentTime = time;
+      });
+
+      // 스피커 아이콘 클릭 → 음소거 토글
+      volumeIcon.addEventListener('click', () => {
+        audio.muted = !audio.muted;
+        volumeIcon.textContent = audio.muted ? '🔇' : '🔊';
+      });
+
+      // 볼륨바 조절
+      volumeBar.addEventListener('input', () => {
+        audio.volume = volumeBar.value;
+
+        if (audio.volume == 0) {
+          volumeIcon.textContent = '🔇';
+        } else {
+          volumeIcon.textContent = '🔊';
+        }
+      });
+    </script>
+  </body>
+</html>
+const percent = (audio.currentTime
