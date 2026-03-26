@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MP4</title>
+
+    <style>
+      body {
+        margin: 0;
+        background: #000;
+        font-family: sans-serif;
+      }
+
+      .mp43 {
+        position: relative;
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+        overflow: hidden;
+        background-color: #000;
+      }
+
+      .mp43 video {
+        width: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      /* --- 커스텀 오디오 플레이어 --- */
+      .audio-player {
+        width: 100%;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.55);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+        font-size: 14px;
+      }
+
+      .audio-player button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+      }
+
+      .audio-player input[type='range'] {
+        flex: 1;
+      }
+
+      /* 스피커 + 볼륨바 묶음 */
+      .volume-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      #volume-bar {
+        width: 80px;
+        display: none; /* 기본 숨김 */
+      }
+
+      .volume-wrapper:hover #volume-bar {
+        display: block; /* hover 시 나타남 */
+      }
+
+      /* 숨겨진 audio */
+      #player {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="mp43">
+      <video
+        src="https://usanonki.github.io/music/springrain.mp4"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="auto"
+      ></video>
+
+      <!-- 숨겨진 실제 오디오 -->
+      <audio
+        id="player"
+        src="https://64.media.tumblr.com/9a462e63f637d56bd9e0a61ba0de35fc/c2bdee631695c56f-8b/001fcc81bd440df27a1dbe8fe79fb734a0a2a688.mp3"
+        autoplay
+        loop
+      ></audio>
+
+      <!-- 커스텀 오디오 UI -->
+      <div class="audio-player">
+        <button id="play-pause">⏸</button>
+
+        <span id="current-time">0:00</span> /
+        <span id="duration">0:00</span>
+
+        <input id="seek" type="range" min="0" max="100" value="0" />
+
+        <!-- 스피커 + 볼륨바 -->
+        <div class="volume-wrapper">
+          <button id="volume-icon">🔊</button>
+          <input id="volume-bar" type="range" min="0" max="1" step="0.01" value="1">
+        </div>
+
+        <!-- 옵션 점3개 (세로) -->
+        <button id="options">⋮</button>
+      </div>
+    </div>
+
+    <script>
+      const audio = document.getElementById('player');
+      const playPauseBtn = document.getElementById('play-pause');
+      const currentTimeEl = document.getElementById('current-time');
+      const durationEl = document.getElementById('duration');
+      const seek = document.getElementById('seek');
+      const volumeIcon = document.getElementById('volume-icon');
+      const volumeBar = document.getElementById('volume-bar');
+
+      function formatTime(sec) {
+        const m = Math.floor(sec / 60) || 0;
+        const s = Math.floor(sec % 60) || 0;
+        return `${m}:${s.toString().padStart(2, '0')}`;
+      }
+
+      // 재생/일시정지
+      playPauseBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          playPauseBtn.textContent = '⏸';
+        } else {
+          audio.pause();
+          playPauseBtn.textContent = '▶';
+        }
+      });
+
+      // 전체 길이 표시
+      audio.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(audio.duration);
+      });
+
+      // 재생 위치 업데이트
+      audio.addEventListener('timeupdate', () => {
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+        const percent = (audio.currentTime
