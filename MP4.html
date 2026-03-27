@@ -7,7 +7,7 @@
     <style>
       body {
         margin: 0;
-        background: transparent ; /* #000의 검정색 대신 투명으로 변경 */
+        background: transparent; /* #000의 검정색 대신 투명으로 변경 */
         font-family: sans-serif;
         display: flex;
         justify-content: center;
@@ -20,7 +20,7 @@
         max-width: 1280px;
         overflow: hidden;
         background-color: #000;
-        background: transparent; /* 여기도 투명으로 변경 1차변경*/ 
+        background: transparent; /* 여기도 투명으로 변경 1차변경*/
       }
       .mp43 video {
         width: 100%;
@@ -134,7 +134,7 @@
       ></video>
       <audio
         id="player"
-        src="https://64.media.tumblr.com/9a462e63f637d56bd9e0a61ba0de35fc/c2bdee631695c56f-8b/001fcc81bd440df27a1dbe8fe79fb734a0a2a688.mp3"   
+        src="https://64.media.tumblr.com/9a462e63f637d56bd9e0a61ba0de35fc/c2bdee631695c56f-8b/001fcc81bd440df27a1dbe8fe79fb734a0a2a688.mp3"
       ></audio>
 
       <div class="audio-player">
@@ -197,102 +197,102 @@
       </div>
     </div>
 
-    <<script>
-  const audio = document.getElementById('player');
-  const playPauseBtn = document.getElementById('play-pause');
-  const playIcon = document.getElementById('play-icon');
-  const currentTimeEl = document.getElementById('current-time');
-  const durationEl = document.getElementById('duration');
-  const seek = document.getElementById('seek');
-  const volumeBar = document.getElementById('volume-bar');
-  const optionsBtn = document.getElementById('options-btn');
-  const optionsMenu = document.getElementById('options-menu');
+    <script>
+      const audio = document.getElementById('player');
+      const playPauseBtn = document.getElementById('play-pause');
+      const playIcon = document.getElementById('play-icon');
+      const currentTimeEl = document.getElementById('current-time');
+      const durationEl = document.getElementById('duration');
+      const seek = document.getElementById('seek');
+      const volumeBar = document.getElementById('volume-bar');
+      const optionsBtn = document.getElementById('options-btn');
+      const optionsMenu = document.getElementById('options-menu');
 
-  const playPath = 'M8 5v14l11-7z';      // ▶ 재생 아이콘
-  const pausePath = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';  // || 일시정지 아이콘
+      const playPath = 'M8 5v14l11-7z'; // ▶ 재생 아이콘
+      const pausePath = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'; // || 일시정지 아이콘
 
-  function formatTime(sec) {
-    const m = Math.floor(sec / 60) || 0;
-    const s = Math.floor(sec % 60) || 0;
-    return `${m}:${s.toString().padStart(2, '0')}`;
-  }
+      function formatTime(sec) {
+        const m = Math.floor(sec / 60) || 0;
+        const s = Math.floor(sec % 60) || 0;
+        return `${m}:${s.toString().padStart(2, '0')}`;
+      }
 
-  // 재생/일시정지 버튼 클릭 이벤트
-  playPauseBtn.addEventListener('click', () => {
-    if (audio.paused) {
-      audio.play();
-      playIcon.innerHTML = `<path d="${pausePath}"/>`;
-    } else {
-      audio.pause();
-      playIcon.innerHTML = `<path d="${playPath}"/>`;
-    }
-  });
+      // 재생/일시정지 버튼 클릭 이벤트
+      playPauseBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          playIcon.innerHTML = `<path d="${pausePath}"/>`;
+        } else {
+          audio.pause();
+          playIcon.innerHTML = `<path d="${playPath}"/>`;
+        }
+      });
 
-  // ==================== 곡이 끝났을 때 처리 ====================
-  audio.addEventListener('ended', () => {
-    audio.pause();
-    audio.currentTime = 0;
-    seek.value = 0;
-    playIcon.innerHTML = `<path d="${playPath}"/>`;   // Play 아이콘으로 변경
-  });
+      // ==================== 곡이 끝났을 때 처리 ====================
+      audio.addEventListener('ended', () => {
+        audio.pause();
+        audio.currentTime = 0;
+        seek.value = 0;
+        playIcon.innerHTML = `<path d="${playPath}"/>`; // Play 아이콘으로 변경
+      });
 
-  // 메타데이터 로드 완료 시 (총 재생 시간 표시)
-  audio.addEventListener('loadedmetadata', () => {
-    durationEl.textContent = formatTime(audio.duration);
-  });
+      // 메타데이터 로드 완료 시 (총 재생 시간 표시)
+      audio.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(audio.duration);
+      });
 
-  // 재생 중 시간 업데이트
-  audio.addEventListener('timeupdate', () => {
-    if (!isNaN(audio.duration) && audio.duration > 0) {
-      currentTimeEl.textContent = formatTime(audio.currentTime);
-      seek.value = (audio.currentTime / audio.duration) * 100;
-    }
-  });
+      // 재생 중 시간 업데이트
+      audio.addEventListener('timeupdate', () => {
+        if (!isNaN(audio.duration) && audio.duration > 0) {
+          currentTimeEl.textContent = formatTime(audio.currentTime);
+          seek.value = (audio.currentTime / audio.duration) * 100;
+        }
+      });
 
-  // 진행바 조작
-  seek.addEventListener('input', () => {
-    if (audio.duration) {
-      audio.currentTime = (seek.value / 100) * audio.duration;
-    }
-  });
+      // 진행바 조작
+      seek.addEventListener('input', () => {
+        if (audio.duration) {
+          audio.currentTime = (seek.value / 100) * audio.duration;
+        }
+      });
 
-  // 볼륨 조절
-  volumeBar.addEventListener('input', () => {
-    audio.volume = parseFloat(volumeBar.value);
-  });
+      // 볼륨 조절
+      volumeBar.addEventListener('input', () => {
+        audio.volume = parseFloat(volumeBar.value);
+      });
 
-  // 옵션 메뉴 토글
-  optionsBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    optionsMenu.classList.toggle('active');
-  });
+      // 옵션 메뉴 토글
+      optionsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        optionsMenu.classList.toggle('active');
+      });
 
-  document.addEventListener('click', () => {
-    optionsMenu.classList.remove('active');
-  });
+      document.addEventListener('click', () => {
+        optionsMenu.classList.remove('active');
+      });
 
-  function setSpeed(speed) {
-    audio.playbackRate = speed;
-    optionsMenu.classList.remove('active');
-  }
+      function setSpeed(speed) {
+        audio.playbackRate = speed;
+        optionsMenu.classList.remove('active');
+      }
 
-  function downloadAudio() {
-    const link = document.createElement('a');
-    link.href = audio.src;
-    link.download = 'audio_track.mp3';
-    link.click();
-  }
+      function downloadAudio() {
+        const link = document.createElement('a');
+        link.href = audio.src;
+        link.download = 'audio_track.mp3';
+        link.click();
+      }
 
-  // ==================== 페이지 로드 시 초기 설정 ====================
-  window.addEventListener('load', () => {
-    // 처음에는 무조건 Play 아이콘 표시
-    playIcon.innerHTML = `<path d="${playPath}"/>`;
-    
-    // autoplay가 없으므로 처음에는 paused 상태임
-    // 진행바와 시간 초기화
-    seek.value = 0;
-    currentTimeEl.textContent = '0:00';
-  });
-</script>
+      // ==================== 페이지 로드 시 초기 설정 ====================
+      window.addEventListener('load', () => {
+        // 처음에는 무조건 Play 아이콘 표시
+        playIcon.innerHTML = `<path d="${playPath}"/>`;
+
+        // autoplay가 없으므로 처음에는 paused 상태임
+        // 진행바와 시간 초기화
+        seek.value = 0;
+        currentTimeEl.textContent = '0:00';
+      });
+    </script>
   </body>
 </html>
