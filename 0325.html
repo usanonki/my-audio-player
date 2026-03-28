@@ -4,37 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>너의 의미</title>
-    <style>
-      /* 1. 배경 설정 (다음 카페 스타일 응용) */
+     <style>
+      /* 1. 배경 설정 */
       body {
         margin: 0;
         padding: 0;
-        /* 레이어: 그라데이션 -> GIF 포인트 -> 전체 배경 이미지 */
         background-image:
-          linear-gradient(
-            90deg,
-            #edf3e5,
-            #dbe7ce 33%,
-            transparent,
-            transparent
-          ),
-            url('https://usanonki.github.io/photo/smallspot.gif'),
-           url('https://usanonki.github.io/photo/siyeon01.gif');
-
+          linear-gradient(90deg, #edf3e5, #dbe7ce 33%, transparent, transparent),
+          url('https://usanonki.github.io/photo/bubble.gif'), 
+          url('https://usanonki.github.io/photo/siyeon01.gif');
         background-attachment: fixed;
-        background-color: #e4d363; /* 기본 바탕 노란색 */
+        background-color: #e4d363;
         background-repeat: no-repeat;
-
-        /* GIF 위치와 배경 이미지 위치 조절 */
-        background-position:
-          right bottom,
-          right 110px bottom -15px,
-          right bottom;
-        background-size:
-          100% 100%,
-          750px 650px,
-          67% 100%;
-
+        background-position: right bottom, right 110px bottom -15px, right bottom;
+        background-size: 100% 100%, 750px 650px, 67% 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -42,55 +25,53 @@
         min-height: 100vh;
         overflow-x: hidden;
       }
-
-      /* 2. 영상 영역 (768x432 16:9 규격) */
-      .video-container {
-        width: 768px;
-        height: 432px;
-        background: #000;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); /* 입체감 */
-        border-radius: 10px;
-        overflow: hidden;
-        z-index: 5;
-      }
-
-      .ql-video {
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
-
-      /* 3. 음악 정보 텍스트 (플레이어 바로 위로 배치) */
+     
+      /* 3. 음악 정보 텍스트 (위치 및 수직 정렬 최적화) */
       .music-info {
-        position: fixed; /* 화면에 고정 */
-        left: 13px; /* 오른쪽에서 20px 띄움 */
-        bottom: 40px; /* 바닥에서 70px 띄움 (오디오 플레이어 높이만큼 확보) */
-
-        padding: 5px 10px;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(8px);
+        position: fixed;
+        right: 5px;
+        bottom: 45px; /* 플레이어 박스(36px) + 바닥(8px) + 간격(8px) */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25px;
+        min-width: 250px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.5);
+        border: 1.5px solid #b8c9a7; 
         border-radius: 30px;
+        backdrop-filter: blur(8px);
         color: #4a5c31;
         font-weight: bold;
-        font-size: 0.9em;
-        z-index: 100; /* 다른 요소보다 위에 보이게 설정 */
-        white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+        font-size: 0.80em;
+        z-index: 101;
+        white-space: nowrap;
       }
 
-      /* 오디오 컨트롤러 (화면 제일 우측 하단) */
-      audio {
-        position: fixed; /* 화면에 고정 */
-        left: 13px; /* 오른쪽에서 20px 띄움 */
-        bottom: 8px; /* 바닥에서 20px 띄움 */
-        padding: 5px 5px;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(8px);
+      /* 4. 오디오 플레이어 감싸는 상자 */
+      .audio-wrapper {
+        position: fixed;
+        right: 5px;
+        bottom: 5px;
+        width: 250px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+        box-sizing: border-box;
+        background: rgba(219, 231, 206, 0.7);
+        border: 1.5px solid #b8c9a7;
         border-radius: 30px;
-        color: #4a5c31;
-        height: 20px; /* 플레이어 높이 */
-        width: 350px; /* 플레이어 너비 조절 가능 */
-        opacity: 0.95;
-        z-index: 100; /* 다른 요소보다 위에 보이게 설정 */
+        box-shadow: 0 4px 15px rgba(74, 92, 49, 0.3); 
+        backdrop-filter: blur(5px);
+        z-index: 100;
+      }
+
+      .bgm-player {
+        width: 100%;
+        height: 20px;
+        opacity: 0.9;
       }
     </style>
   </head>
