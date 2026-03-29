@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>어머니의 자장가</title>
+    <style>
+      /* 1. 배경 설정 (다음 카페 스타일 응용) */
+      body {
+        margin: 0;
+        padding: 0;
+        /* 레이어: 그라데이션 -> GIF 포인트 -> 전체 배경 이미지 */
+        background-image:
+          linear-gradient(
+            90deg,
+            #e9f1ef,
+            #ccd3d3 60%,
+            transparent,
+            transparent
+          ),
+          url(''), url('https://usanonki.github.io/photo/mom.png');
+
+        background-attachment: fixed;
+        background-color: #8a8a85; /* 기본 바탕 엷은 회색 계열 */
+        background-repeat: no-repeat;
+
+        /* GIF 위치와 배경 이미지 위치 조절 */
+        background-position:
+          right bottom,
+          right 110px bottom -15px,
+          right bottom;
+        background-size:
+          100% 100%,
+          750px 650px,
+          67% 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* 2. 영상 영역 (768x432 16:9 규격) */
+      .video-container {
+        width: 768px;
+        height: 432px;
+        background: #000;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); /* 입체감 */
+        border-radius: 10px;
+        overflow: hidden;
+        z-index: 5;
+      }
+
+      .ql-video {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* 3. 음악 정보 텍스트 (플레이어 바로 위로 배치) */
+      .music-info {
+        position: fixed; /* 화면에 고정 */
+        left: 13px; /* 오른쪽에서 20px 띄움 */
+        bottom: 45px; /* 바닥에서 70px 띄움 (오디오 플레이어 높이만큼 확보) */
+
+        padding: 5px 10px;
+        background: rgba(60, 55, 30, 0.4);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+
+        /* 테두리: 안쪽으로 빛이 들어오는 느낌 */
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
+        border-bottom: 1.5px solid rgba(0, 0, 0, 0.1); /* 입체감 부여 */
+
+        border-radius: 30px;
+        color: #fffde7; /* 완전 흰색보다 아주 연한 노란색이 더 고급스러움 */
+        font-weight: bold;
+        font-size: 0.85em;
+        letter-spacing: -0.5px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        z-index: 100; /* 다른 요소보다 위에 보이게 설정 */
+        white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+      }
+
+      /* 오디오 컨트롤러 (화면 제일 우측 하단) */
+      audio {
+        position: fixed; /* 화면에 고정 */
+        left: 13px; /* 오른쪽에서 20px 띄움 */
+        bottom: 8px; /* 바닥에서 20px 띄움 */
+        padding: 5px 5px;
+        background: rgba(129, 127, 98, 0.548);
+        backdrop-filter: blur(20px);
+        border-radius: 30px;
+        color: #c09e2c;
+        height: 20px; /* 플레이어 높이 */
+        width: 350px; /* 플레이어 너비 조절 가능 */
+        opacity: 0.8;
+        filter: sepia(20%) contrast(90%) opacity(0.7); /* 전체적으로 톤을 낮추고 배경과 섞음 */
+        mix-blend-mode: multiply; /* 배경색과 자연스럽게 합성 (흰색이 배경색으로 변함) */
+        z-index: 100; /* 다른 요소보다 위에 보이게 설정 */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 음악 정보 표시 -->
+    <div class="music-info">
+      ♬ 사랑과 평화 - 어머니의 자장가(이장희 작사,작곡) ♬
+    </div>
+
+    <!-- 오디오 레이어 (자동 재생 및 반복 설정) -->
+    <audio controls autoplay loop>
+      <source
+        src="https://usanonki.github.io/music/mom.mp3"
+        type="audio/mpeg"
+      />
+      브라우저가 오디오를 지원하지 않습니다.
+    </audio>
+
+    <script>
+      // 최근 브라우저는 사용자 클릭 없이 소리가 안 날 수 있어 안내 팝업을 띄울 수 있습니다.
+      window.addEventListener(
+        'click',
+        () => {
+          const audio = document.querySelector('audio');
+          if (audio.paused) {
+            audio.play();
+          }
+        },
+        { once: true },
+      );
+    </script>
+  </body>
+</html>
