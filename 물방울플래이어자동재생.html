@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>물방울 배경 + 음악</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('test.png') center/cover no-repeat;
+        z-index: 1;
+      }
+
+      #bubble-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.75;
+        mix-blend-mode: screen;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      #audio-player {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 30px;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 10;
+        transition: all 0.3s ease;
+      }
+      /* 중앙에 간단한 텍스트 (원하시면 지우셔도 됩니다) */
+      .overlay-text {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-family: 'Noto Serif KR', serif;
+        font-size: 4.1rem;
+        font-weight: 700; /* 400으로 바꾸면 더 부드러워요 */
+        text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        z-index: 5;
+        pointer-events: none;
+        text-align: center;
+        opacity: 0.9;
+      }
+      #audio-player:hover {
+        transform: scale(1.15);
+      }
+
+      #audio-player svg {
+        width: 16px;
+        height: 16px;
+        fill: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="background"></div>
+
+    <video id="bubble-video" autoplay loop muted playsinline>
+      <source
+        src="https://blog.kakaocdn.net/dn/Jj59e/btsNWj4zvM2/92KnGjYkrj7v7KMTrENKN0/tfile.mp4"
+        type="video/mp4"
+      />
+    </video>
+
+    <!-- 음악 플레이어 -->
+    <div id="audio-player">
+      <svg
+        id="play-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+      >
+        <path d="M8 5.14v14l11-7z" />
+      </svg>
+      <svg
+        id="pause-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        style="display: none"
+      >
+        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+      </svg>
+    </div>
+    <!-- 배경 위에 간단한 텍스트 (원하면 삭제하세요) -->
+    <div class="overlay-text">Good Friday<br />성 금요일</div>
+
+    <!-- 음악 -->
+    <audio id="bg-music" loop>
+      <source
+        src="https://blog.kakaocdn.net/dn/dKsQt9/btsB7d9BUwp/Wt1WWI0iFty1O2P6A48MOK/tfile.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
+
+    <script>
+      const audio = document.getElementById('bg-music');
+      const player = document.getElementById('audio-player');
+      const playIcon = document.getElementById('play-icon');
+      const pauseIcon = document.getElementById('pause-icon');
+
+      let isPlaying = false;
+
+      // 페이지 로드 후 자동 재생 시도
+      async function autoPlayMusic() {
+        try {
+          audio.volume = 0.65; // 볼륨 조절 (원하는 값으로 변경 가능)
+          await audio.play();
+          isPlaying = true;
+          playIcon.style.display = 'none';
+          pauseIcon.style.display = 'block';
+          console.log('🎵 자동 재생 성공');
+        } catch (err) {
+          console.log('자동 재생이 차단되었습니다. 클릭으로 재생해주세요.');
+          isPlaying = false;
+          playIcon.style.display = 'block';
+          pauseIcon.style.display = 'none';
+        }
+      }
+
+      // 페이지가 완전히 로드된 후 자동 재생 시도
+      window.addEventListener('load', () => {
+        autoPlayMusic();
+      });
+
+      // 플레이어 클릭으로 재생/정지 토글
+      player.addEventListener('click', async () => {
+        if (isPlaying) {
+          audio.pause();
+          playIcon.style.display = 'block';
+          pauseIcon.style.display = 'none';
+        } else {
+          try {
+            await audio.play();
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+          } catch (err) {
+            console.log('재생 실패:', err);
+          }
+        }
+        isPlaying = !isPlaying;
+      });
+    </script>
+  </body>
+</html>
