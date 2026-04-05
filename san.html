@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Space</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* 1920x1080 배경 설정 */
+      .main-scene {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        max-width: 1920px;
+        max-height: 1080px;
+        background: url('https://usanonki.github.io/photo/oversan.webp')
+          no-repeat center center;
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* GIF 배치 */
+      .gif-content {
+        width: 300px;
+        height: auto;
+        position: absolute; /* 자유로운 배치를 위해 설정 */
+        bottom: 30%; /* 하단에서 30px 띄움 */
+        right: 30px; /* 우측에서 30px 띄움 */
+        margin-bottom: 20px;
+      }
+
+      /* 요청하신 둥근 핑크색 오디오 스타일 */
+      .custom-audio {
+        position: absolute; /* 자유로운 배치를 위해 설정 */
+        bottom: 30px; /* 하단에서 30px 띄움 */
+        right: 30px; /* 우측에서 30px 띄움 */
+        border: 2.5px solid #b2e00a;
+        border-radius: 50px;
+        width: 50px;
+        height: 50px;
+        overflow: hidden; /* 영역 밖으로 나가는 컨트롤러 숨김 */
+        transition: width 0.3s ease; /* 마우스 올리면 조절 가능하게 효과 추가(선택사항) */
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      /* 마우스를 올렸을 때만 재생바가 보이게 하고 싶다면 아래 주석을 해제하세요 */
+      /* .custom-audio:hover { width: 300px; } */
+    </style>
+  </head>
+  <body>
+    <div class="main-scene">
+      <!-- GIF 이미지 -->
+      <img
+        src="https://usanonki.github.io/my-audio-player/flowerbubble.gif"
+        alt="Study GIF"
+        class="gif-content"
+      />
+
+      <!-- 요청하신 스타일의 오디오 태그 -->
+      <audio
+        class="custom-audio"
+        src="https://64.media.tumblr.com/c57370822283e26d0c94db7612fb5b4d/a4f8e18ecc925e73-e4/2a83a80fce414ca95cff6dd34ba8fa248ae946ab.mp3"
+        controls
+        autoplay
+        loop
+      ></audio>
+    </div>
+  </body>
+</html>
