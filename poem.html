@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>산 너머 남촌에는</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;                    /* 화면 높이 정확히 맞춤 */
+        overflow: hidden;                 /* 상하 스크롤 완전 제거 */
+        background: url('susun.gif') no-repeat center center fixed;
+        background-size: cover;           /* 전체를 채우되, 넘치는 부분은 잘림 */
+        background-color: #e4d363;
+        font-family: 'Ownglyph_wiseelist-Rg', 'Noto Sans KR', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .paper {
+        width: 302px;
+        height: 414px;
+        background: url('cosmos.gif') no-repeat center;
+        background-size: 100% 100%;
+        position: relative;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .poem-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -45%);
+        width: 320px; /* 편지지 너비에 맞게 350에서 조금 줄임 */
+        text-align: center;
+        text-align: center;
+        line-height: 1;
+        padding: 20px;
+      }
+
+      .poem {
+        font-size: 8.5pt;
+        color: #222222;
+        font-weight: bold;
+        text-shadow:
+          1px 1px 15px rgba(255, 255, 255, 0.9),
+          -1px -1px 15px rgba(255, 255, 255, 0.9);
+        letter-spacing: 0.5px;
+      }
+
+      .title {
+        font-size: 14pt;
+        margin-bottom: 35px;
+        color: #1a1a1a;
+        text-shadow: 2px 2px 20px #ffffff;
+      }
+
+      .author {
+        margin-top: 40px;
+        font-size: 7pt;
+        color: #333;
+        text-shadow: 1px 1px 10px #ffffff;
+      }
+
+      /* 배경음악 */
+      .custom-audio {
+        position: absolute; /* 자유로운 배치를 위해 설정 */
+        bottom: 30px; /* 하단에서 30px 띄움 */
+        right: 30px; /* 우측에서 30px 띄움 */
+        border: 2.5px solid #bfd1e7;
+        border-radius: 50px;
+        width: 300px;
+        height: 30px;
+        overflow: hidden; /* 영역 밖으로 나가는 컨트롤러 숨김 */
+        transition: width 0.3s ease; /* 마우스 올리면 조절 가능하게 효과 추가(선택사항) */
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="paper">
+      <div class="poem-container">
+        <br class="poem">
+          <div class="title">산(山) 너머 남촌(南村)에는</div>
+          ........ 김동환<br /><br />
+
+          산(山) 너머 남촌(南村)에는 <br />
+          누가 살길래<br />
+          해마다 봄바람이<br />
+          남(南)으로 오네<br /><br />
+
+          꽃 피는 사월(四月)이면<br />
+          진달내 향긔<br />
+          밀 익는 오월(五月)이면<br />
+          보릿내음새<br /><br />
+
+          어느 것 한 가진들<br />
+          실어 안 오리<br />
+          남촌(南村)서 남풍(南風) 불제 <br />
+          나는 좋테나<br /><br />
+        </div>
+      </div>
+    </div>
+
+    <!-- 배경 음악 (원하시면 autoplay 제거 가능) -->
+    <audio
+      class="custom-audio"
+      src="https://64.media.tumblr.com/c57370822283e26d0c94db7612fb5b4d/a4f8e18ecc925e73-e4/2a83a80fce414ca95cff6dd34ba8fa248ae946ab.mp3"
+      controls
+      autoplay
+      loop
+    ></audio>
+  </body>
+</html>
