@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>That Night Us</title>
+    <
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* 1. 최초 배경 이미지 */
+      body {
+        background-image: url('https://64.media.tumblr.com/4b63635e50d35cc5914e294d5551dd51/8847f1653b12b97e-76/s540x810/134b3e927883a849deafcb093b761a50a3cd7ab0.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        overflow: hidden;
+        background-color: #faf8f8;
+
+        /* 투명한 mp4 효과 레이어 */
+        .effect-layer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none; /* 클릭 방해 X */
+          overflow: hidden;
+        }
+
+        .effect-layer video {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0.75; /* 투명도 조절 */
+          mix-blend-mode: screen; /* 검정 배경 제거 */
+          filter: brightness(1.3); /* 밝기 보정 */
+          pointer-events: none;
+        }
+      }
+
+      /* 2. 유튜브 영상 컨테이너 */
+      .video-container {
+        position: fixed;
+        z-index: 10;
+        overflow: hidden;
+        transition: all 2.5s ease-in-out;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        pointer-events: none; /* 영상 위 클릭 방지 */
+      }
+
+      /* [초기 상태] 좌측 하단 */
+      .video-small {
+        right: 10px;
+        bottom: 10px;
+        width: 320px;
+        height: 180px;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* [전환 상태] 전체 화면 */
+      .video-full {
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        border: none;
+      }
+
+      /* 유튜브 IFrame 비율 유지 */
+      .video-container iframe {
+        width: 100vw;
+        height: 56.25vw; /* 16:9 비율 */
+        min-height: 100vh;
+        min-width: 177.77vh;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* 3. 우측 하단 텍스트 */
+      .overlay-text {
+        position: fixed;
+        left: 5%;
+        bottom: 4%;
+        z-index: 9999;
+        text-align: center;
+      }
+
+      .overlay-text p {
+        font-family: 'Nanum Brush Script', cursive;
+        font-size: 5em;
+        color: #221fe0;
+        text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 꽃잎/물방울 효과 영상 레이어 -->
+    <div class="effect-layer">
+      <video
+        src="https://usanonki.github.io/photo/sky1.mp4"
+        autoplay
+        loop
+        muted
+      ></video>
+      <video
+        src="https://usanonki.github.io/photo/sky2.mp4"
+        autoplay
+        loop
+        muted
+      ></video>
+    </div>
+    <!-- 영상 영역: 'VIDEO_ID'를 실제 유튜브 영상 ID로 바꾸세요 -->
+    <div id="bgContainer" class="video-container video-small">
+      <iframe
+        id="ytPlayer"
+        src="https://www.youtube.com/embed/u-My9aOCqW4?enablejsapi=1&autoplay=1&controls=1&loop=1&playlist=u-My9aOCqW4"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+      >
+      </iframe>
+    </div>
+
+    <div class="overlay-text">
+      <p id="status-text">해피 데이</p>
+    </div>
+
+    <script>
+      // 25초 후 전체 화면 전환
+      const transitionTime = 25000;
+
+      setTimeout(() => {
+        const container = document.getElementById('bgContainer');
+        const text = document.getElementById('status-text');
+
+        container.classList.remove('video-small');
+        container.classList.add('video-full');
+
+        // 전환 후 시청자가 컨트롤 가능하도록 설정
+        container.style.pointerEvents = 'auto';
+
+        text.innerText = '해피 데이';
+        text.style.color = '#ffffff';
+        text.style.textShadow = '2px 2px 5px rgba(0,0,0,0.7)';
+      }, transitionTime);
+    </script>
+  </body>
+</html>
