@@ -72,6 +72,8 @@
         height: 180px;
         border-radius: 12px;
         border: 2px solid rgba(255, 255, 255, 0.5);
+        pointer-events: auto; /* none에서 auto로 변경하여 클릭 가능하게 수정 */
+        z-index: 100; /* 텍스트보다 아래, 배경보다는 위 */
       }
 
       /* [전환 상태] 전체 화면 */
