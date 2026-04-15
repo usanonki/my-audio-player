@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>그대 모습은 장미</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        height: 100%;
+        background: #000;
+      }
+
+      /* 🌌 전체 장면(scene) */
+      .scene {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      /* 🌟 배경 이미지 */
+      .background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(1.25);
+        z-index: 1;
+      }
+
+      /* ✨ mp4 효과 레이어 */
+      .effect-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .effect-layer video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.45;
+        mix-blend-mode: screen;
+        filter: brightness(1.05);
+      }
+
+      /* 🎵 오디오 (scene 내부 고정) */
+      .audio-container {
+        position: absolute;
+        left: 20px;
+        bottom: 5px;
+        z-index: 10;
+      }
+
+      /* ✨ 텍스트 (우측 정렬 + 페이드인) */
+      .overlay-text {
+        position: absolute;
+        left: 40px;
+        bottom: 30px;
+        z-index: 9;
+        text-align: right;
+        line-height: 1.1;
+        animation: fadeIn 2.2s ease-out forwards;
+        opacity: 0;
+      }
+
+      .overlay-text p {
+        font-family: 'Nanum Brush Script', cursive;
+        margin: 0;
+        color: #ffffff;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+      }
+
+      .text-large {
+        font-size: 2.5em;
+      }
+      .text-medium {
+        font-size: 1.5em;
+      }
+      .text-small {
+        font-size: 1.3em;
+      }
+
+      /* ✒️ Maestra 서명 (Great Vibes) */
+      .signature {
+        position: absolute;
+        left: 40%;
+        bottom: 100px;
+        font-family: 'Nanum Brush Script', cursive;
+        font-size: 4.2em;
+        color: rgba(138, 29, 29, 0.9);
+        letter-spacing: 0.02em;
+        z-index: 9;
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+
+        /* transform 관련 속성 */
+        transform-origin: left bottom;
+        transform: rotate(-13deg) translateY(30px); /* 초기 상태 */
+
+        /* 애니메이션 */
+        opacity: 0;
+        animation: signatureFadeIn 3.2s ease-out forwards;
+        animation-delay: 1.2s;
+      }
+
+      /* 서명 전용 페이드인 애니메이션 */
+      @keyframes signatureFadeIn {
+        0% {
+          opacity: 0;
+          transform: rotate(-13deg) translateY(40px);
+        }
+        100% {
+          opacity: 1;
+          transform: rotate(-13deg) translateY(0);
+        }
+      }
+
+      /* ✨ 페이드인 */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="scene">
+      <!-- 🌟 배경 이미지 -->
+      <img
+        src="https://64.media.tumblr.com/500d53d6cdf64cda25392c27925b4a20/e47205a9f459b5fd-3e/s540x810/a828398a107e9283878134ad2a178a8de9f8ae62.pnj"
+        class="background"
+      />
+
+      <!-- ✨ mp4 효과 -->
+      <div class="effect-layer">
+        <video
+          src="https://blog.kakaocdn.net/dn/b8te3R/btsHCuYLWlB/iULc2tv40kY1LiQww2Fnk1/tfile.mp4"
+          autoplay
+          loop
+          muted
+        ></video>
+      </div>
+
+      <!-- ✨ 텍스트 -->
+      <div class="overlay-text">
+        <p class="text-large">해피 데이</p>
+        <p class="text-medium">그대 모습은 장미</p>
+        <p class="text-small">민 해경</p>
+        <br />
+        <p class="text-medium">마에스트라</p>
+      </div>
+
+      <!-- ✒️ Maestra 서명 -->
+      <div class="signature">눈이부신 장미는 <br />그대 모습인가</div>
+
+      <!-- 🎵 오디오 -->
+      <div class="audio-container">
+        <audio
+          id="mainAudio"
+          style="
+            border: 2.5px solid #9dc8f0;
+            border-radius: 25px;
+            width: 220px;
+            height: 20px;
+          "
+          src="https://a.tumblr.com/tumblr_npg75c7s3D1tu534wo1.mp3"
+          controls
+          autoplay
+          loop
+        ></audio>
+      </div>
+    </div>
+
+    <script>
+      const audio = document.getElementById('mainAudio');
+      audio.volume = 0.3;
+
+      document.body.addEventListener('click', () => audio.play(), {
+        once: true,
+      });
+    </script>
+  </body>
+</html>
