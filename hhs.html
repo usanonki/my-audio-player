@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hippy Hippy Shake</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Monsieur+La+Doulaise&family=Mrs+Saint+Delafield&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        height: 100%;
+        background: #000;
+      }
+
+      /* 🌌 전체 장면 */
+      .scene {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      /* 🌹 장미 배경 + 숨쉬기 애니메이션 */
+      .background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+
+        /* ✨ 숨 쉬는 듯한 효과 */
+        animation: breathe 6s ease-in-out infinite;
+      }
+
+      @keyframes breathe {
+        0% {
+          transform: scale(1);
+          opacity: 0.95;
+        }
+        50% {
+          transform: scale(1.03);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0.95;
+        }
+      }
+
+      /* ✨ mp4 효과 */
+      .effect-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      /* 각 비디오별 개별 설정 */
+      .effect-layer video {
+        position: absolute; /* 비디오들을 각각 띄움 */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        mix-blend-mode: lighten; /* 밝은 부분 위주로 합성 */
+        opacity: 0; /* 기본적으로 숨김 */
+        animation: videoFade 1s forwards; /* 부드럽게 나타나게 함 */
+      }
+
+      /* 비디오가 순차적으로 로드되거나 겹칠 때 안정성을 위한 애니메이션 */
+      @keyframes videoFade {
+        to {
+          opacity: 0.42;
+        }
+      }
+
+      /* 겹침 순서 조정 (필요 시) */
+      .effect-layer video:nth-child(1) {
+        z-index: 3;
+      }
+      .effect-layer video:nth-child(2) {
+        z-index: 4;
+      }
+      .effect-layer video:nth-child(3) {
+        z-index: 5;
+      }
+
+      /* 🎵 오디오 */
+      .audio-container {
+        position: absolute;
+        right: 20px;
+        bottom: 5px; /* ql-video 환경 고려한 추천값 */
+        z-index: 10;
+      }
+
+      /* ✨ 텍스트 */
+      .overlay-text {
+        position: absolute;
+        right: 20px;
+        bottom: 60px;
+        z-index: 9;
+        text-align: right;
+        line-height: 1.1;
+        animation: fadeIn 2.2s ease-out forwards;
+        opacity: 0;
+      }
+
+      .overlay-text p {
+        font-family: 'Permanent Marker', cursive;
+        margin: 0;
+        color: #ffeb3b; /* 로큰롤에 어울리는 노란색 계열 추천 */
+        text-shadow: 3px 3px 4px #b85c7d; /* 입체감 있는 그림자 효과 */
+      }
+
+      .text-large {
+        font-size: 2.5em;
+        letter-spacing: 2px;
+      }
+      .text-medium {
+        font-size: 1.5em;
+      }
+      .text-small {
+        font-size: 1.2em;
+      }
+
+      /* ✨ 텍스트 페이드인 */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="scene">
+      <!-- 🌹 장미 이미지 (숨쉬기 효과 적용됨) -->
+      <img
+        src="https://64.media.tumblr.com/f838376d5dafb40800eff4db4ce7a311/5c455602e4fb4610-10/s540x810/c188518858b29bfce15c9e599ccb872cd73aebe1.webp"
+        class="background"
+      />
+
+      <!-- ✨ mp4 효과 -->
+      <div class="effect-layer">
+        <video
+          src="https://blog.kakaocdn.net/dn/bKAs6a/btsNrkq5BZ6/Q6aLraHjpoKVYmFrRzKoQk/tfile.mp4"
+          autoplay
+          loop
+          muted
+        ></video>
+        <video src="" autoplay loop muted></video>
+        <video
+          src="https://blog.kakaocdn.net/dn/cqaSsC/btrK4Xdgoss/pk70OgGBnEvaYyCUIrX8M0/tfile.mp4"
+          autoplay
+          loop
+          muted
+        ></video>
+      </div>
+
+      <!-- ✨ 텍스트 -->
+      <div class="overlay-text">
+        <p class="text-large">Hippy Hippy Shake</p>
+        <p class="text-medium">The Swinging Blue Jean</p>
+        <p class="text-small">Maestra</p>
+      </div>
+
+      <!-- 🎵 오디오 -->
+      <div class="audio-container">
+        <audio
+          id="mainAudio"
+          style="
+            border: 2.5px solid #b85c7d;
+            border-radius: 25px;
+            width: 220px;
+            height: 20px;
+          "
+          src="https://blog.kakaocdn.net/dn/bVGSJ4/btrMrS828lo/rKRfBeGevjgehyLvdrKMvk/tfile.mp3"
+          controls
+          autoplay
+          loop
+        ></audio>
+      </div>
+    </div>
+
+    <script>
+      const audio = document.getElementById('mainAudio');
+      audio.volume = 0.3;
+
+      document.body.addEventListener('click', () => audio.play(), {
+        once: true,
+      });
+    </script>
+  </body>
+</html>
