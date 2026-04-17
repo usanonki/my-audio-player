@@ -61,11 +61,17 @@
       }
 
       /* 오디오 플레이어 위치 (원하는 대로 조정 가능) */
+      /* 오디오 플레이어와 텍스트를 감싸는 컨테이너 */
       .audio-container {
         position: fixed;
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
+        display: flex;
+        flex-direction: column; /* 세로로 나열 */
+        align-items: center; /* 가로축 중앙 정렬 */
+        text-align: center;
+        width: 100%; /* 텍스트가 넓어질 수 있도록 설정 */
       }
 
       audio {
@@ -73,17 +79,48 @@
         height: 22px;
       }
 
-      /* 텍스트 스타일 및 페이드인 애니메이션 */
-      .title-sub {
-        font-size: 2.2em;
-        font-family: 'Nanum Brush Script', cursive;
-        color: rgba(14, 15, 12, 0.8);
-        margin-bottom: 10px;
+      .title-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        padding-bottom: 6vh;
+        color: #0c1a53;
         text-align: center;
-        letter-spacing: 2px;
+        pointer-events: none;
+        background: radial-gradient(
+          circle at 50% 10%,
+          rgba(248, 1, 1, 0.08),
+          transparent 55%
+        );
+      }
 
-        /* 애니메이션 설정: 2초 동안 부드럽게 나타남 */
-        animation: fadeIn 2s ease-in-out forwards;
+      .title-main {
+        font-family: 'Nanum Brush Script', cursive;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        letter-spacing: 0.12em;
+        text-indent: 0.12em;
+        text-shadow: 0 0 18px rgba(0, 0, 0, 0.7);
+        animation: fadeIn 3s ease-out forwards;
+        opacity: 0;
+        /* 변경 가능 영역 */
+        color: #202201; /* 메인 타이틀 색상 (예: 노란색) */
+        margin-bottom: -15px; /* 3. 메인과 서브 사이의 간격 (마이너스 값으로 더 밀착 가능) */
+      }
+
+      .title-sub {
+        font-family: 'Nanum Brush Script', cursive;
+        margin-top: 0.6rem;
+        font-size: clamp(1.2rem, 3vw, 2rem);
+        opacity: 0.7;
+        text-shadow: 0 0 10px rgba(15, 15, 15, 0.6);
+        animation: fadeIn 4s ease-out forwards;
+        opacity: 0;
+        /* 변경 가능 영역 */
+        color: #202201; /* 서브 타이틀 색상 (흰색) */
+        margin-bottom: 15px; /* 3. 타이틀과 오디오 플레이어 사이의 간격 */
       }
 
       @keyframes fadeIn {
@@ -109,14 +146,17 @@
       <li data-src="https://usanonki.github.io/music/night.mp3">
         밤의 길목에서
       </li>
-      <li data-src="https://blog.kakaocdn.net/dn/Pr6LC/btrZznC2jTh/S9ioh19BgLjDA1TrA6lUC1/tfile.mp3">
+      <li
+        data-src="https://blog.kakaocdn.net/dn/Pr6LC/btrZznC2jTh/S9ioh19BgLjDA1TrA6lUC1/tfile.mp3"
+      >
         Only You - The Platters
       </li>
     </ul>
 
     <div class="audio-container">
       <!-- 추가된 타이틀 -->
-      <div class="title-sub">세렌디피티</div>
+      <div class="title-main">세렌디피티</div>
+      <div class="title-sub">마에스트라</div>
       <audio id="audioPlayer" controls></audio>
     </div>
 
