@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap"
+      rel="stylesheet"
+    />
+    <title>나만의 음악 플레이어</title>
+
+    <style>
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        color: #fff;
+        margin: 0;
+        padding: 40px;
+        min-height: 100vh;
+        background-image: url('https://usanonki.github.io/photo/foxbubble.gif');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        /* 스크롤바를 강제로 제거 */
+        overflow: hidden;
+      }
+
+      /* 곡명 리스트 */
+      .playlist {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-width: 180px;
+      }
+
+      /* 개별 곡 박스 */
+      .playlist li {
+        padding: 6px 12px; /* 위아래 여백을 최소화 (기존의 절반 이하) */
+        margin: 4px 0; /* 박스 사이 간격을 촘촘하게 */
+        background: rgba(
+          0,
+          0,
+          0,
+          0.3
+        ); /* 배경을 조금 더 투명하게 해서 답답함 해소 */
+        border-radius: 5px; /* 작은 크기에 어울리는 둥근 모서리 */
+        font-size: 0.85em; /* 글자 크기를 작게 조절 */
+        white-space: nowrap; /* 제목이 길어도 줄바꿈 되지 않도록 */
+        overflow: hidden; /* 넘치는 글자 숨김 */
+        text-overflow: ellipsis; /* 긴 제목 끝에 ... 표시 */
+        transition: 0.2s;
+      }
+
+      .playlist li:hover {
+        background: rgba(255, 255, 255, 0.25);
+      }
+
+      .playlist li.playing {
+        background: #e92d78;
+        font-weight: bold;
+        opacity: 0.65;
+      }
+
+      /* 오디오 플레이어 위치 (원하는 대로 조정 가능) */
+      .audio-container {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      audio {
+        width: 300px;
+        height: 22px;
+      }
+
+      /* 텍스트 스타일 및 페이드인 애니메이션 */
+      .title-sub {
+        font-size: 2.2em;
+        font-family: 'Nanum Brush Script', cursive;
+        color: rgba(14, 15, 12, 0.8);
+        margin-bottom: 10px;
+        text-align: center;
+        letter-spacing: 2px;
+
+        /* 애니메이션 설정: 2초 동안 부드럽게 나타남 */
+        animation: fadeIn 2s ease-in-out forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px); /* 살짝 위로 올라오는 효과 추가 */
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <ul class="playlist">
+      <li
+        data-src="https://blog.kakaocdn.net/dn/bUJKGy/btsF2L8YeDU/140kFx6fzNKKV3kyaGHnf1/tfile.mp3"
+      >
+        Maggie의 추억
+      </li>
+      <li data-src="https://usanonki.github.io/music/night.mp3">
+        밤의 길목에서
+      </li>
+      <li data-src="https://blog.kakaocdn.net/dn/Pr6LC/btrZznC2jTh/S9ioh19BgLjDA1TrA6lUC1/tfile.mp3">
+        Only You - The Platters
+      </li>
+    </ul>
+
+    <div class="audio-container">
+      <!-- 추가된 타이틀 -->
+      <div class="title-sub">세렌디피티</div>
+      <audio id="audioPlayer" controls></audio>
+    </div>
+
+    <script>
+      const audio = document.getElementById('audioPlayer');
+      const items = document.querySelectorAll('.playlist li');
+      let currentIndex = 0; // 현재 재생 중인 인덱스 저장
+
+      // 곡 재생 함수
+      function playSong(index) {
+        // 인덱스 범위 초과 방지 (마지막 곡이 끝나면 다시 처음으로)
+        if (index >= items.length) index = 0;
+        currentIndex = index;
+
+        items.forEach((li) => li.classList.remove('playing'));
+        const selected = items[index];
+        selected.classList.add('playing');
+
+        audio.src = selected.dataset.src;
+        audio.play();
+      }
+
+      // 클릭 시 재생
+      items.forEach((li, index) => {
+        li.addEventListener('click', () => playSong(index));
+      });
+
+      // [추가된 부분] 한 곡이 끝나면 다음 인덱스 재생
+      audio.addEventListener('ended', () => {
+        playSong(currentIndex + 1);
+      });
+
+      // 첫 곡 자동 재생
+      playSong(0);
+    </script>
+  </body>
+</html>
