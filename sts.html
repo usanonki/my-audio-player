@@ -6,153 +6,176 @@
     <title>Serenade to Spring • 10월의 어느 멋진 날에</title>
 
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap');
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+            * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+            }
 
-      /* ✅ iframe 대응 핵심 */
-      html,
-      body {
-        height: 100%;
-      }
+            /* ✅ iframe 대응 핵심 */
+            html,
+            body {
+              height: 100%;
+            }
 
-      body {
-        font-family: 'Noto Serif KR', serif;
+            body {
+              font-family: 'Noto Serif KR', serif;
 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
 
-        min-height: 100%;
-        padding: 40px 20px;
+              min-height: 100%;
+              padding: 40px 20px;
 
-        background:
-          linear-gradient(
-            90deg,
-            rgba(88, 130, 29, 0.2),
-            rgba(55, 95, 1, 0.2) 29%,
-            transparent
-          ),
-          linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
-          url('https://usanonki.github.io/photo/green.gif')
+              background:
+                linear-gradient(
+                  90deg,
+                  rgba(88, 130, 29, 0.2),
+                  rgba(55, 95, 1, 0.2) 29%,
+                  transparent
+                ),
+                linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
 
-        background-color: #dbb9a7;
-        color: #f0e6d2;
 
-        /* ❌ fixed 제거 (iframe 버그 방지) */
-        background-attachment: scroll;
+              background-color: #dbb9a7;
+              color: #f0e6d2;
 
-        overflow-x: hidden;
-      }
+              /* ❌ fixed 제거 (iframe 버그 방지) */
+              background-attachment: scroll;
 
-      /* 컨테이너 */
-      .container {
-        width: 90%;
-        max-width: 850px;
-        text-align: center;
-      }
+              overflow-x: hidden;
+            }
 
-      /* 타이틀 */
-      h1 {
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(1.8rem, 4vw, 3.2rem);
-        margin-bottom: 5px;
-        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-      }
-
-      .subtitle {
-        font-size: clamp(0.9rem, 2vw, 1.2rem);
-        margin-bottom: 30px;
-        opacity: 0.9;
-        letter-spacing: 2px;
-      }
-
-      /* 텍스트 */
-      .text-wrapper {
-        position: relative;
-        min-height: 180px;
-        margin-top: 30px;
-      }
-
-      .text-box {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-
-        font-size: clamp(1rem, 2.2vw, 1.3rem);
-        line-height: 1.9;
-        padding: 25px;
-
-        background: rgba(0, 0, 0, 0.25);
-        backdrop-filter: blur(3px);
-        border-radius: 20px;
-
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 1.5s ease;
-
-        display: none;
-      }
-
-      .text-box.active {
-        display: block;
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .text-box strong {
-        color: #ffebcd;
-      }
-
-      /* ✅ 🎵 오디오 (핵심 수정) */
-      .audio-container {
-        margin-top: 55px;
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        opacity: 0.7;
-        transition: opacity 0.3s;
-      }
-
-      .audio-container:hover {
-        opacity: 1;
-      }
-
-      audio {
-        width: clamp(180px, 40%, 280px);
-        height: 32px;
-        border: 2.5px solid #a0ce76;
-        border-radius: 25px;
-      }
-
-      /* footer */
-      .footer {
-        margin-top: 25px;
-        font-size: 0.8rem;
-        opacity: 0.7;
-      }
-
-      /* 비네팅 */
-      .overlay {
+            .effect-layer {
         position: fixed;
         inset: 0;
-        background: radial-gradient(
-          circle,
-          transparent 40%,
-          rgba(0, 0, 0, 0.3)
-        );
-        pointer-events: none;
+        z-index: -2; /* 가장 뒤로 */
+        overflow: hidden;
       }
+
+      .effect-layer video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.85; /* ✨ 분위기 조절 */
+        filter: brightness(0.9);
+      }
+
+            /* 컨테이너 */
+            .container {
+              width: 90%;
+              max-width: 850px;
+              text-align: center;
+            }
+
+            /* 타이틀 */
+            h1 {
+              font-family: 'Playfair Display', serif;
+              font-size: clamp(1.8rem, 4vw, 3.2rem);
+              margin-bottom: 5px;
+              text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            }
+
+            .subtitle {
+              font-size: clamp(0.9rem, 2vw, 1.2rem);
+              margin-bottom: 30px;
+              opacity: 0.9;
+              letter-spacing: 2px;
+            }
+
+            /* 텍스트 */
+            .text-wrapper {
+              position: relative;
+              min-height: 180px;
+              margin-top: 30px;
+            }
+
+            .text-box {
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+
+              font-size: clamp(1rem, 2.2vw, 1.3rem);
+              line-height: 1.9;
+              padding: 25px;
+
+              background: rgba(0, 0, 0, 0.25);
+              backdrop-filter: blur(3px);
+              border-radius: 20px;
+
+              opacity: 0;
+              transform: translateY(20px);
+              transition: all 1.5s ease;
+
+              display: none;
+            }
+
+            .text-box.active {
+              display: block;
+              opacity: 1;
+              transform: translateY(0);
+            }
+
+            .text-box strong {
+              color: #ffebcd;
+            }
+
+            /* ✅ 🎵 오디오 (핵심 수정) */
+            .audio-container {
+              margin-top: 55px;
+              display: flex;
+              justify-content: center;
+              width: 100%;
+              opacity: 0.7;
+              transition: opacity 0.3s;
+            }
+
+            .audio-container:hover {
+              opacity: 1;
+            }
+
+            audio {
+              width: clamp(180px, 40%, 280px);
+              height: 32px;
+              border: 2.5px solid #a0ce76;
+              border-radius: 25px;
+            }
+
+            /* footer */
+            .footer {
+              margin-top: 25px;
+              font-size: 0.8rem;
+              opacity: 0.7;
+            }
+
+            /* 비네팅 */
+            .overlay {
+              position: fixed;
+              inset: 0;
+              background: radial-gradient(
+                circle,
+                transparent 40%,
+                rgba(0, 0, 0, 0.3)
+              );
+              pointer-events: none;
+            }
     </style>
   </head>
 
   <body>
+    <div class="effect-layer">
+      <video autoplay muted loop playsinline>
+        <source
+          src="https://va.media.tumblr.com/tumblr_tdt833eQIv1b09833.mp4"
+          type="video/mp4"
+        />
+      </video>
+    </div>
     <div class="overlay"></div>
 
     <div class="container">
