@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Serenade to Spring • 10월의 어느 멋진 날에</title>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap');
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ✅ iframe 대응 핵심 */
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        font-family: 'Noto Serif KR', serif;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 100%;
+        padding: 40px 20px;
+
+        background:
+          linear-gradient(
+            90deg,
+            rgba(88, 130, 29, 0.2),
+            rgba(55, 95, 1, 0.2) 29%,
+            transparent
+          ),
+          linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+          url('https://usanonki.github.io/photo/green.gif')
+
+        background-color: #dbb9a7;
+        color: #f0e6d2;
+
+        /* ❌ fixed 제거 (iframe 버그 방지) */
+        background-attachment: scroll;
+
+        overflow-x: hidden;
+      }
+
+      /* 컨테이너 */
+      .container {
+        width: 90%;
+        max-width: 850px;
+        text-align: center;
+      }
+
+      /* 타이틀 */
+      h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.8rem, 4vw, 3.2rem);
+        margin-bottom: 5px;
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      .subtitle {
+        font-size: clamp(0.9rem, 2vw, 1.2rem);
+        margin-bottom: 30px;
+        opacity: 0.9;
+        letter-spacing: 2px;
+      }
+
+      /* 텍스트 */
+      .text-wrapper {
+        position: relative;
+        min-height: 180px;
+        margin-top: 30px;
+      }
+
+      .text-box {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+
+        font-size: clamp(1rem, 2.2vw, 1.3rem);
+        line-height: 1.9;
+        padding: 25px;
+
+        background: rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(3px);
+        border-radius: 20px;
+
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 1.5s ease;
+
+        display: none;
+      }
+
+      .text-box.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .text-box strong {
+        color: #ffebcd;
+      }
+
+      /* ✅ 🎵 오디오 (핵심 수정) */
+      .audio-container {
+        margin-top: 55px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+      }
+
+      .audio-container:hover {
+        opacity: 1;
+      }
+
+      audio {
+        width: clamp(180px, 40%, 280px);
+        height: 32px;
+        border: 2.5px solid #a0ce76;
+        border-radius: 25px;
+      }
+
+      /* footer */
+      .footer {
+        margin-top: 25px;
+        font-size: 0.8rem;
+        opacity: 0.7;
+      }
+
+      /* 비네팅 */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(
+          circle,
+          transparent 40%,
+          rgba(0, 0, 0, 0.3)
+        );
+        pointer-events: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="overlay"></div>
+
+    <div class="container">
+      <h1>Serenade to Spring</h1>
+      <p class="subtitle">Secret Garden</p>
+
+      <div class="text-wrapper">
+        <div id="text1" class="text-box active">
+          <p>
+            <strong>시크릿 가든</strong>은 노르웨이의 작곡가 롤프 러블랜드와<br />
+            아일랜드의 바이올리니스트 피오뉼라 셰리가 결성한<br />
+            세계적인 뉴에이지 듀오입니다.
+          </p>
+        </div>
+
+        <div id="text2" class="text-box">
+          <p>
+            원곡은 노르웨이의 <em>'Danse Mot Vår'</em>이지만,<br />
+            이들의 연주곡 <strong>'Serenade to Spring'</strong>이 대히트하며<br />
+            봄을 기다리는 설렘의 대명사가 되었습니다.
+          </p>
+        </div>
+
+        <div id="text3" class="text-box">
+          <p>
+            한국에서는 <strong>'10월의 어느 멋진 날에'</strong>라는 가사가
+            붙어<br />
+            가을의 낭만을 노래하는 곡으로 더 익숙해졌죠.<br />
+            계절을 넘어 사랑받는 시대를 초월한 명곡입니다.
+          </p>
+        </div>
+      </div>
+
+      <!-- ✅ 중앙 정렬 오디오 -->
+      <div class="audio-container">
+        <audio
+          id="mainAudio"
+          controls
+          autoplay
+          loop
+          src="https://blog.kakaocdn.net/dn/blbcMe/btsFt4hqR4e/I2XWm5a5lEz8PkJSTMAQn1/tfile.mp3"
+        ></audio>
+      </div>
+
+      <div class="footer">
+        Beautiful Melody for Your Soul<br />
+        <small>© Maestra</small>
+      </div>
+    </div>
+
+    <script>
+      const boxes = [
+        document.getElementById('text1'),
+        document.getElementById('text2'),
+        document.getElementById('text3'),
+      ];
+
+      let currentIndex = 0;
+
+      function showNextText() {
+        boxes[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % boxes.length;
+
+        setTimeout(() => {
+          boxes.forEach((box) => (box.style.display = 'none'));
+          boxes[currentIndex].style.display = 'block';
+
+          setTimeout(() => {
+            boxes[currentIndex].classList.add('active');
+          }, 50);
+        }, 1500);
+      }
+
+      setInterval(showNextText, 15000);
+    </script>
+  </body>
+</html>
