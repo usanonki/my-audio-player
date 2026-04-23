@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cafe Happy Day</title>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap');
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Noto Serif KR', serif;
+        background: url('../png/cafehappyday.png') center/cover no-repeat;
+        background-color: #dbb9a7;
+        height: 100vh;
+        overflow: hidden;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #f0e6d2;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 850px;
+        text-align: center;
+        z-index: 2;
+      }
+
+      h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.8rem, 4vw, 3.2rem);
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      .subtitle {
+        margin-bottom: 30px;
+        opacity: 0.9;
+      }
+
+      /* 텍스트 */
+      .text-wrapper {
+        position: relative;
+        min-height: 180px;
+      }
+
+      .text-box {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+
+        width: 80%;
+        max-width: 650px;
+        font-size: clamp(1rem, 2.2vw, 1.3rem);
+        line-height: 1.5;
+
+        padding: 15px;
+        background: rgba(232, 238, 227, 0.1);
+        backdrop-filter: blur(1px);
+        border-radius: 20px;
+        border: 1px solid rgba(101, 177, 36, 0.7);
+
+        opacity: 0;
+        display: none;
+        transition: all 1.5s ease;
+      }
+
+      .text-box.active {
+        display: block;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* 🎬 MP4 영역 */
+      .video-wrapper {
+        position: fixed;
+        top: 30%;
+        left: 70%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+        display: none;
+      }
+
+      .video-item {
+        position: absolute;
+        opacity: 0;
+
+        transition: opacity 2s ease;
+
+        /* 👉 여기서 크기 조절 */
+        width: clamp(140px, 22vw, 280px);
+        border-radius: 12px;
+      }
+
+      .video-item.active {
+        opacity: 1;
+      }
+
+      /* 오디오 */
+      .audio-container {
+        margin-top: 55px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+      }
+
+      .audio-container:hover {
+        opacity: 1;
+      }
+
+      audio {
+        width: clamp(180px, 40%, 280px);
+        height: 22px;
+        border: 2.5px solid #d3b488;
+        border-radius: 25px;
+      }
+
+      /* 비네팅 (원하면 제거 가능) */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(
+          circle,
+          transparent 40%,
+          rgba(0, 0, 0, 0.3)
+        );
+        pointer-events: none;
+      }
+
+      .footer {
+        margin-top: 25px;
+        font-size: 0.9rem;
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="overlay"></div>
+
+    <div class="container">
+      <h1>Maria Elena</h1>
+      <p class="subtitle">Los Indios Tabajaras</p>
+
+      <!-- 텍스트 -->
+      <div class="text-wrapper">
+        <div class="text-box active">
+          <strong>"마리아 엘레나"</strong>(일명 "Yours is My Heart")는 원래
+          로렌조 바르셀라타가 루시아 마르티네스 가르시아를 위해 작곡한 곡입니다.
+        </div>
+        <div class="text-box">
+          <strong>"마리아 엘레나"</strong>는 이후 여러 음악가들에 의해 많은
+          언어로 녹음되었습니다. 1958년 브라질 그룹
+          <em>로스 인디오스 타바하라스</em>가 라틴 아메리카 전역에서 인기를
+          끌었고, 1963년에는 미국 차트 6위와 영국 차트 5위에 올랐습니다.
+        </div>
+        <div class="text-box">
+          로스 인디오스 타바하라스(타바하라 인디언)는 브라질 북동부 세아라 주
+          티앙구아 출신의 두 형제인 안테노르 리마와 나탈리시오(나토) 리마의 기타
+          듀오였습니다. 이 그룹 이름은 브라질 북동부 대서양 연안의 동쪽 끝에
+          살았던 원주민인 타바하라족을 가리킵니다.
+        </div>
+      </div>
+
+      <!-- 🎬 MP4 -->
+      <div class="video-wrapper">
+        <video
+          class="video-item active"
+          src="https://va.media.tumblr.com/tumblr_tdx8g8LDs21b09833.mp4"
+          muted
+          loop
+          playsinline
+        ></video>
+        <video
+          class="video-item"
+          src="https://va.media.tumblr.com/tumblr_tdx7xiqrSB1b09833.mp4"
+          muted
+          loop
+          playsinline
+        ></video>
+        <video
+          class="video-item"
+          src="https://va.media.tumblr.com/tumblr_tdx89vnVeH1b09833.mp4"
+          muted
+          loop
+          playsinline
+        ></video>
+      </div>
+
+      <!-- 오디오 -->
+      <div class="audio-container">
+        <audio
+          id="mainAudio"
+          controls
+          autoplay
+          loop
+          src="https://blog.kakaocdn.net/dna/bAIlqX/dJMcaadY24A/AAAAAAAAAAAAAAAAAAAAAH0nGAs9_5S72Z-5mz15SragLU0bYsvEtd3q_zredQVi/tfile.mp3?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1777561199&allow_ip=&allow_referer=&signature=NnB6ZT4qJwhlQpCEzI2ETZicHyU%3D"
+        ></audio>
+      </div>
+
+      <div class="footer">
+        Beautiful Melody for Your Soul<br />
+        <small>© Maestra</small>
+      </div>
+    </div>
+
+    <script>
+      /* 텍스트 */
+      const boxes = document.querySelectorAll('.text-box');
+      let current = 0;
+
+      function nextText() {
+        // 마지막 텍스트일 경우 → 텍스트 종료 후 바로 영상 시작
+        if (current >= boxes.length - 1) {
+          boxes[current].classList.remove('active');
+
+          // 마지막 텍스트가 사라지는 시간(1.5초) + 약간의 여유
+          setTimeout(startVideo, 2400);
+          return;
+        }
+
+        // 현재 텍스트 숨기기
+        boxes[current].classList.remove('active');
+        current++;
+
+        // 다음 텍스트 표시
+        setTimeout(() => {
+          boxes.forEach((b) => (b.style.display = 'none'));
+          boxes[current].style.display = 'block';
+
+          setTimeout(() => {
+            boxes[current].classList.add('active');
+          }, 50);
+        }, 1500);
+
+        // 다음 텍스트로 8초 후 이동
+        setTimeout(nextText, 9000);
+      }
+
+      // 첫 텍스트는 5초 후 전환 시작
+      setTimeout(nextText, 5000);
+
+      /* 🎬 MP4 로직 */
+      const videos = document.querySelectorAll('.video-item');
+      const wrapper = document.querySelector('.video-wrapper');
+      let vIndex = 0;
+
+      function startVideo() {
+        wrapper.style.display = 'block';
+
+        // 모든 영상 초기화
+        videos.forEach((v) => {
+          v.pause();
+          v.currentTime = 0;
+        });
+
+        // 첫 영상 재생
+        videos[0].play();
+
+        // 7초 간격으로 영상 전환
+        setInterval(() => {
+          const currentVideo = videos[vIndex];
+
+          vIndex = (vIndex + 1) % videos.length;
+          const nextVideo = videos[vIndex];
+
+          nextVideo.currentTime = 0;
+          nextVideo.play();
+          nextVideo.classList.add('active');
+
+          // 기존 영상 fade-out
+          setTimeout(() => {
+            currentVideo.classList.remove('active');
+            currentVideo.pause();
+          }, 800);
+        }, 7000);
+      }
+    </script>
+  </body>
+</html>
