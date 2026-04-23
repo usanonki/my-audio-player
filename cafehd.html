@@ -188,21 +188,51 @@
       <div class="video-wrapper">
         <video
           class="video-item active"
+          src="https://va.media.tumblr.com/tumblr_tdyufaayao1b09833.mp4"
+          muted
+          loop
+          playsinline
+        ></video>
+        <video
+          class="video-item"
+          src="https://va.media.tumblr.com/tumblr_tdyvsrelM61b09833.mp4"
+          muted
+          loop
+          playsinline
+        ></video>
+        <video
+          class="video-item"
+          src="https://va.media.tumblr.com/tumblr_tdyuutD8tj1b09833.mp4"
+          muted
+          loop
+          playsinline
+        ></video>
+
+        <video
+          class="video-item active"
+          src="https://va.media.tumblr.com/tumblr_tdyul3PBoQ1b09833.mp4"
+          muted
+          loop
+          playsinline
+        ></video>
+        <video
+          class="video-item"
+          src="https://va.media.tumblr.com/tumblr_tdyuijwOpG1b09833.mp4"
+          muted
+          loop
+          playsinline
+        ></video>
+        <video
+          class="video-item"
           src="https://va.media.tumblr.com/tumblr_tdx8g8LDs21b09833.mp4"
           muted
           loop
           playsinline
         ></video>
+
         <video
           class="video-item"
           src="https://va.media.tumblr.com/tumblr_tdx7xiqrSB1b09833.mp4"
-          muted
-          loop
-          playsinline
-        ></video>
-        <video
-          class="video-item"
-          src="https://va.media.tumblr.com/tumblr_tdx89vnVeH1b09833.mp4"
           muted
           loop
           playsinline
@@ -215,7 +245,6 @@
           id="mainAudio"
           controls
           autoplay
-          loop
           src="https://blog.kakaocdn.net/dna/bAIlqX/dJMcaadY24A/AAAAAAAAAAAAAAAAAAAAAH0nGAs9_5S72Z-5mz15SragLU0bYsvEtd3q_zredQVi/tfile.mp3?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1777561199&allow_ip=&allow_referer=&signature=NnB6ZT4qJwhlQpCEzI2ETZicHyU%3D"
         ></audio>
       </div>
@@ -227,76 +256,102 @@
     </div>
 
     <script>
-      /* 텍스트 */
       const boxes = document.querySelectorAll('.text-box');
-      let current = 0;
+      const videos = document.querySelectorAll('.video-item');
+      const wrapper = document.querySelector('.video-wrapper');
+      const bgm = document.getElementById('mainAudio');
+
+      let currentText = 0;
+      let videoIndex = 0;
+      let timers = [];
+
+      function resetAll() {
+        timers.forEach(clearTimeout);
+        timers = [];
+        currentText = 0;
+        videoIndex = 0;
+
+        // 초기 상태 설정
+        boxes.forEach((b, i) => {
+          b.classList.remove('active');
+          b.style.display = i === 0 ? 'block' : 'none';
+        });
+        wrapper.style.display = 'none';
+        videos.forEach((v) => {
+          v.classList.remove('active');
+          v.pause();
+        });
+
+        // 첫 번째 텍스트 활성화
+        setTimeout(() => boxes[0].classList.add('active'), 100);
+        scheduleNextText(9450);
+      }
+
+      function scheduleNextText(delay) {
+        timers.push(setTimeout(nextText, delay));
+      }
 
       function nextText() {
-        // 마지막 텍스트일 경우 → 텍스트 종료 후 바로 영상 시작
-        if (current >= boxes.length - 1) {
-          boxes[current].classList.remove('active');
+        boxes[currentText].classList.remove('active');
 
-          // 마지막 텍스트가 사라지는 시간(1.5초) + 약간의 여유
-          setTimeout(startVideo, 2400);
+        if (currentText >= boxes.length - 1) {
+          // 마지막 텍스트면 2초 뒤 영상 시작
+          timers.push(setTimeout(startVideoLoop, 2000));
           return;
         }
 
-        // 현재 텍스트 숨기기
-        boxes[current].classList.remove('active');
-        current++;
-
-        // 다음 텍스트 표시
-        setTimeout(() => {
+        const t1 = setTimeout(() => {
           boxes.forEach((b) => (b.style.display = 'none'));
-          boxes[current].style.display = 'block';
+          currentText++;
+          boxes[currentText].style.display = 'block';
 
-          setTimeout(() => {
-            boxes[current].classList.add('active');
+          const t2 = setTimeout(() => {
+            boxes[currentText].classList.add('active');
           }, 50);
+          timers.push(t2);
         }, 1500);
+        timers.push(t1);
 
-        // 다음 텍스트로 8초 후 이동
-        setTimeout(nextText, 11000);
+        scheduleNextText(9450);
       }
 
-      // 첫 텍스트는 5초 후 전환 시작
-      setTimeout(nextText, 5000);
-
-      /* 🎬 MP4 로직 */
-      const videos = document.querySelectorAll('.video-item');
-      const wrapper = document.querySelector('.video-wrapper');
-      let vIndex = 0;
-
-      function startVideo() {
+      function startVideoLoop() {
+        boxes.forEach((b) => (b.style.display = 'none'));
         wrapper.style.display = 'block';
+        playNextVideo();
+      }
 
-        // 모든 영상 초기화
+      function playNextVideo() {
         videos.forEach((v) => {
+          v.classList.remove('active');
           v.pause();
-          v.currentTime = 0;
         });
 
-        // 첫 영상 재생
-        videos[0].play();
+        const currentV = videos[videoIndex];
+        currentV.classList.add('active');
+        currentV.play().catch(() => {});
 
-        // 7초 간격으로 영상 전환
-        setInterval(() => {
-          const currentVideo = videos[vIndex];
-
-          vIndex = (vIndex + 1) % videos.length;
-          const nextVideo = videos[vIndex];
-
-          nextVideo.currentTime = 0;
-          nextVideo.play();
-          nextVideo.classList.add('active');
-
-          // 기존 영상 fade-out
-          setTimeout(() => {
-            currentVideo.classList.remove('active');
-            currentVideo.pause();
-          }, 800);
-        }, 7000);
+        videoIndex = (videoIndex + 1) % videos.length;
+        timers.push(setTimeout(playNextVideo, 8000)); // 8초마다 교체
       }
+
+      // 오디오가 끝나면 리셋 후 재생
+      bgm.addEventListener('ended', () => {
+        resetAll();
+        bgm.play().catch(() => {});
+      });
+
+      // 브라우저 정책 대응: 클릭 시 오디오 재생 시도
+      window.addEventListener(
+        'click',
+        () => {
+          if (bgm.paused) bgm.play().catch(() => {});
+        },
+        { once: true },
+      );
+
+      // 시작
+      resetAll();
     </script>
   </body>
 </html>
