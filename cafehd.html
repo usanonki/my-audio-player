@@ -137,10 +137,22 @@
         pointer-events: none;
       }
 
-      .footer {
-        margin-top: 25px;
-        font-size: 0.9rem;
-        opacity: 0.7;
+      .footer small {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 4px 12px;
+
+        /* 배경 이미지의 분위기를 해치지 않는 낮은 채도의 반투명 배경 */
+        background: rgba(151, 149, 149, 0.25);
+        backdrop-filter: blur(1px); /* 배경을 살짝 흐리게 해서 글씨를 띄움 */
+        border-radius: 20px; /* 둥근 느낌으로 부드럽게 */
+
+        /* 폰트 흐름 유지 */
+        color: #f0e6d2; /* 상위 요소와 같은 색상으로 통일감 유지 */
+        font-size: 0.75rem; /* 너무 크지 않게 조절 */
+        font-weight: 500; /* 조금 더 또렷하게만 수정 */
+        letter-spacing: 0.15em; /* 자간을 넓혀 고급스러운 인상 강조 */
+        opacity: 0.9; /* 너무 쨍하지 않게 살짝 조절 */
       }
     </style>
   </head>
