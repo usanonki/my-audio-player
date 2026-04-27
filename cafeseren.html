@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Love Is Just A Dream - Serendipity</title>
+
+    <link rel="preconnect" href="https://googleapis.com" />
+    <link rel="preconnect" href="https://gstatic.com" crossorigin />
+    <link
+      href="https://googleapis.com/css2?family=Nanum+Brush+Script&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Song+Myung&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        height: 100%;
+        background: #000;
+      }
+
+      .scene {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* 배경 밝기를 살짝 낮춰 텍스트 가독성 확보 */
+        filter: brightness(0.95) contrast(1.05);
+        z-index: 1;
+      }
+
+      /* 꽃잎 레이어 (현재 비워둠) */
+      .petal-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      /* 좌측 하단 정보 텍스트 - 그림자 강화 */
+      .overlay-text {
+        position: absolute;
+        left: 40px;
+        bottom: 40px;
+        z-index: 15;
+        text-align: left;
+        line-height: 1.2;
+        animation: fadeIn 2.2s ease-out forwards;
+        opacity: 0;
+      }
+
+      .overlay-text p {
+        font-family: 'Nanum Brush Script', cursive;
+        margin: 0;
+        color: #ffffff;
+        /* 밝은 배경 대비 검정 그림자 강화 */
+        text-shadow:
+          2px 2px 8px rgba(0, 0, 0, 0.9),
+          0 0 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .text-large {
+        font-size: 2.8em;
+      }
+      .text-medium {
+        font-size: 1.7em;
+      }
+      .text-small {
+        font-size: 1.4em;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* 중앙 자막 - 로고와 밸런스를 맞춘 '엔틱 브라운 & 골드' 스타일 */
+      .text-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+      }
+
+      .text-box {
+        position: absolute;
+        top: 88%; /* 로고와 겹치지 않게 약간 아래로 조정 */
+        left: 60%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 600px;
+        font-family: 'Song Myung', serif;
+        font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+        line-height: 1.2;
+        text-align: right;
+        padding: 20px;
+
+        /* 로고 톤과 맞춘 딥 브라운 컬러 */
+        color: #4a3219;
+        font-weight: 700;
+
+        /* 가독성의 핵심: 흰색 테두리 + 로고톤 금빛 후광 */
+        text-shadow:
+          -0.8px -0.8px 0 #fff,
+          /* 위쪽 왼쪽 */ 0.8px -0.8px 0 #fff,
+          /* 위쪽 오른쪽 */ -0.8px 0.8px 0 #fff,
+          /* 아래쪽 왼쪽 */ 0.8px 0.8px 0 #fff,
+          /* 아래쪽 오른쪽 */ 0px 0px 12px rgba(212, 180, 131, 0.6); /* 금빛 광채는 유지하거나 살짝 낮춤 */
+
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 2s ease,
+          transform 2s ease;
+      }
+
+      .text-box.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translate(-50%, -55%);
+      }
+
+      .audio-container {
+        position: absolute;
+        left: 40px;
+        bottom: 15px;
+        z-index: 20;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="scene">
+      <!-- 이미지 파일명을 cafeseren.png로 수정하셨다고 하여 반영했습니다 -->
+      <img
+        src="https://64.media.tumblr.com/524e750951827495c91f3c94550c5fa7/064d2aae94137b15-d9/s540x810/f846a2976c1044128e683fcb6921ad96b39d6c8f.pnj"
+        class="background"
+        alt="Cafe Serendipity"
+      />
+
+      <div class="petal-layer">
+        <!-- 추후 사용할 영상을 위해 비워둠 -->
+        <video src="" autoplay loop muted playsinline></video>
+      </div>
+
+      <div class="text-wrapper">
+        <div class="text-box">
+          현재 캐나다에 거주하고 있는
+          <strong>Claude Choe</strong>는<br />작곡가이자 지휘자
+        </div>
+        <div class="text-box">
+          연주자와 프로듀서로서 세계를 무대로 <br />활동하고 있는
+          아티스트입니다.
+        </div>
+        <div class="text-box">
+          그는 소프라노 조수미 음반 '마이 스토리' 타이틀 곡<br />'사랑은 꿈과
+          같은 것'을 작곡했습니다.
+        </div>
+        <div class="text-box">
+          꿈이었나 너를 떠나온 날 지금까지 후회하고 있어<br />기억조차 하기 힘든
+          지금 사랑이란 이미 끝났다오
+        </div>
+        <div class="text-box">
+          그대와의 사랑의 추억은 차가운 옛날 옛날의 일 뿐<br />무성한 들녘의
+          외로움에 내 서늘한 옷깃을 여미네
+        </div>
+        <div class="text-box">
+          사랑이란 끝없는 그리움 사랑이란 꿈과 같은 것~<br />너무나도 사랑했던
+          널~~~ 후회해도 이젠 소용이 없네
+        </div>
+        <div class="text-box">널 사랑 할 수 있다면....</div>
+        <div class="text-box">
+          또다시 한 번 그대 품에서<br />또다시 한 번 널 사랑 할 수 있다면~
+        </div>
+      </div>
+
+      <div class="overlay-text">
+        <p class="text-large">세렌디피티</p>
+        <p class="text-medium">사랑은 꿈과 같은 것</p>
+        <p class="text-small">Claude Choe</p>
+      </div>
+
+      <div class="audio-container">
+        <audio
+          id="mainAudio"
+          style="
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            width: 220px;
+            height: 25px;
+            background: rgba(0, 0, 0, 0.2);
+          "
+          src="https://blog.kakaocdn.net/dn/cXwJ3q/btrybFXjVPg/cV4QYi9isTqkJerqtfaFv0/tfile.mp3"
+          controls
+          autoplay
+          loop
+        ></audio>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const boxes = document.querySelectorAll('.text-box');
+        const bgm = document.getElementById('mainAudio');
+        let index = 0;
+        const interval = 10000;
+
+        function showNext() {
+          boxes.forEach((b) => b.classList.remove('active'));
+          if (boxes[index]) {
+            boxes[index].classList.add('active');
+            index++;
+          }
+          if (index >= boxes.length) {
+            index = 0;
+          }
+        }
+
+        showNext();
+        setInterval(showNext, interval);
+
+        window.addEventListener(
+          'click',
+          () => {
+            bgm.play().catch(() => {});
+          },
+          { once: true },
+        );
+      });
+    </script>
+  </body>
+</html>
