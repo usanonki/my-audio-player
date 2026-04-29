@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>하늘바라기</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ✅ iframe 환경 대응: vh 대신 % 사용 */
+      html {
+        height: 100%;
+      }
+
+      body {
+        background: #000;
+        height: 100%; /* 100vh → 100% (iframe 높이 정확히 맞춤) */
+        overflow: hidden;
+      }
+
+      .video-wrapper {
+        position: fixed; /* relative → fixed (빈틈 완전 차단) */
+        inset: 0; /* top/right/bottom/left: 0 한번에 */
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+        opacity: 0;
+        transform: scale(1.04); /* 살짝 크게 → 하단 검은 경계선 제거 */
+        filter: blur(6px);
+
+        transition:
+          opacity 2.5s ease-in-out,
+          transform 2.5s ease-in-out,
+          filter 2.5s ease-in-out;
+      }
+
+      video.visible {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+        z-index: 2;
+      }
+
+      video.hidden {
+        opacity: 0;
+        transform: scale(1.05);
+        filter: blur(8px);
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      /* ✨ 텍스트 (우측 정렬 + 페이드인) */
+      .overlay-text {
+        position: fixed; /* absolute → fixed (video-wrapper와 맞춤) */
+        right: 40px;
+        bottom: 60px;
+        z-index: 9;
+        text-align: right;
+        line-height: 1.1;
+        animation: fadeIn 2.2s ease-out forwards;
+        opacity: 0; /* 애니메이션 시작 전 숨김 */
+        animation-delay: 0.3s; /* 약간의 딜레이 후 등장 */
+      }
+
+      .overlay-text p {
+        font-family: 'Nanum Brush Script', cursive;
+        margin: 0;
+        color: #ffffff;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+      }
+
+      .text-large {
+        font-size: 2.5em;
+      }
+      .text-medium {
+        font-size: 1.5em;
+      }
+      .text-small {
+        font-size: 1.3em;
+      }
+
+      /* ✅ 수정: 닫는 중괄호 } 추가 → 애니메이션 정상 작동 */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      } /* ← 이 } 가 원본에서 누락되어 있었음 */
+    </style>
+  </head>
+
+  <body>
+    <div class="video-wrapper">
+      <video id="videoA" muted playsinline preload="auto"></video>
+      <video id="videoB" muted playsinline preload="auto"></video>
+    </div>
+
+    <!-- ✨ 텍스트 -->
+    <div class="overlay-text">
+      <p class="text-large">하늘바라기</p>
+      <p class="text-medium">정 은지</p>
+
+      <br />
+      <p class="text-medium">마에스트라</p>
+    </div>
+
+    <!-- 오디오 -->
+    <div
+      class="audio-fixed-container"
+      style="position: fixed; right: 20px; bottom: 20px; z-index: 10000"
+    >
+      <audio
+        id="bgm"
+        style="
+          border: 2.5px solid #65b609;
+          border-radius: 25px;
+          width: 250px;
+          height: 30px;
+        "
+        src="https://blog.kakaocdn.net/dn/ecNcA9/btsF2yaWgmj/AV0QUSpZJlmHGDbPlatPk1/tfile.mp3"
+        controls
+        autoplay
+      ></audio>
+    </div>
+
+    <script>
+      const videoSrc = 'https://va.media.tumblr.com/tumblr_te9yvebDtq1b09833.mp4'; // 경로 확인!
+
+      const audio = document.getElementById('bgm');
+      const videoA = document.getElementById('videoA');
+      const videoB = document.getElementById('videoB');
+
+      let isUsingA = true;
+      let preSwitchTimer = null;
+
+      const PRELOAD_TIME = 3.5; // 🔥 여유 있게
+
+      function setInitialVideo(videoElement) {
+        videoElement.src = videoSrc;
+        videoElement.load();
+      }
+
+      function scheduleSwitch(activeVideo, nextVideo) {
+        if (preSwitchTimer) clearTimeout(preSwitchTimer);
+
+        preSwitchTimer = setTimeout(
+          () => {
+            nextVideo.currentTime = 0;
+            nextVideo.play().catch(() => {});
+
+            activeVideo.classList.remove('visible');
+            activeVideo.classList.add('hidden');
+
+            nextVideo.classList.remove('hidden');
+            nextVideo.classList.add('visible');
+
+            isUsingA = !isUsingA;
+
+            setTimeout(() => {
+              const newActive = isUsingA ? videoA : videoB;
+              const newNext = isUsingA ? videoB : videoA;
+              scheduleSwitch(newActive, newNext);
+            }, 100);
+          },
+          (activeVideo.duration - PRELOAD_TIME) * 1000,
+        );
+      }
+
+      function startSeamlessLoop() {
+        setInitialVideo(videoA);
+        setInitialVideo(videoB);
+
+        videoA.onloadedmetadata = () => {
+          videoA.currentTime = 0;
+          videoA
+            .play()
+            .then(() => {
+              videoA.classList.add('visible');
+              scheduleSwitch(videoA, videoB);
+            })
+            .catch(() => {});
+        };
+      }
+
+      audio.addEventListener('play', () => {
+        if (videoA.paused || !videoA.src) {
+          startSeamlessLoop();
+        }
+      });
+
+      window.addEventListener('load', () => {
+        audio.play().catch(() => {
+          document.body.addEventListener('click', () => audio.play(), {
+            once: true,
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
