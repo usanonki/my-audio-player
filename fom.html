@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>First Of May</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap');
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        background: transparent;
+        overflow: hidden;
+      }
+
+      iframe {
+        width: 100%;
+        height: 100vh;
+        border: none;
+        background: transparent;
+      }
+
+      .video-wrapper {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+        opacity: 0;
+
+        /* 👉 transform을 변수 기반으로 변경 */
+        transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(1.04);
+
+        filter: blur(6px) brightness(0.9) contrast(1.05);
+
+        transition:
+          opacity 2.5s ease-in-out,
+          transform 1.2s ease-out,
+          filter 2.5s ease-in-out;
+      }
+
+      video.visible {
+        opacity: 1;
+        transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(1);
+
+        filter: blur(0) brightness(1) contrast(1.1);
+        z-index: 2;
+      }
+
+      video.hidden {
+        opacity: 0;
+        transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(1.05);
+
+        filter: blur(8px);
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .overlay-text {
+        position: fixed;
+        right: 20px;
+        bottom: 60px;
+        z-index: 9;
+        text-align: right;
+        line-height: 1.25;
+        opacity: 0;
+        animation: fadeIn 2.2s ease-out forwards 3s;
+      }
+
+      .overlay-text p {
+        color: #ffffff;
+        text-shadow: 2px 2px 10px rgba(19, 18, 18, 0.8);
+      }
+
+      .text-large {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+        letter-spacing: 1px;
+      }
+
+      .text-medium {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.1rem, 1.8vw, 2.1rem);
+        opacity: 0.85;
+      }
+
+      .text-small {
+        font-family: 'Nanum Brush Script', cursive;
+        font-size: 1.5em;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="video-wrapper">
+      <video id="videoA" muted playsinline preload="auto"></video>
+      <video id="videoB" muted playsinline preload="auto"></video>
+    </div>
+
+    <div class="overlay-text">
+      <p class="text-large">First of May</p>
+      <p class="text-medium">Giovanni Marradi</p>
+      <br />
+      <p class="text-small">마에스트라</p>
+    </div>
+
+    <div style="position: fixed; right: 20px; bottom: 20px; z-index: 10000">
+      <audio
+        id="bgm"
+        style="
+          border: 2.5px solid #bce091b6;
+          border-radius: 25px;
+          width: 250px;
+          height: 30px;
+        "
+        src="https://blog.kakaocdn.net/dn/bJS7e6/btsG5GAc3A8/fWNDfQAsC4glq7EsNb8C1K/tfile.mp3"
+        controls
+      ></audio>
+    </div>
+
+    <script>
+      const videoSrc =
+        'https://va.media.tumblr.com/tumblr_tebvzaYESF1b09833.mp4';
+      const PLAY_RATE = 0.95;
+
+      const audio = document.getElementById('bgm');
+      const videoA = document.getElementById('videoA');
+      const videoB = document.getElementById('videoB');
+
+      let isUsingA = true;
+      let preSwitchTimer = null;
+      const PRELOAD_TIME = 2.5;
+
+      function setInitialVideo(videoElement) {
+        videoElement.src = videoSrc;
+        videoElement.load();
+        videoElement.muted = true;
+      }
+
+      function scheduleSwitch(activeVideo, nextVideo) {
+        if (!activeVideo.duration || isNaN(activeVideo.duration)) {
+          setTimeout(() => scheduleSwitch(activeVideo, nextVideo), 500);
+          return;
+        }
+
+        if (preSwitchTimer) clearTimeout(preSwitchTimer);
+
+        const effectiveDuration = activeVideo.duration / PLAY_RATE;
+        const delay = (effectiveDuration - PRELOAD_TIME) * 1000;
+
+        preSwitchTimer = setTimeout(() => {
+          nextVideo.currentTime = 0;
+          nextVideo.playbackRate = PLAY_RATE;
+
+          nextVideo.play().then(() => {
+            activeVideo.classList.remove('visible');
+            activeVideo.classList.add('hidden');
+
+            nextVideo.classList.remove('hidden');
+            nextVideo.classList.add('visible');
+
+            isUsingA = !isUsingA;
+
+            const newActive = isUsingA ? videoA : videoB;
+            const newNext = isUsingA ? videoB : videoA;
+            scheduleSwitch(newActive, newNext);
+          });
+        }, delay);
+      }
+
+      function startSeamlessLoop() {
+        setInitialVideo(videoA);
+        setInitialVideo(videoB);
+
+        videoA.onloadedmetadata = () => {
+          videoA.playbackRate = PLAY_RATE;
+          videoB.playbackRate = PLAY_RATE;
+
+          Promise.all([videoA.play(), videoB.play()]).then(() => {
+            videoB.classList.add('hidden');
+            videoA.classList.add('visible');
+
+            scheduleSwitch(videoA, videoB);
+          });
+        };
+      }
+
+      // 🎯 패럴럭스 효과 (핵심)
+      document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 30;
+        const y = (e.clientY / window.innerHeight - 0.5) * 30;
+
+        document.querySelectorAll('video').forEach((video) => {
+          video.style.setProperty('--tx', `${x}px`);
+          video.style.setProperty('--ty', `${y}px`);
+        });
+      });
+
+      audio.addEventListener('play', () => {
+        if (!videoA.src) {
+          startSeamlessLoop();
+        }
+      });
+
+      window.addEventListener('load', () => {
+        audio.play().catch(() => {
+          document.body.addEventListener('click', () => audio.play(), {
+            once: true,
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
