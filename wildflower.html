@@ -1,0 +1,220 @@
+!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>들꽃-유 익종</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Playfair Display', serif;
+        /* 1. 배경 설정: url만 바꾸면 분위기가 확 바뀝니다 */
+        background:
+          linear-gradient(
+            90deg,
+            rgba(88, 130, 29, 0.1),
+            rgba(55, 95, 1, 0.1) 29%,
+            transparent,
+            transparent
+          ),
+          linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+          url('https://64.media.tumblr.com/1d63f626ab06e6f0dc413a8cdace51dd/203b5aab4b43940b-2a/s500x750/c28dff82f137ed98da25024cd49c151df87ef8a1.jpg')
+            center/cover no-repeat;
+        background-attachment: fixed;
+        background-color: #dbb9a7;
+        color: #f0e6d2;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 850px;
+        text-align: center;
+        z-index: 2;
+      }
+
+      h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.2rem;
+        margin-bottom: 5px;
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 50px;
+        opacity: 0.9;
+        letter-spacing: 2px;
+      }
+
+      /* 2. 오디오 컨트롤: 위치나 필터는 여기서 조정 */
+      .audio-container {
+        position: absolute;
+        left: 50%;
+        bottom: 80px;
+        transform: translateX(-50%); /* 이 줄 추가 */
+        z-index: 10;
+        opacity: 0.6;
+        transition: opacity 0.3s;
+      }
+      .audio-container:hover {
+        opacity: 1;
+      }
+      audio {
+        width: 240px;
+        height: 30px;
+      }
+
+      /* 3. 텍스트 박스: 정보 전달용 레이아웃 */
+      .text-wrapper {
+        position: relative;
+        min-height: 180px;
+      }
+
+      .text-box {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        font-size: 1.3rem;
+        line-height: 1.9;
+        padding: 30px;
+        background: rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(3px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 1.5s ease;
+        display: none;
+      }
+
+      .text-box.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .footer {
+        margin-top: 60px;
+        font-size: 0.95rem;
+        opacity: 0.7;
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          circle,
+          transparent 40%,
+          rgba(0, 0, 0, 0.3) 100%
+        );
+        pointer-events: none;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overlay"></div>
+
+    <div class="container">
+      <!-- 4. 내용 수정 영역 -->
+      <h1>들꽃</h1>
+      <p class="subtitle">유 익종</p>
+
+      <div class="text-wrapper">
+        <div id="text1" class="text-box active">
+          <p>
+            유익종의 ‘들꽃’ 한 소절이<br />
+            부드러운 바람을 타고 오월의 첫 주말을 살며시 열어줍니다.
+          </p>
+        </div>
+
+        <div id="text2" class="text-box">
+          <p>
+            가장 소중한 사람에게<br />
+            들꽃 한 송이를 조심스레 건네는 마음으로 인사를 드립니다.
+          </p>
+        </div>
+
+        <div id="text3" class="text-box">
+          <p>
+            화려하지 않아도 오래 기억되는 향기처럼,<br />
+            소중한 분들과 따뜻하게 어우러지는 오월이 되세요.
+          </p>
+        </div>
+
+        <div id="text4" class="text-box">
+          <p>
+            들꽃은 심지 않아도 아름답게 피어나듯,<br />
+            당신의 일상에도 뜻하지 않은 기쁨이 가득하길 바랍니다.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer">
+        Happy Day<br />
+        <small>© Maestra</small>
+      </div>
+    </div>
+
+    <!-- 오디오 소스 변경 -->
+    <div class="audio-container">
+      <audio
+        id="mainAudio"
+        src="https://blog.kakaocdn.net/dn/2qL8P/btriWLkxznh/Xc3cP2OzHC8wQEpT9qawIK/tfile.mp3"
+        controls
+        autoplay
+        loop
+      ></audio>
+    </div>
+
+    <script>
+      const boxes = [
+        document.getElementById('text1'),
+        document.getElementById('text2'),
+        document.getElementById('text3'),
+        document.getElementById('text4'),
+      ];
+
+      let currentIndex = 0;
+
+      function showNextText() {
+        boxes[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % boxes.length;
+
+        setTimeout(() => {
+          boxes.forEach((box) => (box.style.display = 'none'));
+          boxes[currentIndex].style.display = 'block';
+          setTimeout(() => {
+            boxes[currentIndex].classList.add('active');
+          }, 50);
+        }, 1500); // 박스가 사라지는 페이드 아웃 대기 시간
+      }
+
+      // 5. 전환 속도 조절 (15000 = 15초)
+      setInterval(showNextText, 15000);
+    </script>
+  </body>
+</html>
