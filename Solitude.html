@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Solitude Georges Delerue (2:55)</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+      }
+
+      .scene {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url('https://64.media.tumblr.com/83fe322cae172d517221369ed4f82344/990f4dc307f4616f-a9/s540x810/214191ca2a2dbf7b8e0600dc596c41978b7c48e4.jpg');
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.75) contrast(1.05);
+      }
+
+      .overlay {
+        position: absolute;
+        bottom: 12%;
+        text-align: center;
+        color: #f5f5f5;
+        font-family: 'Noto Serif KR', serif;
+        text-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+        z-index: 10; /* 오버레이가 위에 오도록 보장 */
+      }
+
+      .overlay p {
+        margin: 0.6em 0;
+        opacity: 0;
+        letter-spacing: 0.06em;
+        font-size: 1.2rem;
+        transform: translateY(15px);
+        transition:
+          opacity 2.5s ease-out,
+          transform 2.5s ease-out;
+      }
+
+      /* ✅ 수정: 선택자를 명확히 하여 우선순위 해결 (.overlay p.show) */
+      .overlay p.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ✅ 수정: 페이드아웃 시 모든 라인을 동시에 사라지게 하려면 전체 적용 가능 */
+      .overlay p.fadeout {
+        opacity: 0 !important;
+        transform: translateY(-10px) !important;
+        transition:
+          opacity 4s ease-in,
+          transform 4s ease-in !important;
+      }
+
+      audio {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        width: 250px;
+        height: 20px;
+        border: 2.5px solid #ee0707;
+        border-radius: 25px;
+        z-index: 100;
+        opacity: 0.3; /* 디자인을 위해 투명도 조절 */
+      }
+      audio:hover {
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="scene">
+      <div class="overlay">
+        <p class="line1">
+          그 고요 속에서 나는 나의 그림자를 바라보고, <br />아무 말도 없이
+          저녁이 천천히 스며든다.
+        </p>
+
+        <p class="line2">
+          희미한 빛 사이로 지나간 시간들이 조용히 되돌아오고, <br />잊었다고
+          믿었던 순간들이 다시 나를 스친다.
+        </p>
+
+        <p class="line3">
+          끝내 닿지 못한 마음 하나가, <br />어둠 깊은 곳에서 아직도 나를 부르고
+          있다.
+        </p>
+      </div>
+
+      <audio
+        id="bgm"
+        src="https://blog.kakaocdn.net/dn/cznu2y/btsLbn3pu7g/kPjVQFXGCVGebfQlk5LC7k/tfile.mp3"
+        controls
+        autoplay
+        loop
+      ></audio>
+    </div>
+
+    <script>
+      window.addEventListener('load', () => {
+        const audio = document.getElementById('bgm');
+        const lines = [
+          document.querySelector('.line1'),
+          document.querySelector('.line2'),
+          document.querySelector('.line3'),
+        ];
+
+        function playSequence() {
+          // 초기화 (다시 시작할 때 숨김)
+          lines.forEach((line) => {
+            line.classList.remove('show', 'fadeout');
+          });
+
+          // 순차 등장
+          setTimeout(() => lines[0].classList.add('show'), 15000);
+          setTimeout(() => lines[1].classList.add('show'), 30000);
+          setTimeout(() => lines[2].classList.add('show'), 45000);
+
+          // 페이드 아웃
+          setTimeout(() => {
+            lines.forEach((line) => line.classList.add('fadeout'));
+          }, 70000);
+
+          // 🔁 다시 반복 (페이드 끝나고 약간 여유 주기)
+          setTimeout(() => {
+            playSequence();
+          }, 85000); // 70초 + 15초 여유
+        }
+
+        playSequence();
+
+        // 첫 클릭 시 음악 시작
+        document.body.addEventListener(
+          'click',
+          () => {
+            audio.muted = false;
+            audio.play();
+          },
+          { once: true },
+        );
+      });
+    </script>
+  </body>
+</html>
