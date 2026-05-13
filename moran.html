@@ -1,0 +1,186 @@
+<!doctype html>
+
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>또 한 송이의 나의 모란</title>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+      }
+
+      .scene {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; /* 중요 */
+      }
+
+      /* 첫 번째 배경 (기본) */
+      .scene::before,
+      .scene::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.75) contrast(1.05);
+        transition: opacity 1.5s ease-in-out; /* 전환 효과 */
+      }
+
+      /* 첫 번째 이미지 */
+      .scene::before {
+        background-image: url('../jpg/maa.jpg');
+        z-index: 1;
+      }
+
+      /* 두 번째 이미지 */
+      .scene::after {
+        background-image: url('../jpg/mbb.jpg');
+        z-index: 2;
+        opacity: 0; /* 처음에는 숨김 */
+      }
+
+      /* 30초마다 fade 전환 */
+      @keyframes backgroundSwitch {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        } /* 15초에 완전히 보임 */
+        100% {
+          opacity: 0;
+        } /* 30초에 다시 사라짐 */
+      }
+
+      .scene::after {
+        animation: backgroundSwitch 60s infinite linear; /* 60초 주기로 설정 (30초마다 전환) */
+      }
+
+      .overlay {
+        position: absolute;
+        bottom: 12%;
+        text-align: center;
+        color: #f5f5f5;
+        font-family: 'Noto Serif KR', serif;
+        text-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+        z-index: 20;
+      }
+
+      .overlay p {
+        margin: 0.4em 0;
+        opacity: 0;
+        letter-spacing: 0.06em;
+        transition:
+          opacity 2s ease-out,
+          transform 2s ease-out;
+      }
+
+      .overlay p.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .overlay p.fadeout {
+        opacity: 0 !important;
+        transform: translateY(-10px) !important;
+        transition:
+          opacity 4s ease-in,
+          transform 4s ease-in !important;
+      }
+
+      /* 오디오 플레이어 위치 */
+
+      audio {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        opacity: 0.5;
+        width: 250px;
+        height: 25px;
+        border: 2.5px solid #abf09d;
+        border-radius: 25px;
+        z-index: 10;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="scene">
+      <audio
+        id="bgm"
+        src="https://64.media.tumblr.com/127a9cc604c493b0297e1f7593ed9db7/68f20120d5021274-a7/74588a786e32e4ec8d9f9ac4d7d84171cfb361cb.mp3"
+        controls
+        autoplay
+      ></audio>
+
+      <div class="overlay">
+        <p class="line1">
+          모란꽃 피는 유월이 오면 또 한 송이의 꽃 나의 모란 추억은 아름다워<br />
+          밉도록 아름다워 아무 말도 없이 저녁이 천천히 스며든다.
+        </p>
+
+        <p class="line2">
+          또 한 송이의 나의 모란/ 김용호 시, 조두남 작곡1958년<br />어디선가
+          자주 들어 본 것 같은 노래 입니다^^
+        </p>
+
+        <p class="line3">
+          저는 '모란,동백' 조영남이 2005년에 리메이크 한 노래가 떠
+          오릅니다....<br />이 곡의 작곡 작사는 1988년 "이 제하" 입니다...
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const audio = document.getElementById('bgm');
+
+      const line1 = document.querySelector('.line1');
+
+      const line2 = document.querySelector('.line2');
+
+      const line3 = document.querySelector('.line3');
+
+      // 타이밍 기준 (총 175초)
+
+      const timing = {
+        line1_in: 15, // 15초
+
+        line2_in: 30, // 45초 30
+
+        line3_in: 45, // 95초 45
+
+        line3_out: 60, // 160초 60
+      };
+
+      // 오디오 재생 시간에 따라 텍스트 상태 변경
+
+      audio.addEventListener('timeupdate', () => {
+        const t = audio.currentTime;
+
+        if (t >= timing.line1_in && t < timing.line2_in) {
+          line1.classList.add('show');
+        }
+
+        if (t >= timing.line2_in && t < timing.line3_in) {
+          line2.classList.add('show');
+        }
+
+        if (t >= timing.line3_in && t < timing.line3_out) {
+          line3.classList.add('show');
+        }
+      });
+    </script>
+  </body>
+</html>
