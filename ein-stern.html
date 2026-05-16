@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ein Stern</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* 배경 */
+      .main-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://64.media.tumblr.com/698cfc0bb969359fc92acc6cac2fb92b/151cc636ca9fe158-a5/s400x600/f0eb14bfc6e6221ea32057da511d607941136d46.jpg');
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+      }
+
+      /* 꽃잎 효과 */
+      .petal-effect {
+        position: fixed;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        height: 500px;
+        background-image: url('https://64.media.tumblr.com/9c9eae6922fb0cde4465b40616926926/bac17bf25e27e3c2-09/s540x810/cf118e968140c5265707920d8b6827b2b4f71a2c.gifv');
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      /* 오디오 */
+      .audio-player {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        opacity: 0.5;
+        width: 250px;
+        height: 22px;
+        border: 2.5px solid #abf09d;
+        border-radius: 25px;
+        z-index: 30;
+      }
+
+      /* 기본 fadeIn */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+
+      /* 기존 텍스트 */
+      .overlay-text {
+        position: fixed;
+        left: 40px;
+        bottom: 50px;
+        z-index: 31;
+        text-align: left;
+        line-height: 1;
+        animation: fadeIn 2.2s ease-out forwards;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .overlay-text p {
+        font-family: 'Nanum Brush Script', cursive;
+        margin: 0;
+        color: #ffffff;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+      }
+
+      .text-large {
+        font-size: 2.5em;
+      }
+      .text-medium {
+        font-size: 1.5em;
+      }
+      .text-small {
+        font-size: 1.3em;
+      }
+
+      /* 외성본 3단 텍스트 */
+      .story-text {
+        position: fixed;
+        width: 100%;
+        top: 30%;
+        text-align: center;
+        font-family: 'Nanum Brush Script', cursive;
+        color: #ffffff;
+        text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.85);
+        opacity: 0;
+        z-index: 40;
+        pointer-events: none;
+        line-height: 1.4;
+        font-size: clamp(1.8rem, 4vw, 3.2rem);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 배경 -->
+    <div class="main-background"></div>
+
+    <!-- 꽃잎 효과 -->
+    <div class="petal-effect"></div>
+
+    <!-- 오디오 -->
+    <audio class="audio-player" controls autoplay loop>
+      <source
+        src="https://blog.kakaocdn.net/dn/oml8v/btsaPFMjys3/ZbVGX6BvtDl7Q1CcnSfaM0/tfile.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
+
+    <!-- 기존 텍스트 -->
+    <div class="overlay-text">
+      <p class="text-large"></p>
+      <p class="text-medium">너의 이름을 담은 별</p>
+      <p class="text-small">Nik P. & DJ Ötzi COVER Tyros 4 PA2x</p>
+
+      <p class="text-small">마에스트라</p>
+    </div>
+
+    <!-- 외성본 1단 -->
+    <div id="story1" class="story-text">
+      밤하늘에 별 하나가 피어오르듯,<br />
+      원곡의 멜로디가 마음속에서 조용히 깨어난다.<br />
+      그때의 감정이 다시 문을 두드리는 순간.
+    </div>
+
+    <!-- 외성본 2단 -->
+    <div id="story2" class="story-text">
+      schlagerburschi의 2개의 전자악기 "Tyros 4 와 PA2x"의 연주는<br />
+      익숙한 선율 위에 부드러운 전자음의 결을 더해<br />
+      또 다른 빛으로 곡을 다시 태어나게 한다.
+    </div>
+
+    <!-- 외성본 3단 -->
+    <div id="story3" class="story-text">
+      반복되는 멜로디는 오래된 추억처럼 천천히 스며들고,<br />
+      별빛 같은 음색은 마음의 가장 조용한 곳에 머문다.<br />
+      여운은 오래 머물수록 더 아름다워진다.
+    </div>
+
+    <!-- JS: 30초 간격 순환 -->
+    <script>
+      function cycleText() {
+        const blocks = ['story1', 'story2', 'story3'];
+        const interval = 30000; // 30초 간격
+        const fadeDuration = 2500;
+
+        blocks.forEach((id, index) => {
+          let el = document.getElementById(id);
+
+          // 등장
+          setTimeout(() => {
+            el.style.animation = `fadeIn 2.5s forwards`;
+          }, index * interval);
+
+          // 사라짐
+          setTimeout(
+            () => {
+              el.style.animation = `fadeOut 2.5s forwards`;
+            },
+            index * interval + (interval - fadeDuration),
+          );
+        });
+
+        // 전체 반복
+        setTimeout(() => {
+          blocks.forEach((id) => {
+            let el = document.getElementById(id);
+            el.style.animation = '';
+            void el.offsetWidth; // 강제 리셋
+          });
+          cycleText();
+        }, blocks.length * interval);
+      }
+
+      cycleText();
+    </script>
+  </body>
+</html>
