@@ -63,9 +63,22 @@
         line-height: 1.4;
       }
 
-      /* 6. 오디오 영역 */
+      /* 🎯 오디오 플레이어 - 화면 하단 고정 */
       .audio-box {
-        margin-top: 50px; /* 기존 50 → 줄임 */
+        position: fixed;
+        bottom: 25px;           /* 20~30px 사이 원하는 값으로 조정 */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        width: auto;
+        max-width: 90%;
+      }
+
+      /* 오디오 컨트롤 스타일링 (더 예쁘게) */
+      audio {
+        width: 320px;
+        max-width: 100%;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
       }
 
       
