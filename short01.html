@@ -2,7 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>02_동영상 배경 연습</title>
+    <title>움짤모음</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,78 +13,74 @@
     />
 
     <style>
-      /* 🔧 0. 기본 스타일 초기화 (중요) */
+      /* 기본 초기화 */
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
 
-      /* 1. 배경 동영상 */
+      /* 배경 영상 */
       #bg-video {
         position: fixed;
-        right: 0;
-        bottom: 0;
-        min-width: 100%;
-        min-height: 100%;
+        inset: 0;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         z-index: -1;
       }
 
-      /* 2. 전체 스타일 */
+      /* 전체 스타일 */
       body {
+        height: 100vh;
+        overflow: hidden;
+
         color: white;
         text-align: center;
         font-family: 'Nanum Brush Script', cursive;
         font-size: 30px;
         text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
-
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
       }
 
-      /* 3. 콘텐츠 위치 */
+      /* 콘텐츠 */
       .content {
         margin-top: 10vh;
       }
 
-      /* 4. 제목 */
       h1 {
         font-size: 40px;
-        margin-bottom: 10px; /* 🔥 줄임 */
         line-height: 1.2;
+        margin-bottom: 10px;
       }
 
-      /* 5. 본문 텍스트 */
-      .content > p {
-        margin-top: 0; /* 🔥 핵심 */
-        margin-bottom: 20px;
+      .content p {
         line-height: 1.4;
+        margin-bottom: 20px;
       }
 
-      /* 🎯 오디오 플레이어 - 화면 하단 고정 */
+      /* 오디오 플레이어 */
       .audio-box {
         position: fixed;
-        bottom: 25px;           /* 20~30px 사이 원하는 값으로 조정 */
+        bottom: 25px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 10;
-        width: auto;
         max-width: 90%;
       }
+
       .audio-box audio {
-      border: 2.5px solid #9dc8f0;
-      border-radius: 25px;
-      width: 220px;
-      height: 20px;
-      background: rgba(0, 0, 0, 0.3);
-      filter: drop-shadow(0 4px 12px rgba(157, 200, 240, 0.4));
+        width: 220px;
+        height: 20px;
+        max-width: 100%;
+
+        border: 2.5px solid #9dc8f0;
+        border-radius: 25px;
+
+        background: rgba(0, 0, 0, 0.3);
+
+        filter: drop-shadow(0 4px 12px rgba(157, 200, 240, 0.4))
+          drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
       }
-
-     
-
-      
     </style>
   </head>
 
@@ -101,18 +97,16 @@
     <div class="content">
       <h1>놀라운세상</h1>
       <p>움짤 모음.</p>
+    </div>
 
-      <!-- 오디오 -->
-      <div class="audio-box">
-        <audio controls autoplay loop>
-          <source
-            src="https://a.tumblr.com/tumblr_n14qujmYBI1tro4jro1.mp3"
-            type="audio/mpeg"
-          />
-        </audio>
-      </div>
-
-      
+    <!-- 오디오 -->
+    <div class="audio-box">
+      <audio controls autoplay loop>
+        <source
+          src="https://a.tumblr.com/tumblr_n14qujmYBI1tro4jro1.mp3"
+          type="audio/mpeg"
+        />
+      </audio>
     </div>
   </body>
 </html>
